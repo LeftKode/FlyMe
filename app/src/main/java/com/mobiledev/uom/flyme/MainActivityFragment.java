@@ -30,6 +30,9 @@ public class MainActivityFragment extends Fragment {
     int date = c.get(Calendar.DATE);
     ArrayAdapter<String> flightAdapter;
 
+    public void ThisIsANewClass(){
+        String deleteMe;
+    }
     public MainActivityFragment() {
     }
 
