@@ -32,6 +32,7 @@ public class MainActivityFragment extends Fragment {
 
     public void ThisIsANewClass(){
         String deleteMe;
+        String MessageReceived;
     }
     public MainActivityFragment() {
     }
