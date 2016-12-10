@@ -17,7 +17,23 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+
+            <Button
+                android:id="@+id/search_button"
+                android:text="@string/button_text"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:minWidth="150dp"
+                android:background="?attr/colorPrimary"
+                android:textAllCaps="false"
+                android:textStyle="normal|bold"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp" />
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
