@@ -207,6 +207,9 @@ public class MainActivityFragment extends Fragment {
             if (result != null){
                 flightAdapter.clear();
                 for (String flightStr : result){
+                    if(flightStr == null){
+                        break;
+                    }
                     flightAdapter.add(flightStr);
                 }
             }
