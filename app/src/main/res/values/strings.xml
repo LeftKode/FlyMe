@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">FlyMe</string>
     <string name="action_settings">Settings</string>
-    <string name="button_text">Αναζήτηση Πτήσεων</string>
+    <string name="action_search">Αναζήτηση Πτήσεων</string>
+    <string name="title_activity_search">Αναζήτηση Πτήσεων</string>
+
+    <!-- Ημερομηνία Αναχώρησης-->
+    <string name="departure_date">Ημερομηνία Αναχώρησης</string>
+
+    <!-- Ημερομηνία Επιστροφής-->
+    <string name="return_date">Ημερομηνία Επιστροφής</string>
+
 </resources>
