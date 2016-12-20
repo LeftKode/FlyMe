@@ -1,7 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:gravity="center_vertical"
-    android:id="@+id/list_item_flight_textview" />
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fdsfsdfsd">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="1">
+
+            <TextView
+                android:text="origin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/originLoc"
+                android:textSize="14sp"
+                android:paddingLeft="1dp"
+                android:paddingRight="3dp"
+                android:fontFamily="sans-serif"
+                android:maxLength="20" />
+
+            <TextView
+                android:text="departure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/departureDate"
+                android:textSize="14sp"
+                android:clickable="false"
+                android:textColor="@color/colorPrimary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="destination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/destinationLoc"
+                android:textSize="14sp"
+                android:paddingLeft="1dp"
+                android:paddingRight="3dp"
+                android:maxLength="20" />
+
+            <TextView
+                android:text="arrival"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/arrivalDate"
+                android:textSize="14sp"
+                android:inputType="date"
+                android:textColor="@color/colorPrimary" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/price_textView"
+                android:textColor="@android:color/holo_green_dark"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
