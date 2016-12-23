@@ -13,11 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.mobiledev.uom.flyme.classes.AirlineFinderTask;
+import com.mobiledev.uom.flyme.classes.AirlineNameResponse;
 import com.mobiledev.uom.flyme.classes.DestLocationFinderTask;
 import com.mobiledev.uom.flyme.classes.DestinationResponse;
-import com.mobiledev.uom.flyme.classes.OriginResponse;
 import com.mobiledev.uom.flyme.classes.FlightModel;
 import com.mobiledev.uom.flyme.classes.OriginLocationFinderTask;
+import com.mobiledev.uom.flyme.classes.OriginResponse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -41,13 +44,15 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment implements OriginResponse, DestinationResponse {
+public class MainActivityFragment extends Fragment implements OriginResponse,DestinationResponse, AirlineNameResponse{
 
     private ListView listView;
     private String originAirportName;
     private String destinationAirportName;
+    private Map<String, String> airlineMap;
     OriginLocationFinderTask originFinder = new OriginLocationFinderTask();
     DestLocationFinderTask destinationFinder = new DestLocationFinderTask();
+    AirlineFinderTask airlineFinder = new AirlineFinderTask();
 
     public MainActivityFragment() {
     }
@@ -57,8 +62,10 @@ public class MainActivityFragment extends Fragment implements OriginResponse, De
 
         super.onCreate(savedInstanceState);
         originFinder.delegate = this;
-        originFinder.execute("SKG");
         destinationFinder.delegate = this;
+        airlineFinder.delegate = this;
+        airlineFinder.execute();
+        originFinder.execute("LON");
         destinationFinder.execute("ATH");
     }
 
@@ -74,7 +81,7 @@ public class MainActivityFragment extends Fragment implements OriginResponse, De
     @Override
     public void onStart(){
         super.onStart();
-        new ShowFlightsTask().execute("SKG");
+        new ShowFlightsTask().execute("LON");
     }
 
     @Override
@@ -87,6 +94,10 @@ public class MainActivityFragment extends Fragment implements OriginResponse, De
         originAirportName = output;
     }
 
+    @Override
+    public void GetMyAirlineName(Map<String, String> output) {
+        airlineMap = output;
+    }
 
     public class ShowFlightsTask extends AsyncTask<String , Void, List<FlightModel>>{
         private final String LOG_TAG = ShowFlightsTask.class.getSimpleName();
@@ -105,6 +116,8 @@ public class MainActivityFragment extends Fragment implements OriginResponse, De
             final String F_AIRP = "airport";
             final String F_FARE = "fare";
             final String F_PRICE = "total_price";
+            final String F_AIRL = "marketing_airline";
+            final String F_INBOUNDS = "inbound";
             final String currency;
 
 
@@ -118,6 +131,7 @@ public class MainActivityFragment extends Fragment implements OriginResponse, De
                 String arrival;
                 String originLoc;
                 String destinationLoc;
+                String airline;
                 String price;
 
                 JSONObject newObject = flightResult.getJSONObject(i);
@@ -125,39 +139,132 @@ public class MainActivityFragment extends Fragment implements OriginResponse, De
                 price = fare.getString(F_PRICE);
                 JSONArray itinArray = newObject.getJSONArray(F_ITINS);
                 for(int j=0; j<itinArray.length(); j++) {
-                    FlightModel model = new FlightModel();
-                    SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                    SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-
                     JSONObject itinObject = itinArray.getJSONObject(j);
                     JSONObject outboundObject = itinObject.getJSONObject(F_OUTBOUNDS);
-                    JSONObject flightObject = outboundObject.getJSONArray(F_FLIGHTS).getJSONObject(0);
 
-                    departure = flightObject.getString(F_DEPS);
-                    Date myDepDate = dateFormat1.parse(departure);
-                    dateFormat1.applyPattern("dd-MM-yyyy HH:MM");
-                    String departDate = dateFormat1.format(myDepDate);
-                    model.setDepartureDate(departDate);
+                    JSONObject inbound;
+                    if(flightJsonStr.contains("arrival_date")) {
+                        inbound = itinObject.getJSONObject("inbound");
+                    }
 
-                    arrival = flightObject.getString(F_ARRS);
-                    Date myArrDate = dateFormat2.parse(arrival);
-                    dateFormat2.applyPattern("dd-MM-yyyy HH:mm");
-                    String arrivalDate = dateFormat2.format(myArrDate);
-                    model.setArrivalDate(arrivalDate);
+                    JSONArray flightArray = outboundObject.getJSONArray(F_FLIGHTS);
+                    for(int k=0; k<flightArray.length(); k++) {
+                        JSONObject flightObject = flightArray.getJSONObject(k);
+
+                        FlightModel model = new FlightModel();
+                        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+
+                        departure = flightObject.getString(F_DEPS);
+                        Date myDepDate = dateFormat1.parse(departure);
+                        dateFormat1.applyPattern("dd-MM-yyyy HH:mm");
+                        String departDate = dateFormat1.format(myDepDate);
+                        model.setDepartureDate(departDate);
+
+                        arrival = flightObject.getString(F_ARRS);
+                        Date myArrDate = dateFormat2.parse(arrival);
+                        dateFormat2.applyPattern("dd-MM-yyyy HH:mm");
+                        String arrivalDate = dateFormat2.format(myArrDate);
+                        model.setArrivalDate(arrivalDate);
+
+                        JSONObject originObject = flightObject.getJSONObject(F_ORIGIN);
+                        originLoc = originObject.getString(F_AIRP);
+                        model.setOriginLocation(originLoc);
+
+                        JSONObject destinationObject = flightObject.getJSONObject(F_DEST);
+                        destinationLoc = destinationObject.getString(F_AIRP);
+
+                        airline = flightObject.getString(F_AIRL);
+
+                        model.setAirline(airline);
+                        model.setDestinationLocation(destinationLoc);
+                        model.setCurrency(currency);
+                        model.setPrice(price);
+
+                        modelList.add(model);
+                    }
+
+                    /*
+                    JSONObject outboundObject = itinObject.getJSONObject(F_OUTBOUNDS);
+                    JSONArray outboundFlightArray = outboundObject.getJSONArray(F_FlIGHTS);
+
+                    JSONObject inboundObject = itinObject.getJSONObject(F_INBOUNDS);
+                    JSONArray inboundFlightArray = inboundObject.getJSONArray(F_FlIGHTS);
+
+                    FlightModel model = new FlightModel();
+
+                    List<FlightModel.outboundFlights> outboundFlightsList = new ArrayList<>();
+                    for(int l=0; l<outboundFlightArray; l++){
+                        JSONObject flightObject = outboundFlightArray.getJSONObject(l);
+                        FlightModel.outboundFlights outboundFlight = new FlightModel.outboundFlights();
+                        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+
+                        departure = flightObject.getString(F_DEPS);
+                        Date myDepDate = dateFormat1.parse(departure);
+                        dateFormat1.applyPattern("dd-MM-yyyy HH:mm");
+                        String departDate = dateFormat1.format(myDepDate);
+                        outboundFlight.setDepartureDate(departDate);
+
+                        arrival = flightObject.getString(F_ARRS);
+                        Date myArrDate = dateFormat2.parse(arrival);
+                        dateFormat2.applyPattern("dd-MM-yyyy HH:mm");
+                        String arrivalDate = dateFormat2.format(myArrDate);
+                        outboundFlight.setArrivalDate(arrivalDate);
+
+                        JSONObject originObject = flightObject.getJSONObject(F_ORIGIN);
+                        originLoc = originObject.getString(F_AIRP);
+                        outboundFlight.setOriginLocation(originLoc);
+
+                        JSONObject destinationObject = flightObject.getJSONObject(F_DEST);
+                        destinationLoc = destinationObject.getString(F_AIRP);
+                        outboundFlight.setDestinationLocation(destinationLoc);
+
+                        airline = flightObject.getString(F_AIRL);
+                        outboundFlight.setAirline(airline);
+                        outboundFlightList.add(inboundFlight);
+                    }
 
 
-                    JSONObject originObject = flightObject.getJSONObject(F_ORIGIN);
-                    originLoc = originObject.getString(F_AIRP);
-                    model.setOriginLocation(originLoc);
+                    List<FlightModel.inboundFlights> inboundFlightsList = new ArrayList<>();
+                    for(int l=0; l<inboundFlightArray; l++){
+                        JSONObject flightObject = inboundFlightArray.getJSONObject(l);
+                        FlightModel.inboundFlights inboundFlight = new FlightModel.inboundFlights();
+                        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 
-                    JSONObject destinationObject = flightObject.getJSONObject(F_DEST);
-                    destinationLoc = destinationObject.getString(F_AIRP);
+                        departure = flightObject.getString(F_DEPS);
+                        Date myDepDate = dateFormat1.parse(departure);
+                        dateFormat1.applyPattern("dd-MM-yyyy HH:mm");
+                        String departDate = dateFormat1.format(myDepDate);
+                        inboundFlight.setDepartureDate(departDate);
 
-                    model.setDestinationLocation(destinationLoc);
+                        arrival = flightObject.getString(F_ARRS);
+                        Date myArrDate = dateFormat2.parse(arrival);
+                        dateFormat2.applyPattern("dd-MM-yyyy HH:mm");
+                        String arrivalDate = dateFormat2.format(myArrDate);
+                        inboundFlight.setArrivalDate(arrivalDate);
+
+                        JSONObject originObject = flightObject.getJSONObject(F_ORIGIN);
+                        originLoc = originObject.getString(F_AIRP);
+                        inboundFlight.setOriginLocation(originLoc);
+
+                        JSONObject destinationObject = flightObject.getJSONObject(F_DEST);
+                        destinationLoc = destinationObject.getString(F_AIRP);
+                        inboundFlight.setDestinationLocation(destinationLoc);
+
+                        airline = flightObject.getString(F_AIRL);
+                        inboundFlight.setAirline(airline);
+                        inboundFlightList.add(inboundFlight);
+                    }
                     model.setCurrency(currency);
                     model.setPrice(price);
-
+                    model.setOutboundFlightList(outboundFlightList);
+                    model.setInboundFlightList(inboundFlightList);
                     modelList.add(model);
+
+
+                     */
                 }
 
             }
@@ -185,9 +292,9 @@ public class MainActivityFragment extends Fragment implements OriginResponse, De
                         .appendQueryParameter(API_KEY, BuildConfig.AMADEUS_KEY)
                         .appendQueryParameter(ORIGIN, params[0])
                         .appendQueryParameter(DESTINATION, "ATH")
-                        .appendQueryParameter(DEPART_DATE, "2016-12-20")
+                        .appendQueryParameter(DEPART_DATE, "2016-12-25")
                         .appendQueryParameter(CURRENCY, "EUR")
-                        .appendQueryParameter(NO_OF_RESULTS, "5")
+                        .appendQueryParameter(NO_OF_RESULTS, "10")
                         .build();
 
                 URL url = new URL(builtUri.toString());
@@ -248,12 +355,13 @@ public class MainActivityFragment extends Fragment implements OriginResponse, De
             // This will only happen if there was an error getting or parsing the forecast.
             return null;
 
-            }
+        }
 
         @Override
         protected void onPostExecute(List<FlightModel> result){
             FlightAdapter adapter = new FlightAdapter(getContext(), R.layout.fragment_main, result);
             listView.setAdapter(adapter);
+
         }
     }
 
@@ -270,7 +378,6 @@ public class MainActivityFragment extends Fragment implements OriginResponse, De
             inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
         }
 
-
         //καλείται τόσες φόρες όσα και τα αντικείμενα που έχουμε
         @Override
         public View getView(int position, View convertView, ViewGroup parent){
@@ -285,13 +392,18 @@ public class MainActivityFragment extends Fragment implements OriginResponse, De
             TextView departDate = (TextView)convertView.findViewById(R.id.departureDate);
             TextView arrivalDate = (TextView)convertView.findViewById(R.id.arrivalDate);
             TextView currency = (TextView)convertView.findViewById(R.id.price_textView);
+            TextView airline = (TextView)convertView.findViewById(R.id.airlineName);
 
-            originLoc.setText(originAirportName);
+            //καλώ το substring για να μην εμφανίζει το [code]
+            originLoc.setText(originAirportName.substring(0,originAirportName.indexOf("[")-1));
 
-            destinationLoc.setText(destinationAirportName);
+            destinationLoc.setText(destinationAirportName.substring(0,destinationAirportName.indexOf("[")-1));
 
             departDate.setText(":" +" "+flightModelList.get(position).getDepartureDate());
             arrivalDate.setText(":" +" "+flightModelList.get(position).getArrivalDate());
+
+            airline.setText(airlineMap.get(flightModelList.get(position).getAirline()));
+
             currency.setText(flightModelList.get(position).getPrice()
                     + " " + flightModelList.get(position).getCurrency());
 
@@ -299,6 +411,5 @@ public class MainActivityFragment extends Fragment implements OriginResponse, De
             return convertView;
         }
     }
-
 }
 

@@ -27,7 +27,8 @@
                 android:paddingLeft="1dp"
                 android:paddingRight="3dp"
                 android:fontFamily="sans-serif"
-                android:maxLength="20" />
+                android:maxLength="20"
+                android:focusable="false" />
 
             <TextView
                 android:text="departure"
@@ -69,6 +70,13 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <TextView
+                android:text="airline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/airlineName"
+                android:layout_weight="1" />
 
             <TextView
                 android:text="price"
