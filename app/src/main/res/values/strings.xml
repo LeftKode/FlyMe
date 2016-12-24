@@ -4,10 +4,39 @@
     <string name="action_search">Αναζήτηση Πτήσεων</string>
     <string name="title_activity_search">Αναζήτηση Πτήσεων</string>
 
-    <!-- Ημερομηνία Αναχώρησης-->
+    <!-- Ημερομηνία Αναχώρησης και Επιστροφής-->
     <string name="departure_date">Ημερομηνία Αναχώρησης</string>
-
-    <!-- Ημερομηνία Επιστροφής-->
     <string name="return_date">Ημερομηνία Επιστροφής</string>
+
+    <!-- Αεροδρόμιο Αναχώρησης και Προορισμού -->
+    <string name="origin">Αεροδρόμιο Αναχώρησης</string>
+    <string name="destination">Αεροδρόμιο Προορισμού</string>
+
+    <!-- Περιγραφή αεροδρόμιο αναχώρησης και προορισμού -->
+    <string name="origin_hint">Επιλέξτε Αεροδρόμιο Αναχώρησης</string>
+    <string name="destination_hint">Επιλέξτε Αεροδρόμιο Προορισμού</string>
+
+
+    <string name="with_return">Με Επιστροφή</string>
+
+    <string name="plus_symbol">+</string>
+    <string name="minus_symbol">-</string>
+
+    <string name="adults_text">Ενήλικες</string>
+    <string name="children_text">Παιδιά (2-11 ετών)</string>
+    <string name="infants_text">Βρέφη (εώς 2 ετών)</string>
+
+    <string name="flyers_higher_than_max_message">Οι επιβάτες μπορούν να είναι μέχρι 9. Eπιλέξτε μικρότερο αριθμό.</string>
+    <string name="infants_higher_than_max_message">Πρέπει να υπάρχει τουλάχιστον ένας ενήλικας για κάθε βρέφος.</string>
+    <string name="flyers_zero_num_message">Πρέπει να υπάρχει τουλάχιστον ένας επιβάτης.</string>
+    flyers_zero_num_message
+
+    <string name="non_stop">Μόνο Απευθείας Πτήσεις</string>
+    <string name="title_activity_results">ResultsActivity</string>
+
+    <string name="origin_is_missing_message">Δεν επιλέξατε αεροδρόμιο αναχώρησης.</string>
+    <string name="destination_is_missing_message">Δεν επιλέξατε αεροδρόμιο προορισμού.</string>
+
+    <string name="destin_date_after_origin_message">Η ημερομηνία προορισμού δεν μπορεί να είναι πριν από την ημερομηνία αναχώρησης.</string>
 
 </resources>

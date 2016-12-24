@@ -1,26 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/content_search"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.mobiledev.uom.flyme.SearchActivityFragment"
-    tools:showIn="@layout/activity_search">
 
 
-    <ScrollView
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.mobiledev.uom.flyme.SearchActivityFragment"
+        tools:showIn="@layout/activity_search">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/startDateTextView">
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView"
+                android:text="@string/origin"
+                android:textStyle="normal|bold"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="15dp">
+
+                <com.mobiledev.uom.flyme.DelayAutoCompleteTextView
+                    android:id="@+id/originDACTV"
+                    android:inputType="textCapSentences|textNoSuggestions"
+                    android:textColorHint="@color/colorHint"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="flagNoExtractUi"
+                    android:layout_weight="0.1"
+                    android:layout_width="match_parent"
+                    android:hint="@string/origin_hint"/>
+
+                <ProgressBar
+                    android:id="@+id/pb_loading_indicator"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_weight="0.9" />
+
+            </LinearLayout>
+
+            <TextView
+                android:text="@string/destination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"
+                android:textStyle="normal|bold"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:layout_marginBottom="15dp">
+
+                <com.mobiledev.uom.flyme.DelayAutoCompleteTextView
+                    android:id="@+id/destinationDACTV"
+                    android:inputType="textCapSentences|textNoSuggestions"
+                    android:hint="@string/destination_hint"
+                    android:textColorHint="@color/colorHint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="flagNoExtractUi"
+                    android:layout_weight="0.1" />
+
+                <ProgressBar
+                    android:id="@+id/pb_loading_indicator2"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|right"
+                    android:visibility="invisible"
+                    android:layout_weight="0.9" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -28,7 +95,8 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:paddingLeft="8dp"
-                android:paddingRight="8dp">
+                android:paddingRight="8dp"
+                android:layout_marginBottom="15dp">
 
                 <TextView
                     android:text="@string/departure_date"
@@ -40,8 +108,39 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="15dp"
-                    android:textStyle="normal|bold" />
+                    android:layout_marginBottom="5dp"
+                    android:textStyle="normal|bold"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/departureDateBtn"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <Switch
+                android:text="@string/with_return"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/withReturnSwitch"
+                android:textStyle="normal|bold"
+                android:layout_weight="1"
+                android:layout_marginBottom="15dp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/returnDateLayout"
+                android:visibility="gone"
+                android:layout_marginBottom="15dp">
 
                 <TextView
                     android:text="@string/return_date"
@@ -53,30 +152,11 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="15dp"
-                    android:textStyle="normal|bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:layout_weight="1">
+                    android:layout_marginBottom="5dp"
+                    android:textStyle="normal|bold"
+                    android:textSize="18sp" />
 
                 <Button
-                    android:text="01-01-01"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/departureDateBtn"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:textSize="14sp" />
-
-                <Button
-                    android:text="01-01-01"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/returnDateBtn"
@@ -85,8 +165,180 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:textSize="14sp" />
+
             </LinearLayout>
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/adults_text"
+                    android:textStyle="normal|bold"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.2"
+                    android:elevation="0dp"
+                    style="@android:style/Widget.Button"
+                    android:layout_height="wrap_content"
+                    android:text="@string/minus_symbol"
+                    android:id="@+id/adultsMinusBtn" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:layout_weight="0.2"
+                    android:textSize="18sp"
+                    android:id="@+id/adultsNumTextView" />
+
+                <Button
+                    android:layout_gravity="center"
+                    android:layout_weight="0.2"
+                    style="@android:style/Widget.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/plus_symbol"
+                    android:id="@+id/adultsAddBtn" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/children_text"
+                    android:textStyle="normal|bold"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.2"
+                    android:elevation="0dp"
+                    style="@android:style/Widget.Button"
+                    android:layout_height="wrap_content"
+                    android:text="@string/minus_symbol"
+                    android:id="@+id/childrenMinusBtn" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:layout_weight="0.2"
+                    android:textSize="18sp"
+                    android:id="@+id/childrenNumTextView" />
+
+                <Button
+                    android:layout_gravity="center"
+                    android:layout_weight="0.2"
+                    style="@android:style/Widget.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/plus_symbol"
+                    android:id="@+id/childrenAddBtn" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/infants_text"
+                    android:textStyle="normal|bold"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.2"
+                    android:elevation="0dp"
+                    style="@android:style/Widget.Button"
+                    android:layout_height="wrap_content"
+                    android:text="@string/minus_symbol"
+                    android:id="@+id/infantsMinusBtn" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:layout_weight="0.2"
+                    android:textSize="18sp"
+                    android:id="@+id/infantsNumTextView" />
+
+                <Button
+                    android:layout_gravity="center"
+                    android:layout_weight="0.2"
+                    style="@android:style/Widget.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/plus_symbol"
+                    android:id="@+id/infantsAddBtn" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textStyle="normal|bold"
+                    android:textSize="18sp"
+                    android:paddingRight="30dp"
+                    android:layout_weight="1"
+                    android:text="@string/non_stop" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/non_stop_checkbox"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical" />
+
+            </LinearLayout>
+
+            <Button
+                android:text="@string/action_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/search_flights_btn"
+                android:gravity="center_vertical|center_horizontal|center"
+                android:layout_gravity="center"
+                android:textStyle="normal|bold"
+                android:textAllCaps="false" />
+
+
         </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+</ScrollView>
