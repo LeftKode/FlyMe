@@ -361,12 +361,12 @@ public class SearchActivityFragment extends Fragment implements DatePickerDialog
 
         Uri builtUri = Uri.parse(BASE_URL).buildUpon()
                 .appendQueryParameter(API_KEY, BuildConfig.AMADEUS_KEY)
-                .appendQueryParameter(ORIGIN, origin.getCode())
-                .appendQueryParameter(DESTINATION, destination.getCode())
+                .appendQueryParameter(ORIGIN, origin.getValue())
+                .appendQueryParameter(DESTINATION, destination.getValue())
                 .appendQueryParameter(DEPART_DATE, String.format(fmt.format(departureDate.getTime()))).build();
 
-        originLoc = origin.getCode();
-        destinationLoc = destination.getCode();
+        originLoc = origin.getValue();
+        destinationLoc = destination.getValue();
         departDate = String.format(fmt.format(departureDate.getTime()));
 
         //Αν έχει επιλέξει ημερομηνία επιστροφής να την προσθέσει

@@ -49,7 +49,7 @@ public class MainActivityFragment extends Fragment{
         final Cursor data = myDBHelper.getTableData();
 
         if(data.getCount() == 0)
-            textView.setText("Δεν έχετε πραγματοποιήση κάποια αναζήτση πτήσης ακόμα"+'\n'+"Ξεκινήστε να ψάχνετε πατώντας το παραπάνω κουμπί αναζήτησης");
+            textView.setText("Δεν έχετε πραγματοποιήσει κάποια αναζήτηση πτήσης ακόμα"+'\n'+"Ξεκινήστε να ψάχνετε πατώντας το παραπάνω κουμπί αναζήτησης");
         else {
             textView.setText("Παρακάτω μπορείτε να δείτε τις πιο πρόσφατες αναζητήσεις σας!" +'\n'+ "Πατήστε " +
                     "σε κάποια από αυτές για να επιστρέψετε στην αναζήτηση σας!");
@@ -61,7 +61,7 @@ public class MainActivityFragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getContext(), ResultsActivity.class);
-                intent.putExtra("databaseUrl", data.getString(data.getColumnIndexOrThrow("url")));
+                intent.putExtra(Intent.EXTRA_TEXT, data.getString(data.getColumnIndexOrThrow("url")));
                 startActivity(intent);
             }
         });

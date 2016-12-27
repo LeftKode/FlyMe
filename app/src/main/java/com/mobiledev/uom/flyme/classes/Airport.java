@@ -2,16 +2,16 @@ package com.mobiledev.uom.flyme.classes;
 
 public class Airport {
 
-    private String code;
+    private String value;
     private String label;
 
     public Airport(String value, String label) {
-        this.code = value;
+        this.value = value;
         this.label = label;
     }
 
-    public String getCode() {
-        return code;
+    public String getValue() {
+        return value;
     }
 
     public String getLabel() {

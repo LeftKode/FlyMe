@@ -99,9 +99,6 @@ public class AirportAutoCompleteAdapter extends BaseAdapter implements Filterabl
      * Returns a search result for the given book title.
      */
     private List<Airport> findAirports(Context context, String airportTitle) {
-        // GoogleBooksProtocol is a wrapper for the Google Books API
-        /*GoogleBooksProtocol protocol = new GoogleBooksProtocol(context, MAX_RESULTS);
-        return protocol.findBooks(bookTitle);*/
 
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
