@@ -2,8 +2,11 @@ package com.mobiledev.uom.flyme;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 
 import com.mobiledev.uom.flyme.classes.Airport;
 import com.mobiledev.uom.flyme.classes.AirportAutoCompleteAdapter;
+import com.mobiledev.uom.flyme.classes.DBHelper;
 import com.mobiledev.uom.flyme.classes.SingleToast;
 
 import java.text.SimpleDateFormat;
@@ -33,6 +37,7 @@ import java.util.GregorianCalendar;
  */
 public class SearchActivityFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
+    private DBHelper myDBHelper;
     private static final int THRESHOLD = 2;
     private static final int maxFlyers = 9;
 
@@ -84,6 +89,7 @@ public class SearchActivityFragment extends Fragment implements DatePickerDialog
         super.onCreate(savedInstanceState);
 
         //Αρχικοποίηση των ημερομηνιών departureDate και returnDate
+        myDBHelper = new DBHelper(getActivity());
         departureDate = new GregorianCalendar();
         returnDate = new GregorianCalendar();
         numOfAdults = defaultNumOfAdults;
@@ -338,6 +344,17 @@ public class SearchActivityFragment extends Fragment implements DatePickerDialog
         final String NO_OF_RESULTS = "number_of_results";       //Αριθμός Αποτελεσμάτων
 
 
+        //Αρχικοποίηση πεδίων για εισαγωγή στη βάση
+        String url;
+        String originLoc;
+        String destinationLoc;
+        String departDate;
+        String retDate = null;
+        int adultsNo = defaultNumOfAdults;
+        int childrenNo = defaultNumOfChildren;
+        int infantNo = defaultNumOfChildren;
+        int nonStop = 0;
+
         //Φορμάτ Ημερομηνιών
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
         fmt.setCalendar(departureDate);
@@ -348,34 +365,67 @@ public class SearchActivityFragment extends Fragment implements DatePickerDialog
                 .appendQueryParameter(DESTINATION, destination.getCode())
                 .appendQueryParameter(DEPART_DATE, String.format(fmt.format(departureDate.getTime()))).build();
 
+        originLoc = origin.getCode();
+        destinationLoc = destination.getCode();
+        departDate = String.format(fmt.format(departureDate.getTime()));
+
         //Αν έχει επιλέξει ημερομηνία επιστροφής να την προσθέσει
         if(withDestinationSwitch.isChecked()){
             builtUri = builtUri.buildUpon().appendQueryParameter(RETURN_DATE, String.format(fmt.format(returnDate.getTime()))).build();
+            retDate = String.format(fmt.format(returnDate.getTime()));
         }
 
         //Αν ο αριθμός των επιβατών είναι διαφορετικοί σε κάποια κατηγορία να την προσθέτει στο uri
         if(numOfAdults!=defaultNumOfAdults){
             builtUri = builtUri.buildUpon().appendQueryParameter(ADULTS, Integer.toString(numOfAdults)).build();
+            adultsNo = numOfAdults;
         }
 
         if(numOfChildren!=defaultNumOfChildren){
             builtUri = builtUri.buildUpon().appendQueryParameter(CHILDREN, Integer.toString(numOfChildren)).build();
+            childrenNo = numOfChildren;
         }
 
         if(numOfInfants!=defaultNumOfInfants){
             builtUri = builtUri.buildUpon().appendQueryParameter(INFANTS,Integer.toString(numOfInfants)).build();
+            infantNo = numOfInfants;
         }
 
         //Εάν είναι τσεκαρισμένη η επιλογή "Μόνο Απευθείας Πτήσεις" να προσθέσει το αντίστοιχο ερώτημα στο uri
         if(nonStopValue){
             builtUri = builtUri.buildUpon().appendQueryParameter(NONSTOP,"true").build();
+            nonStop = 1;
         }
 
-        //TODO Εδώ να βάλουμε το currency που θα παίρνουμε από τα options αντι για ¨EUR¨
+        //Επιστρέφει το νόμισμα που επέλεξε ο χρήστης στην αναζήτησ και ανάλογα την επιλογή στέλνει στη διεύθυνση το αντίστοιχο νόμισμα
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String currencyType = sharedPreferences.getString(
+                            getString(R.string.currency_key),
+                            getString(R.string.currency_eur));
+
+        if(currencyType.equals(getString(R.string.currency_eur)))
+            builtUri = builtUri.buildUpon().appendQueryParameter(CURRENCY, "EUR").build();
+        else if(currencyType.equals(getString(R.string.currency_usd)))
+            builtUri = builtUri.buildUpon().appendQueryParameter(CURRENCY, "USD").build();
+
         //Το νόμισμα συναλλαγής αν είναι διαφορετικό του USD να προσθέτει το αντίστοιχο ερώτημα στο uri
-        builtUri = builtUri.buildUpon().appendQueryParameter(CURRENCY, "EUR").build();
+        //builtUri = builtUri.buildUpon().appendQueryParameter(CURRENCY, "EUR").build();
                 //.appendQueryParameter(NO_OF_RESULTS, "10")
                 //.build();
+
+        url = builtUri.toString();
+
+
+        Cursor data = myDBHelper.getTableData();
+
+        if(data.getCount() > 9){
+            myDBHelper.deleteRow();
+            myDBHelper.insertData(url,originLoc,destinationLoc,departDate,retDate, adultsNo, childrenNo, infantNo, nonStop);
+        }
+        else
+            myDBHelper.insertData(url,originLoc,destinationLoc,departDate,retDate, adultsNo, childrenNo, infantNo, nonStop);
+
+
         return builtUri.toString();
     }
 

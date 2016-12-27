@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <string-array name="currency_options">
+            <item>@string/currency_label_euro</item>
+            <item>@string/currency_label_dollars</item>
+        </string-array>
+
+        <string-array name="currency_values">
+            <item>@string/currency_eur</item>
+            <item>@string/currency_usd</item>
+        </string-array>
+</resources>

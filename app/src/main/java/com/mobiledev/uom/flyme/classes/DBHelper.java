@@ -16,6 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static int VERSION = 1;
 
     private static final String TABLE_NAME = "searchList";
+    private static final String ID = "_id";
     private static final String URL = "url";
     private static final String ORIGIN_LOC = "originLocation";
     private static final String DEST_LOC = "destinationLocation";
@@ -35,17 +36,18 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-        String createTableQuery = "CREATE TABLE" + TABLE_NAME +
-                ")"+
-                URL + "TEXT NOT NULL" +
-                ORIGIN_LOC + "TEXT NOT NULL" +
-                DEST_LOC + "TEXT NOT NULL" +
-                DEP_DATE + "TEXT NOT NULL" +
-                ARR_DATE + "TEXT NOT NULL" +
-                NON_STOP + "INTEGER NOT NULL" +
-                ADULT_NO + "INTEGER NOT NULL" +
-                CHILD_NO + "INTEGER NOT NULL" +
-                INFANT_NO + "INTEGER NOT NULL" +
+        String createTableQuery = "CREATE TABLE " + TABLE_NAME +
+                " ("+
+                ID  + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                URL + " TEXT, " +
+                ORIGIN_LOC + " TEXT, " +
+                DEST_LOC + " TEXT, " +
+                DEP_DATE + " TEXT, " +
+                ARR_DATE + " TEXT, " +
+                ADULT_NO + " INTEGER, " +
+                CHILD_NO + " INTEGER, " +
+                INFANT_NO + " INTEGER," +
+                NON_STOP + " INTEGER" +
                 ")";
 
         sqLiteDatabase.execSQL(createTableQuery);
@@ -55,18 +57,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
-
-    public void openDB(){
-        myDB = getWritableDatabase();
-    }
-
-    public void closeDB(){
-        if(myDB != null && myDB.isOpen()) {
-            myDB.close();
-        }
-
-    }
-
     /*
 
     moveToLast για να παει στο τελος και μετα while("kati".moveToPrevious) για να παω στην αρχη
@@ -74,8 +64,8 @@ public class DBHelper extends SQLiteOpenHelper {
     το getCount μας λεει ποσες υπάρχουν στην βαση
 
     */
-    public long insertData(String url, String originLoc, String destLoc, String depDate, String arrDate,
-                             int nonStop, int adultNo, int childNo, int infantNo){
+    public boolean insertData(String url, String originLoc, String destLoc, String depDate, String arrDate,
+                              int adultNo, int childNo, int infantNo,int nonStop){
 
         ContentValues values = new ContentValues();
         values.put(URL, url);
@@ -83,17 +73,30 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(DEST_LOC, destLoc);
         values.put(DEP_DATE, depDate);
         values.put(ARR_DATE, arrDate);
-        values.put(NON_STOP, nonStop);
         values.put(ADULT_NO, adultNo);
         values.put(CHILD_NO, childNo);
         values.put(INFANT_NO, infantNo);
+        values.put(NON_STOP, nonStop);
 
         //Με το return επιστρέφεται ο αριθμός της σειράς στην οποία προστέθηκαν τα πεδία
-        return myDB.insert(TABLE_NAME, null, values);
+        long result = myDB.insert(TABLE_NAME, null, values);
+
+        if (result == -1){
+            return false;
+        }else {
+            return true;
+        }
     }
 
     public Cursor getTableData(){
-        Cursor data = myDB.rawQuery("SELECT * FROM" + TABLE_NAME, null);
+        myDB = this.getWritableDatabase();
+        Cursor data = myDB.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY " + ID + " DESC", null);
         return data;
+    }
+
+    public long deleteRow(){
+        myDB = this.getWritableDatabase();
+        String where = ID + " = (SELECT MIN("+ID+") FROM "+TABLE_NAME+")";
+        return myDB.delete(TABLE_NAME, where ,null);
     }
 }

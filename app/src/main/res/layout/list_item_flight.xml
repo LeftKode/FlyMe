@@ -3,14 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/db_item_draw">
 
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/fdsfsdfsd">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -24,26 +24,36 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/originLoc"
                 android:textSize="14sp"
-                android:paddingLeft="1dp"
+                android:paddingLeft="3dp"
                 android:paddingRight="3dp"
                 android:fontFamily="sans-serif"
-                android:maxLength="20"
-                android:focusable="false" />
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:textStyle="normal|bold"
+                android:textColor="@color/colorPrimaryDark" />
 
             <TextView
                 android:text="departure"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/departureDate"
                 android:textSize="14sp"
                 android:clickable="false"
-                android:textColor="@color/colorPrimary" />
+                android:textColor="@android:color/holo_green_dark"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:textAlignment="textEnd"
+                android:textStyle="normal|bold"
+                android:paddingRight="5dp" />
+
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="1">
 
             <TextView
                 android:text="destination"
@@ -51,41 +61,74 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/destinationLoc"
                 android:textSize="14sp"
-                android:paddingLeft="1dp"
+                android:paddingLeft="3dp"
                 android:paddingRight="3dp"
-                android:maxLength="20" />
+                android:maxLength="20"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:textStyle="normal|bold"
+                android:textColor="@color/colorPrimaryDark" />
 
             <TextView
                 android:text="arrival"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/arrivalDate"
                 android:textSize="14sp"
                 android:inputType="date"
-                android:textColor="@color/colorPrimary" />
+                android:textColor="@android:color/holo_green_dark"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:textAlignment="textEnd"
+                android:textStyle="normal|bold"
+                android:paddingRight="5dp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="2.77">
 
             <TextView
-                android:text="airline"
-                android:layout_width="wrap_content"
+                android:text="adultNo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/airlineName"
-                android:layout_weight="1" />
+                android:id="@+id/adultNoTextView"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:paddingLeft="3dp" />
 
             <TextView
-                android:text="price"
-                android:layout_width="wrap_content"
+                android:text="childrenNo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/price_textView"
-                android:textColor="@android:color/holo_green_dark"
-                android:layout_weight="1" />
+                android:id="@+id/children_textView"
+                android:textColor="?android:attr/textColorTertiary"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:paddingLeft="3dp" />
+
+            <TextView
+                android:text="infantNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/infantNo_textView"
+                android:layout_weight="1"
+                android:paddingLeft="3dp" />
+
+            <TextView
+                android:text="nonStop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/nonStop_textView"
+                android:layout_weight="1"
+                android:paddingLeft="3dp" />
         </LinearLayout>
 
     </LinearLayout>
+
 </LinearLayout>

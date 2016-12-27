@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 public class ResultsActivityFragment extends Fragment {
 
     private String urlText;
+    private String databaseUrlText;
 
     public ResultsActivityFragment() {
     }
@@ -28,6 +29,12 @@ public class ResultsActivityFragment extends Fragment {
             //Παίρνει το url που του στάλθηκε από κάποια activity
             urlText = intent.getStringExtra(Intent.EXTRA_TEXT);
             Log.v("Test",urlText);
+        }
+
+        if (intent != null && intent.hasExtra("databaseUrl")) {
+            //Παίρνει το url που του στάλθηκε από κάποια activity
+            databaseUrlText = intent.getStringExtra("databaseUrl");
+            Log.v("TestUrl",databaseUrlText);
         }
 
         //TODO Να εμφανίζει ένα textView αν μας έρθει από τον server ότι δεν υπάρχει απάντηση
