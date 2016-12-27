@@ -81,7 +81,7 @@ public class MainActivityFragment extends Fragment{
 
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            return LayoutInflater.from(context).inflate(R.layout.list_item_flight, parent, false);
+            return LayoutInflater.from(context).inflate(R.layout.db_listview_item, parent, false);
         }
 
         @Override
@@ -497,7 +497,7 @@ public class MainActivityFragment extends Fragment{
 //
 //
 //            if (convertView == null){
-//                convertView = inflater.inflate(R.layout.list_item_flight, null);
+//                convertView = inflater.inflate(R.layout.db_listview_item, null);
 //            }
 //
 //            TextView originLoc = (TextView)convertView.findViewById(R.id.originLoc);
