@@ -365,8 +365,8 @@ public class SearchActivityFragment extends Fragment implements DatePickerDialog
                 .appendQueryParameter(DESTINATION, destination.getValue())
                 .appendQueryParameter(DEPART_DATE, String.format(fmt.format(departureDate.getTime()))).build();
 
-        originLoc = origin.getValue();
-        destinationLoc = destination.getValue();
+        originLoc = origin.getLabel();
+        destinationLoc = destination.getLabel();
         departDate = String.format(fmt.format(departureDate.getTime()));
 
         //Αν έχει επιλέξει ημερομηνία επιστροφής να την προσθέσει
