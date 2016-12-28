@@ -19,7 +19,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="Μετάβαση"
+            android:text="@string/departure_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/details_departView" />
@@ -35,18 +35,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/details_depart_date_time" />
-
-        <TextView
-            android:text="duration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_depart_duration" />
-
-        <TextView
-            android:text="Επιστροφή"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_arrivalView" />
 
         <TextView
             android:text="arrivalLocation"
@@ -71,6 +59,48 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/details_airline" />
+
+        <TextView
+            android:text="@string/return_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/details_arrivalView" />
+
+        <TextView
+            android:text="returnLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/details_ret_depart_loc" />
+
+        <TextView
+            android:text="return date/rime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/details_ret_date_time" />
+
+        <TextView
+            android:text="ret_arrivalLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/details_ret_arrivalLocation" />
+
+        <TextView
+            android:text="ret_arrival_date_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/details_ret_arrival_date_time" />
+
+        <TextView
+            android:text="return duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/details_et_duration" />
+
+        <TextView
+            android:text="return airline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/details_ret_airline" />
 
         <TextView
             android:text="price per adult"

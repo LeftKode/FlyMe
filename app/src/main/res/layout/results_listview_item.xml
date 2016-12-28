@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="departure details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/results_depart_details" />
+
+    <TextView
+        android:text="return details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/results_return_details" />
+
+    <TextView
+        android:text="stop number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/results_stop_no" />
+
+    <TextView
+        android:text="total price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/results_total_price"
+        android:textAlignment="textEnd" />
+</LinearLayout>

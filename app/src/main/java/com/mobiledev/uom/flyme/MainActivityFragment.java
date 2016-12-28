@@ -49,10 +49,10 @@ public class MainActivityFragment extends Fragment{
         final Cursor data = myDBHelper.getTableData();
 
         if(data.getCount() == 0)
-            textView.setText("Δεν έχετε πραγματοποιήσει κάποια αναζήτηση πτήσης ακόμα"+'\n'+"Ξεκινήστε να ψάχνετε πατώντας το παραπάνω κουμπί αναζήτησης");
+            textView.setText(getResources().getString(R.string.no_flights_searched) + '\n'+ getResources().getString(R.string.start_searching));
         else {
-            textView.setText("Παρακάτω μπορείτε να δείτε τις πιο πρόσφατες αναζητήσεις σας!" +'\n'+ "Πατήστε " +
-                    "σε κάποια από αυτές για να επιστρέψετε στην αναζήτηση σας!");
+            textView.setText(getResources().getString(R.string.see_your_flights)
+                    +'\n'+ getResources().getString(R.string.click_your_flights));
             SQLAdapter adapter = new SQLAdapter(getContext(), data, 0);
             listView.setAdapter(adapter);
         }
@@ -106,33 +106,33 @@ public class MainActivityFragment extends Fragment{
             int numOfInfants = cursor.getInt(cursor.getColumnIndexOrThrow("infantNumber"));
             int stops = cursor.getInt(cursor.getColumnIndexOrThrow("nonStop"));
 
-            originView.setText("Από: " + originLocation);
-            destinationView.setText("Προς: " + destLocation);
-            depDateView.setText("Αναχώριση: " + departureDate);
+            originView.setText(getResources().getString(R.string.from) + originLocation);
+            destinationView.setText(getResources().getString(R.string.to) + destLocation);
+            depDateView.setText(getResources().getString(R.string.transition) + departureDate);
             if(arrivalDate != null)
-                arrDateView.setText("Επιστροφή: "+ arrivalDate);
+                arrDateView.setText(getResources().getString(R.string.return_from)+ arrivalDate);
             else
-                arrDateView.setText("Επιστροφή: Δεν έχει οριστεί");
+                arrDateView.setText(getResources().getString(R.string.return_not_declared));
 
             if (numOfAdults == 0 )
                 adultNo.setVisibility(GONE);
             else
-                adultNo.setText("Αριθμός Ενηλίκων: "+Integer.toString(numOfAdults));
+                adultNo.setText(getResources().getString(R.string.adult_number)+Integer.toString(numOfAdults));
 
             if (numOfChildren == 0)
                 childrenNo.setVisibility(GONE);
             else
-                childrenNo.setText("Αριθμός Παιδιών: " +Integer.toString(numOfChildren));
+                childrenNo.setText(getResources().getString(R.string.children_number) +Integer.toString(numOfChildren));
 
             if (numOfInfants == 0)
                 infantNo.setVisibility(GONE);
             else
-                infantNo.setText("Αριθμός Βρεφών: "+Integer.toString(numOfInfants));
+                infantNo.setText(getResources().getString(R.string.infant_number)+Integer.toString(numOfInfants));
 
             if(stops == 0)
-                nonStop.setText("Απευθείας πτήσεις: Όχι");
+                nonStop.setText(getResources().getString(R.string.non_direct_flights));
             else
-                nonStop.setText("Απευθείας πτήσης: Ναι");
+                nonStop.setText(getResources().getString(R.string.direct_flights));
 
         }
     }
