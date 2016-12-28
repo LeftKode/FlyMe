@@ -89,6 +89,7 @@ public class ResultsActivityFragment extends Fragment {
     public class ShowFlightsTask extends AsyncTask<String , Void, List<FlightModel>> {
         private final String LOG_TAG = ResultsActivityFragment.ShowFlightsTask.class.getSimpleName();
         private String airlinesCodes = "";
+        private boolean returnDateExists;
         ExecutorService executor = Executors.newFixedThreadPool(4);
 
         private List<FlightModel> getFlightDataFromJson(String urlStr, String flightJsonStr) throws JSONException, ParseException {
@@ -100,6 +101,10 @@ public class ResultsActivityFragment extends Fragment {
             final String F_FLIGHTS = "flights";
             final String F_FARE = "fare";
             final String F_PRICE = "total_price";
+            final String F_PRICE_PER_ADULT = "price_per_adult";
+            final String F_PRICE_PER_INFANT = "price_per_infant";
+            final String F_TOTAL_FARE = "total_fare";
+            final String F_TAX = "tax";
             final String F_INBOUNDS = "inbound";
             final String currency;
 
@@ -116,7 +121,8 @@ public class ResultsActivityFragment extends Fragment {
             String destinationLoc;
 
             String priceStr;
-            float price;
+            float price, totalFarePerAdult, totalFarePerChild, totalFarePerInfant;
+            JSONObject priceAdultObj, priceInfantObj;
             JSONObject newObject;
             JSONObject fare;
             JSONArray itinArray;
@@ -136,7 +142,9 @@ public class ResultsActivityFragment extends Fragment {
 
 
 
-            boolean returnDateExists = flightJsonStr.contains("arrival_date");
+            returnDateExists = urlText.contains("return_date");
+            boolean zeroAdults = urlText.contains("adults=0");
+            boolean infantsExist = urlText.contains("infants");
 
             for(int i=0; i < flightResult.length(); i++){
 
@@ -145,6 +153,20 @@ public class ResultsActivityFragment extends Fragment {
                 fare = newObject.getJSONObject(F_FARE);
                 priceStr = fare.getString(F_PRICE);
                 price = Float.valueOf(priceStr);
+
+                if(!zeroAdults){
+                    priceAdultObj = fare.getJSONObject(F_PRICE_PER_ADULT);
+                    priceStr = priceAdultObj.getString(F_TOTAL_FARE);
+                    totalFarePerAdult = Float.valueOf(priceStr);
+
+                }
+                if(infantsExist){
+                    priceInfantObj = fare.getJSONObject(F_PRICE_PER_INFANT);
+                    priceStr = priceInfantObj.getString(F_TOTAL_FARE);
+                    totalFarePerInfant = Float.valueOf(priceStr);
+                }
+
+
                 //TODO Να βάλω να παίρνει την τιμή του καθενός επιβάτη
                 itinArray = newObject.getJSONArray(F_ITINS);
                 model = new FlightModel();
@@ -356,6 +378,15 @@ public class ResultsActivityFragment extends Fragment {
                         flight.setDestinationAirport(airportsMap.get(flight.getOriginAirport().getValue()));
                         flight.setAirline(airlinesMap.get(flight.getAirline().getCode()));
                     }
+
+                    if(returnDateExists){
+                        for(Flight flight: itin.getInboundFlightsList()){
+                            flight.setOriginAirport(airportsMap.get(flight.getOriginAirport().getValue()));
+                            flight.setDestinationAirport(airportsMap.get(flight.getOriginAirport().getValue()));
+                            flight.setAirline(airlinesMap.get(flight.getAirline().getCode()));
+                        }
+                    }
+
                 }
             }
         }
@@ -491,7 +522,9 @@ public class ResultsActivityFragment extends Fragment {
             if(result == null){
                 textView.setText("Δεν υπήρχαν διαθέσιμες πτήσεις!");
             }
+            else{
 
+            }
             //MainActivityFragment.FlightAdapter adapter = new MainActivityFragment.FlightAdapter(getContext(), R.layout.fragment_main, result);
             //listView.setAdapter(adapter);
 
