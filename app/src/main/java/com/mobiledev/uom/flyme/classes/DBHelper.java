@@ -24,7 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String ARR_DATE = "arrivalDate";
     private static final String NON_STOP = "nonStop";
     private static final String ADULT_NO = "adultsNumber";
-    private static final String CHILD_NO = "childernNumber";
+    private static final String CHILD_NO = "childrenNumber";
     private static final String INFANT_NO = "infantNumber";
 
     private SQLiteDatabase myDB;
@@ -98,5 +98,19 @@ public class DBHelper extends SQLiteOpenHelper {
         myDB = this.getWritableDatabase();
         String where = ID + " = (SELECT MIN("+ID+") FROM "+TABLE_NAME+")";
         return myDB.delete(TABLE_NAME, where ,null);
+    }
+
+    public Cursor getTableRow(int id){
+        myDB = this.getWritableDatabase();
+        Cursor data = myDB.rawQuery("SELECT "+URL+ "," +ADULT_NO+ "," +CHILD_NO+ "," +INFANT_NO+ " FROM " + TABLE_NAME + " WHERE " + ID + " = " +id, null);
+        return data;
+
+    }
+
+    public Cursor getID(){
+        myDB = this.getWritableDatabase();
+        Cursor data = myDB.rawQuery("SELECT " +ID+ " FROM " + TABLE_NAME + " WHERE " + ID + " = (SELECT MAX("+ID+") FROM "+TABLE_NAME+")",null);
+        return data;
+
     }
 }

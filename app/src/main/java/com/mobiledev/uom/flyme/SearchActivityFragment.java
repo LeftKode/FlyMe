@@ -293,7 +293,11 @@ public class SearchActivityFragment extends Fragment implements DatePickerDialog
                 //Αλλιώς στέλνει το url στην SearchActivity
                 else{
                     String urlText = createSearchFlightsUrl();
-                    Intent intent = new Intent(getActivity(),ResultsActivity.class).putExtra(Intent.EXTRA_TEXT,urlText);
+                    int entry_position;
+                    Cursor data = myDBHelper.getID();
+                    data.moveToFirst();
+                    entry_position = data.getInt(data.getColumnIndexOrThrow("_id"));
+                    Intent intent = new Intent(getActivity(),ResultsActivity.class).putExtra("db_id",entry_position);
                     startActivity(intent);
                 }
 

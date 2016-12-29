@@ -61,7 +61,7 @@ public class MainActivityFragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getContext(), ResultsActivity.class);
-                intent.putExtra(Intent.EXTRA_TEXT, data.getString(data.getColumnIndexOrThrow("url")));
+                intent.putExtra("db_id", data.getInt(data.getColumnIndexOrThrow("_id")));
                 startActivity(intent);
             }
         });
@@ -102,7 +102,7 @@ public class MainActivityFragment extends Fragment{
             String departureDate = cursor.getString(cursor.getColumnIndexOrThrow("departureDate"));
             String arrivalDate = cursor.getString(cursor.getColumnIndexOrThrow("arrivalDate"));
             int numOfAdults = cursor.getInt(cursor.getColumnIndexOrThrow("adultsNumber"));
-            int numOfChildren = cursor.getInt(cursor.getColumnIndexOrThrow("childernNumber"));
+            int numOfChildren = cursor.getInt(cursor.getColumnIndexOrThrow("childrenNumber"));
             int numOfInfants = cursor.getInt(cursor.getColumnIndexOrThrow("infantNumber"));
             int stops = cursor.getInt(cursor.getColumnIndexOrThrow("nonStop"));
 

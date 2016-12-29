@@ -12,8 +12,8 @@
     <string name="start_searching">Ξεκινήστε να ψάχνετε πατώντας το παραπάνω κουμπί αναζήτησης</string>
     <string name="see_your_flights">Παρακάτω μπορείτε να δείτε τις πιο πρόσφατες αναζητήσεις σας!</string>
     <string name="click_your_flights">Πατήστε σε κάποια από αυτές για να επιστρέψετε στην αναζήτηση σας!</string>
-    <string name="from">Από:</string>
-    <string name="to">Προς:</string>
+    <string name="from">Από: </string>
+    <string name="to">Προς: </string>
     <string name="transition">Μετάβαση: </string>
     <string name="return_from">Επιστροφή: </string>
     <string name="return_not_declared">Επιστροφή: Δεν έχει οριστεί</string>

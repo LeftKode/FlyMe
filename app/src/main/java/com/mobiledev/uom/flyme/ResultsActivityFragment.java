@@ -1,6 +1,7 @@
 package com.mobiledev.uom.flyme;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import com.mobiledev.uom.flyme.classes.Airline;
 import com.mobiledev.uom.flyme.classes.AirlineFinderThread;
 import com.mobiledev.uom.flyme.classes.Airport;
 import com.mobiledev.uom.flyme.classes.AirportFinderThread;
+import com.mobiledev.uom.flyme.classes.DBHelper;
 import com.mobiledev.uom.flyme.classes.Flight;
 import com.mobiledev.uom.flyme.classes.FlightModel;
 import com.mobiledev.uom.flyme.classes.Itinerary;
@@ -46,8 +48,13 @@ import java.util.concurrent.TimeUnit;
  */
 public class ResultsActivityFragment extends Fragment {
 
+    private int db_id;
+    DBHelper myDBHelper;
     private String urlText;
-    private String databaseUrlText;
+    private int adultNo;
+    private int childrenNo;
+    private int infantNo;
+    private int id;
 
     List<String> airportsCodesList = new ArrayList<>();     //Λίστα με τα αεροδρόμια που βρέθηκαν
     Map<String, Airport> airportsMap = new ConcurrentHashMap<>();
@@ -59,15 +66,32 @@ public class ResultsActivityFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        myDBHelper = new DBHelper(getActivity());
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //H SearchActivity καλείται μέσω ενός intent που περιέχει ένα string που είναι το url
         Intent intent = getActivity().getIntent();
         View rootView = inflater.inflate(R.layout.fragment_results, container, false);
-        if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
+        if (intent != null && intent.hasExtra("db_id")) {
             //Παίρνει το url που του στάλθηκε από κάποια activity
-            urlText = intent.getStringExtra(Intent.EXTRA_TEXT);
-            Log.v("Test",urlText);
+            db_id = intent.getExtras().getInt("db_id");
+            Cursor data = myDBHelper.getTableRow(db_id);
+            data.moveToFirst();
+            urlText = data.getString(data.getColumnIndexOrThrow("url"));
+            adultNo = data.getInt(data.getColumnIndexOrThrow("adultsNumber"));
+            childrenNo = data.getInt(data.getColumnIndexOrThrow("childrenNumber"));
+            infantNo = data.getInt(data.getColumnIndexOrThrow("infantNumber"));
+
+            Log.e("Test",Integer.toString(adultNo));
+            Log.e("Test",Integer.toString(childrenNo));
+            Log.e("Test",Integer.toString(infantNo));
+            Log.e("Test", urlText);
             new ShowFlightsTask().execute(urlText);
         }
 
