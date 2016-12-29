@@ -1,7 +1,11 @@
 package com.mobiledev.uom.flyme;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -48,6 +53,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ResultsActivityFragment extends Fragment {
 
+    private ProgressDialog progressDialog;
     private int db_id;
     DBHelper myDBHelper;
     private String urlText;
@@ -88,9 +94,10 @@ public class ResultsActivityFragment extends Fragment {
             childrenNo = data.getInt(data.getColumnIndexOrThrow("childrenNumber"));
             infantNo = data.getInt(data.getColumnIndexOrThrow("infantNumber"));
 
-            Log.e("Test",Integer.toString(adultNo));
-            Log.e("Test",Integer.toString(childrenNo));
-            Log.e("Test",Integer.toString(infantNo));
+
+            //Log.e("Test",Integer.toString(adultNo));
+           // Log.e("Test",Integer.toString(childrenNo));
+           // Log.e("Test",Integer.toString(infantNo));
             Log.e("Test", urlText);
             new ShowFlightsTask().execute(urlText);
         }
@@ -145,7 +152,7 @@ public class ResultsActivityFragment extends Fragment {
             String destinationLoc;
 
             String priceStr;
-            float price, totalFarePerAdult, totalFarePerChild, totalFarePerInfant;
+            float totalPrice, totalFarePerAdult, totalFarePerChild, totalFarePerInfant;
             JSONObject priceAdultObj, priceInfantObj;
             JSONObject newObject;
             JSONObject fare;
@@ -167,8 +174,8 @@ public class ResultsActivityFragment extends Fragment {
 
 
             returnDateExists = urlText.contains("return_date");
-            boolean zeroAdults = urlText.contains("adults=0");
-            boolean infantsExist = urlText.contains("infants");
+            //boolean zeroAdults = urlText.contains("adults=0");
+            //boolean infantsExist = urlText.contains("infants");
 
             for(int i=0; i < flightResult.length(); i++){
 
@@ -176,25 +183,41 @@ public class ResultsActivityFragment extends Fragment {
                 newObject = flightResult.getJSONObject(i);
                 fare = newObject.getJSONObject(F_FARE);
                 priceStr = fare.getString(F_PRICE);
-                price = Float.valueOf(priceStr);
+                totalPrice = Float.valueOf(priceStr);
 
-                if(!zeroAdults){
+                if(adultNo>0){
                     priceAdultObj = fare.getJSONObject(F_PRICE_PER_ADULT);
                     priceStr = priceAdultObj.getString(F_TOTAL_FARE);
                     totalFarePerAdult = Float.valueOf(priceStr);
+                }else
+                    totalFarePerAdult = 0;
 
-                }
-                if(infantsExist){
+                if(infantNo>0){
                     priceInfantObj = fare.getJSONObject(F_PRICE_PER_INFANT);
                     priceStr = priceInfantObj.getString(F_TOTAL_FARE);
                     totalFarePerInfant = Float.valueOf(priceStr);
-                }
+                }else
+                    totalFarePerInfant = 0;
 
+                if(childrenNo>0){
+                    totalFarePerChild = (float) ((totalPrice -((adultNo*totalFarePerAdult) + (infantNo*totalFarePerInfant)))/childrenNo);
+                    totalFarePerChild = (float) Math.round(totalFarePerChild * 100) / 100; //Για να παίρνει μέχρι 2 δεκαδικά
+                    //Log.v("SSSSSSSSSSSSSSSSS",Float.toString(totalPrice));
+                    //Log.v("SSSSSSSSSSSSSSSSS",Float.toString(totalFarePerAdult));
+                    //Log.v("SSSSSSSSSSSSSSSSS",Float.toString(totalFarePerInfant));
+
+                    //Log.v("SSSSSSSSSSSSSSSSS",Float.toString(5*totalFarePerChild));
+
+                }else
+                    totalFarePerChild = 0;
 
                 //TODO Να βάλω να παίρνει την τιμή του καθενός επιβάτη
                 itinArray = newObject.getJSONArray(F_ITINS);
                 model = new FlightModel();
                 model.setItineraries(new ArrayList<Itinerary>());
+                model.setPricePerAdult(totalFarePerAdult);
+                model.setPricePerChild(totalFarePerChild);
+                model.setPricePerInfant(totalFarePerInfant);
                 for(int j=0; j<itinArray.length(); j++) {
                     itinObject = itinArray.getJSONObject(j);
                     /*outboundObject = itinObject.getJSONObject(F_OUTBOUNDS);
@@ -231,7 +254,7 @@ public class ResultsActivityFragment extends Fragment {
                         model.setAirline(airlineCode);
 
                         model.setCurrency(currency);
-                        model.setTotalPrice(price);
+                        model.setTotalPrice(totalPrice);
 
                         modelList.add(model);
                     }
@@ -325,7 +348,7 @@ public class ResultsActivityFragment extends Fragment {
                             flight.setAirline(airlineCode);
                             inboundFlightList.add(flight);*/
                         }
-                        model.getItineraries().get(i).setInboundFlightsList(inboundFlightList);
+                        model.getItineraries().get(j).setInboundFlightsList(inboundFlightList);
                     }
 
 
@@ -367,7 +390,7 @@ public class ResultsActivityFragment extends Fragment {
 
                 }
                 model.setCurrency(currency);
-                model.setTotalPrice(price);
+                model.setTotalPrice(totalPrice);
 
                 modelList.add(model);
 
@@ -508,8 +531,11 @@ public class ResultsActivityFragment extends Fragment {
                     return null;
                 }
 
-                Log.v(LOG_TAG, "Forecast string: " + flightJsonString);
-            } catch (IOException e) {
+               // Log.v(LOG_TAG, "Forecast string: " + flightJsonString);
+            } catch (FileNotFoundException e){
+                return null;
+            }
+            catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
                 // If the code didn't successfully get the weather data, there's no point in attemping
                 // to parse it.
@@ -553,6 +579,12 @@ public class ResultsActivityFragment extends Fragment {
             //listView.setAdapter(adapter);
 
         }
+    }
+    public boolean isOnline() {
+        ConnectivityManager cm =
+               (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+       NetworkInfo netInfo = cm.getActiveNetworkInfo();
+       return netInfo != null && netInfo.isConnected();
     }
 
 

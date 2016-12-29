@@ -159,6 +159,7 @@ public class SearchActivityFragment extends Fragment implements DatePickerDialog
 
         //Δημιουργία ενός AirportAutoComplete adapter και εισαγωγή του στα δυό πεδία
         adapter = new AirportAutoCompleteAdapter(getActivity());
+        adapter.setToast(myToast);
         originDelayAutoCompleteTV.setAdapter(adapter);
         destinationDelayAutoCompleteTV.setAdapter(adapter);
 

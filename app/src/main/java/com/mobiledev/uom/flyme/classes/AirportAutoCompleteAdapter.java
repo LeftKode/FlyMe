@@ -1,6 +1,8 @@
 package com.mobiledev.uom.flyme.classes;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mobiledev.uom.flyme.BuildConfig;
 import com.mobiledev.uom.flyme.R;
@@ -33,6 +36,19 @@ public class AirportAutoCompleteAdapter extends BaseAdapter implements Filterabl
     private static final int MAX_RESULTS = 5;
     private Context mContext;
     private List<Airport> resultList = new ArrayList<>();
+    private boolean interneConToastIsOn;
+   // private Activity activity;
+    private SingleToast toast;
+
+
+
+    public void setToast(SingleToast toast) {
+        this.toast = toast;
+    }
+
+    /*public void setActivity(Activity activity) {
+        this.activity = activity;
+    }*/
 
     public List<Airport> getResultList() {
         return resultList;
@@ -79,19 +95,25 @@ public class AirportAutoCompleteAdapter extends BaseAdapter implements Filterabl
                     // Assign the data to the FilterResults
                     filterResults.values = airports;
                     filterResults.count = airports.size();
+
                 }
                 return filterResults;
             }
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                if (results != null && results.count > 0) {
+                if(!isOnline()){
+                    toast.show(mContext,"No Internet Connection", Toast.LENGTH_SHORT);
+                }
+                else if (results != null && results.count > 0) {
                     resultList = (List<Airport>) results.values;
                     notifyDataSetChanged();
                 } else {
                     notifyDataSetInvalidated();
                 }
             }};
+
+
         return filter;
     }
 
@@ -187,6 +209,11 @@ public class AirportAutoCompleteAdapter extends BaseAdapter implements Filterabl
         return airports;
     }
 
-
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnected();
+    }
 }
 

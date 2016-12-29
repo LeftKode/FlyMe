@@ -11,9 +11,19 @@ public class FlightModel {
     private String currency;
     private float totalPrice;
     private float pricePerAdult;
-    private float taxAdults;
+    //private float taxAdults;
     private float pricePerInfant;
-    private float taxInfants;
+
+    public float getPricePerChild() {
+        return pricePerChild;
+    }
+
+    public void setPricePerChild(float pricePerChild) {
+        this.pricePerChild = pricePerChild;
+    }
+
+    private float pricePerChild;
+    //private float taxInfants;
     private List<Itinerary> itineraries;
 
     public List<Itinerary> getItineraries() {
@@ -48,13 +58,13 @@ public class FlightModel {
         this.pricePerInfant = pricePerInfant;
     }
 
-    public void setTaxAdults(float taxAdults) {
+    /*public void setTaxAdults(float taxAdults) {
         this.taxAdults = taxAdults;
-    }
+    }*/
 
-    public void setTaxInfants(float taxInfants) {
+    /*public void setTaxInfants(float taxInfants) {
         this.taxInfants = taxInfants;
-    }
+    }*/
 
     public float getPricePerAdult() {
         return pricePerAdult;
@@ -64,13 +74,13 @@ public class FlightModel {
         return pricePerInfant;
     }
 
-    public float getTaxAdults() {
+    /*public float getTaxAdults() {
         return taxAdults;
-    }
+    }*/
 
-    public float getTaxInfants() {
+    /*public float getTaxInfants() {
         return taxInfants;
-    }
+    }*/
 
 
 }
