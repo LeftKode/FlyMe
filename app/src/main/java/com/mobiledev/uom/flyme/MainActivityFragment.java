@@ -473,18 +473,18 @@ public class MainActivityFragment extends Fragment{
 //
 //        @Override
 //        protected void onPostExecute(List<FlightModel> result) {
-//            FlightAdapter adapter = new FlightAdapter(getContext(), R.layout.fragment_main, result);
+//            ItineraryAdapter adapter = new ItineraryAdapter(getContext(), R.layout.fragment_main, result);
 //            listView.setAdapter(adapter);
 //        }
 //    }
 //
-//    public class FlightAdapter extends ArrayAdapter{
+//    public class ItineraryAdapter extends ArrayAdapter{
 //
 //        public List<FlightModel> flightModelList;
 //        private int resource;
 //        private LayoutInflater inflater;
 //
-//        public FlightAdapter(Context context, int resource, List<FlightModel> objects){
+//        public ItineraryAdapter(Context context, int resource, List<FlightModel> objects){
 //            super(context, resource, objects);
 //            flightModelList = objects;
 //            this.resource = resource;

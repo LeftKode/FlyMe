@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mobiledev.uom.flyme.classes.Airline;
@@ -23,6 +24,7 @@ import com.mobiledev.uom.flyme.classes.DBHelper;
 import com.mobiledev.uom.flyme.classes.Flight;
 import com.mobiledev.uom.flyme.classes.FlightModel;
 import com.mobiledev.uom.flyme.classes.Itinerary;
+import com.mobiledev.uom.flyme.classes.ItineraryAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,6 +68,8 @@ public class ResultsActivityFragment extends Fragment {
     Map<String, Airport> airportsMap = new ConcurrentHashMap<>();
     Map<String, Airline> airlinesMap = new HashMap<>();
 
+    private ListView listView;
+
     View rootView;
 
     public ResultsActivityFragment() {
@@ -94,6 +98,7 @@ public class ResultsActivityFragment extends Fragment {
             childrenNo = data.getInt(data.getColumnIndexOrThrow("childrenNumber"));
             infantNo = data.getInt(data.getColumnIndexOrThrow("infantNumber"));
 
+            listView = (ListView) rootView.findViewById(R.id.results_listview);
 
             //Log.e("Test",Integer.toString(adultNo));
            // Log.e("Test",Integer.toString(childrenNo));
@@ -307,7 +312,11 @@ public class ResultsActivityFragment extends Fragment {
                         //flight.setAirline(airlineCode);
                         //outboundFlightList.add(flight);*/
                     }
-                    model.getItineraries().add(new Itinerary(outboundFlightList));
+                    //TODO Να παιρνω τις διευθυνσεις του model
+                    Itinerary itin = new Itinerary(model);
+                    model.getItineraries().add(itin);
+                    model.getItineraries().get(j).setOutboundFlightsList(outboundFlightList);
+                   // model.getItineraries().add(new Itinerary(outboundFlightList));
 
                     if(returnDateExists){
                         inboundObject = itinObject.getJSONObject(F_INBOUNDS);
@@ -575,8 +584,14 @@ public class ResultsActivityFragment extends Fragment {
             else{
 
             }
-            //MainActivityFragment.FlightAdapter adapter = new MainActivityFragment.FlightAdapter(getContext(), R.layout.fragment_main, result);
-            //listView.setAdapter(adapter);
+            List<Itinerary> itineraries = new ArrayList<>();
+            for (FlightModel model: result) {
+                for (Itinerary itin: model.getItineraries()) {
+                    itineraries.add(itin);
+                }
+            }
+            ItineraryAdapter adapter = new ItineraryAdapter(getContext(), R.layout.fragment_main, itineraries);
+            listView.setAdapter(adapter);
 
         }
     }

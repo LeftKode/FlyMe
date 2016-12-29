@@ -7,16 +7,22 @@ import java.util.List;
  */
 
 public class Itinerary {
+    private FlightModel model;
     private List<Flight> outboundFlightsList;
     private List<Flight> inboundFlightsList;
 
-    public Itinerary(List<Flight> outboundFlightsList) {
+    public Itinerary(FlightModel model) {
+        this.model = model;
         this.outboundFlightsList = outboundFlightsList;
     }
 
     public Itinerary(List<Flight> outboundFlightsList, List<Flight> inboundFlightsList) {
         this.inboundFlightsList = inboundFlightsList;
         this.outboundFlightsList = outboundFlightsList;
+    }
+
+    public FlightModel getModel() {
+        return model;
     }
 
     public void setInboundFlightsList(List<Flight> inboundFlightsList) {
