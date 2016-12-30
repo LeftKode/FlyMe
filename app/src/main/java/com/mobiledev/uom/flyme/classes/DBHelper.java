@@ -21,7 +21,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String ORIGIN_LOC = "originLocation";
     private static final String DEST_LOC = "destinationLocation";
     private static final String DEP_DATE = "departureDate";
-    private static final String ARR_DATE = "arrivalDate";
+    private static final String ARR_DATE = "returnDate";
     private static final String NON_STOP = "nonStop";
     private static final String ADULT_NO = "adultsNumber";
     private static final String CHILD_NO = "childrenNumber";
@@ -102,7 +102,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Cursor getTableRow(int id){
         myDB = this.getWritableDatabase();
-        Cursor data = myDB.rawQuery("SELECT "+URL+ "," +ADULT_NO+ "," +CHILD_NO+ "," +INFANT_NO+ " FROM " + TABLE_NAME + " WHERE " + ID + " = " +id, null);
+        Cursor data = myDB.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + ID + " = " +id, null);
         return data;
 
     }

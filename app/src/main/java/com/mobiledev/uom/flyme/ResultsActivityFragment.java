@@ -65,9 +65,14 @@ public class ResultsActivityFragment extends Fragment {
     private int db_id;
     DBHelper myDBHelper;
     private String urlText;
+    private String originLoc;
+    private String destinationLoc;
+    private String departDate;
+    private String retunDate;
     private int adultNo;
     private int childrenNo;
     private int infantNo;
+
 
     List<String> airportsCodesList = new ArrayList<>();     //Λίστα με τα αεροδρόμια που βρέθηκαν
     Map<String, Airport> airportsMap = new ConcurrentHashMap<>();
@@ -102,6 +107,11 @@ public class ResultsActivityFragment extends Fragment {
             adultNo = data.getInt(data.getColumnIndexOrThrow("adultsNumber"));
             childrenNo = data.getInt(data.getColumnIndexOrThrow("childrenNumber"));
             infantNo = data.getInt(data.getColumnIndexOrThrow("infantNumber"));
+            originLoc = data.getString(data.getColumnIndexOrThrow("originLocation"));
+            destinationLoc = data.getString(data.getColumnIndexOrThrow("destinationLocation"));
+            departDate = data.getString(data.getColumnIndexOrThrow("departureDate"));
+            retunDate = data.getString(data.getColumnIndexOrThrow("returnDate"));
+
 
             ShowFlightsTask flightsTask = new ShowFlightsTask();
 
