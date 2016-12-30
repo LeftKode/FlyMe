@@ -1,7 +1,9 @@
 package com.mobiledev.uom.flyme;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,6 +23,7 @@ import com.mobiledev.uom.flyme.classes.Airline;
 import com.mobiledev.uom.flyme.classes.AirlineFinderThread;
 import com.mobiledev.uom.flyme.classes.Airport;
 import com.mobiledev.uom.flyme.classes.AirportFinderThread;
+import com.mobiledev.uom.flyme.classes.AlertDialogButtonListener;
 import com.mobiledev.uom.flyme.classes.DBHelper;
 import com.mobiledev.uom.flyme.classes.Flight;
 import com.mobiledev.uom.flyme.classes.FlightModel;
@@ -49,6 +53,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.Boolean.FALSE;
+
 
 /**
  * A placeholder fragment containing a simple view.
@@ -62,7 +68,6 @@ public class ResultsActivityFragment extends Fragment {
     private int adultNo;
     private int childrenNo;
     private int infantNo;
-    private int id;
 
     List<String> airportsCodesList = new ArrayList<>();     //Λίστα με τα αεροδρόμια που βρέθηκαν
     Map<String, Airport> airportsMap = new ConcurrentHashMap<>();
@@ -98,13 +103,31 @@ public class ResultsActivityFragment extends Fragment {
             childrenNo = data.getInt(data.getColumnIndexOrThrow("childrenNumber"));
             infantNo = data.getInt(data.getColumnIndexOrThrow("infantNumber"));
 
+            ShowFlightsTask flightsTask = new ShowFlightsTask();
+
+            if(isOnline()){
+                flightsTask.execute(urlText);
+            }else{
+                DialogInterface.OnClickListener listener = null;
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                alertDialogBuilder.setTitle("Δεν βρέθηκε δίκτυο");
+                alertDialogBuilder.setMessage("Δεν βρέθηκε κάποιο διαθέσιμο δίκτυο. Συνδεθείτε και δοκιμάστε ξανά");
+                alertDialogBuilder.setPositiveButton("Δοκιμάστε ξανά", listener);
+                alertDialogBuilder.setCancelable(FALSE);
+
+                AlertDialog dialog = alertDialogBuilder.create();
+                dialog.show();
+                Button dialogButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                dialogButton.setOnClickListener(new AlertDialogButtonListener(dialog,flightsTask,getActivity(),urlText));
+            }
             listView = (ListView) rootView.findViewById(R.id.results_listview);
 
             //Log.e("Test",Integer.toString(adultNo));
            // Log.e("Test",Integer.toString(childrenNo));
            // Log.e("Test",Integer.toString(infantNo));
             Log.e("Test", urlText);
-            new ShowFlightsTask().execute(urlText);
+
         }
 
        /* if (intent != null && intent.hasExtra("databaseUrl")) {
@@ -578,29 +601,29 @@ public class ResultsActivityFragment extends Fragment {
         protected void onPostExecute(List<FlightModel> result){
 
             TextView textView = (TextView) rootView.findViewById(R.id.resultsInfoTextView);
+            List<Itinerary> itineraries = new ArrayList<>();
             if(result == null){
                 textView.setText("Δεν υπήρχαν διαθέσιμες πτήσεις!");
             }
             else{
-
-            }
-            List<Itinerary> itineraries = new ArrayList<>();
-            for (FlightModel model: result) {
-                for (Itinerary itin: model.getItineraries()) {
-                    itineraries.add(itin);
+                for (FlightModel model: result) {
+                    for (Itinerary itin: model.getItineraries()) {
+                        itineraries.add(itin);
+                    }
                 }
             }
+
             ItineraryAdapter adapter = new ItineraryAdapter(getContext(), R.layout.fragment_main, itineraries);
             listView.setAdapter(adapter);
 
         }
     }
+
     public boolean isOnline() {
         ConnectivityManager cm =
-               (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-       NetworkInfo netInfo = cm.getActiveNetworkInfo();
-       return netInfo != null && netInfo.isConnected();
+                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnected();
     }
-
 
 }

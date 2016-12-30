@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FlyMe</string>
+    <string name="try_again">Try again</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Flight Search</string>
+    <string name="title_activity_search">Flight Search</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="action_share">Share</string>
+
+    <!-- Main Activity Strings -->
+    <string name="no_flights_searched">You haven\'t searched for any flights yet.</string>
+    <string name="start_searching">Press the search button to start searching</string>
+    <string name="see_your_flights">Below you can see your most recent searches</string>
+    <string name="click_your_flights">Click on one on them to return to your search</string>
+    <string name="from">From:</string>
+    <string name="to">To:</string>
+    <string name="transition">Transition: </string>
+    <string name="return_from">Return: </string>
+    <string name="return_not_declared">Return: Not declared!</string>
+    <string name="adult_number">Adults: </string>
+    <string name="children_number">Children: </string>
+    <string name="infant_number">Infants: </string>
+    <string name="non_direct_flights">Direct flights: No</string>
+    <string name="direct_flights">Direct flights: Yes</string>
+
+    <!-- Ημερομηνία Αναχώρησης και Επιστροφής -->
+    <string name="departure_date">Departure date</string>
+    <string name="return_date">Return date</string>
+
+    <!-- Όνομα της λίστας στο μενου -->
+    <string name="currency_label">Currency</string>
+    <!-- Επικεφαλιδα για τα ευρω -->
+    <string name="currency_label_euro">EUR</string>
+    <!-- Επικεφαλιδα για τα δολαρια -->
+    <string name="currency_label_dollars">USD</string>
+    <!-- Κλειδί του νομίσματος για τα SharedPreferences -->
+    <string name="currency_key" translatable="false">currency</string>
+    <!-- Τιμή στα SharedPreferences για τα ευρώ -->
+    <string name="currency_eur" translatable="false">eur</string>
+    <!--  Τιμή στα SharedPreferences για τα δολάρια -->
+    <string name="currency_usd" translatable="false">usd</string>
+
+    <string name="with_return">Return</string>
+
+    <string name="adults_text">Adults</string>
+    <string name="children_text">Children (2-11 years old)</string>
+    <string name="infants_text">Infants (max 2 years old)</string>
+
+    <string name="flyers_higher_than_max_message">The passengers can\'t be more than 9. Please add less passengers.</string>
+    <string name="infants_higher_than_max_message">There must be at lease 1 adult per infant.</string>
+    <string name="flyers_zero_num_message">You must include at least 1 passenger</string>
+
+    <string name="non_stop">Direct Flights Only</string>
+    <string name="title_activity_results">ResultsActivity</string>
+
+    <string name="origin_is_missing_message">You haven\'t selected the origin airport!</string>
+    <string name="destination_is_missing_message">You haven\'t selected the destination airport!</string>
+
+    <string name="destin_date_after_origin_message">The return date can\'t be before the transition date!</string>
+
+    <!-- Strings στην DetailsActivity-->
+    <string name="title_activity_details">Flights Details</string>
+    <string name="departure_title">Transition</string>
+    <string name="return_title">Return</string>
+
+
+</resources>
