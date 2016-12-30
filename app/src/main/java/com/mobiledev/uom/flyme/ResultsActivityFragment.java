@@ -46,6 +46,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,8 +69,8 @@ public class ResultsActivityFragment extends Fragment {
     private String urlText;
     private String originLoc;
     private String destinationLoc;
-    private String departDate;
-    private String retunDate;
+    private String departDateString;
+    private String retunDateString;
     private int adultNo;
     private int childrenNo;
     private int infantNo;
@@ -102,7 +103,7 @@ public class ResultsActivityFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         View rootView = inflater.inflate(R.layout.fragment_results, container, false);
         if (intent != null && intent.hasExtra("db_id")) {
-            //Παίρνει το url που του στάλθηκε από κάποια activity
+            //Παίρνει το id της γραμμής της βάσης πόυ ειναι αποθηκευμενη η αναζήτηση
             db_id = intent.getExtras().getInt("db_id");
             Cursor data = myDBHelper.getTableRow(db_id);
             data.moveToFirst();
@@ -112,8 +113,8 @@ public class ResultsActivityFragment extends Fragment {
             infantNo = data.getInt(data.getColumnIndexOrThrow("infantNumber"));
             originLoc = data.getString(data.getColumnIndexOrThrow("originLocation"));
             destinationLoc = data.getString(data.getColumnIndexOrThrow("destinationLocation"));
-            departDate = data.getString(data.getColumnIndexOrThrow("departureDate"));
-            retunDate = data.getString(data.getColumnIndexOrThrow("returnDate"));
+            departDateString = data.getString(data.getColumnIndexOrThrow("departureDate"));
+            retunDateString = data.getString(data.getColumnIndexOrThrow("returnDate"));
 
 
             ShowFlightsTask flightsTask = new ShowFlightsTask();
@@ -135,6 +136,35 @@ public class ResultsActivityFragment extends Fragment {
                 dialogButton.setOnClickListener(new AlertDialogButtonListener(dialog,flightsTask,getActivity(),urlText));
             }
             listView = (ListView) rootView.findViewById(R.id.results_listview);
+            TextView searchResults = (TextView) rootView.findViewById(R.id.resultsSearchInfo);
+            TextView locationInfo = (TextView) rootView.findViewById(R.id.resultsLocationInfo);
+            TextView dateInfo = (TextView) rootView.findViewById(R.id.resultsDateInfo);
+            TextView adultInfo = (TextView) rootView.findViewById(R.id.resultsAdultInfo);
+            TextView childrenInfo = (TextView) rootView.findViewById(R.id.resultsChildrenInfo);
+            TextView infantInfo = (TextView) rootView.findViewById(R.id.resultsInfantInfo);
+
+            String locationInfoString = originLoc.substring(originLoc.indexOf('[')+1,originLoc.lastIndexOf(']')) +" - "
+                    + destinationLoc.substring(destinationLoc.indexOf('[')+1,destinationLoc.lastIndexOf(']'));
+
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date departDate = null;
+            Date returnDate = null;
+            try{
+                departDate = format.parse(departDateString);
+                returnDate = format.parse(retunDateString);
+            }catch (ParseException e){
+                e.printStackTrace();
+            }
+
+            String finalDepartDate = new SimpleDateFormat("d MMM").format(departDate);
+            String finalReturnDate = new SimpleDateFormat("d MMM").format(returnDate);
+
+            searchResults.setText("Αναζητήσατε για:");
+            locationInfo.setText(locationInfoString);
+            dateInfo.setText(finalDepartDate+ " - " + finalReturnDate);
+            adultInfo.setText("Ενήλικες: " + adultNo);
+            childrenInfo.setText("Παιδιά: " + childrenNo);
+            infantInfo.setText("Βρέφη: " + infantNo);
 
             //Log.e("Test",Integer.toString(adultNo));
            // Log.e("Test",Integer.toString(childrenNo));
@@ -625,10 +655,21 @@ public class ResultsActivityFragment extends Fragment {
         @Override
         protected void onPostExecute(List<FlightModel> result){
 
-            TextView textView = (TextView) rootView.findViewById(R.id.resultsInfoTextView);
+            TextView textView = (TextView) rootView.findViewById(R.id.resultsSearchInfo);
+            TextView locationInfo = (TextView) rootView.findViewById(R.id.resultsLocationInfo);
+            TextView dateInfo = (TextView) rootView.findViewById(R.id.resultsDateInfo);
+            TextView adultInfo = (TextView) rootView.findViewById(R.id.resultsAdultInfo);
+            TextView childrenInfo = (TextView) rootView.findViewById(R.id.resultsChildrenInfo);
+            TextView infantInfo = (TextView) rootView.findViewById(R.id.resultsInfantInfo);
             List<Itinerary> itineraries = new ArrayList<>();
             if(result == null){
-                textView.setText("Δεν υπήρχαν διαθέσιμες πτήσεις!");
+                textView.setText("Δεν βρέθηκαν διαθέσιμες πτήσεις για την αναζήτηση σας!");
+                locationInfo.setText("");
+                dateInfo.setText("");
+                adultInfo.setText("");
+                childrenInfo.setText("");
+                infantInfo.setText("");
+
             }
             else{
                 for (FlightModel model: result) {

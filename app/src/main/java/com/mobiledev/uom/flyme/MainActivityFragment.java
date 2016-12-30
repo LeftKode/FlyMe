@@ -51,8 +51,7 @@ public class MainActivityFragment extends Fragment{
         if(data.getCount() == 0)
             textView.setText(getResources().getString(R.string.no_flights_searched) + '\n'+ getResources().getString(R.string.start_searching));
         else {
-            textView.setText(getResources().getString(R.string.see_your_flights)
-                    +'\n'+ getResources().getString(R.string.click_your_flights));
+            textView.setText(getResources().getString(R.string.see_your_flights));
             SQLAdapter adapter = new SQLAdapter(getContext(), data, 0);
             listView.setAdapter(adapter);
         }

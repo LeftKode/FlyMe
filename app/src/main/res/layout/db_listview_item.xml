@@ -8,30 +8,30 @@
     android:orientation="vertical">
 
 
-            <TextView
-                android:text="origin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/originLoc"
-                android:textSize="14sp"
-                android:paddingLeft="3dp"
-                android:fontFamily="sans-serif"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:textStyle="normal|bold"
-                android:textColor="@color/colorPrimaryDark" />
+    <TextView
+        android:text="origin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/originLoc"
+        android:textSize="14sp"
+        android:paddingLeft="3dp"
+        android:fontFamily="sans-serif"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:textStyle="normal|bold"
+        android:textColor="@color/colorPrimaryDark" />
 
-            <TextView
-                android:text="destination"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/destinationLoc"
-                android:textSize="14sp"
-                android:paddingLeft="3dp"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:textStyle="normal|bold"
-                android:textColor="@color/colorPrimaryDark" />
+    <TextView
+        android:text="destination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/destinationLoc"
+        android:textSize="14sp"
+        android:paddingLeft="3dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:textStyle="normal|bold"
+        android:textColor="@color/colorPrimaryDark" />
 
     <TextView
         android:text="departure"
@@ -47,49 +47,49 @@
         android:paddingLeft="3dp" />
 
     <TextView
-                android:text="arrival"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/arrivalDate"
-                android:textSize="14sp"
-                android:inputType="date"
-                android:textColor="@android:color/holo_green_dark"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:textStyle="normal|bold"
+        android:text="arrival"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/arrivalDate"
+        android:textSize="14sp"
+        android:inputType="date"
+        android:textColor="@android:color/holo_green_dark"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:textStyle="normal|bold"
         android:paddingLeft="3dp" />
 
     <TextView
-                android:text="adultNo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/adultNoTextView"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:paddingLeft="3dp" />
+        android:text="adultNo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/adultNoTextView"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:paddingLeft="3dp" />
 
-            <TextView
-                android:text="childrenNo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/children_textView"
-                android:textColor="?android:attr/textColorTertiary"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:paddingLeft="3dp" />
+    <TextView
+        android:text="childrenNo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/children_textView"
+        android:textColor="?android:attr/textColorTertiary"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:paddingLeft="3dp" />
 
-            <TextView
-                android:text="infantNo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/infantNo_textView"
-                android:paddingLeft="3dp" />
+    <TextView
+        android:text="infantNo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/infantNo_textView"
+        android:paddingLeft="3dp" />
 
-            <TextView
-                android:text="nonStop"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/nonStop_textView"
-                android:paddingLeft="3dp" />
+    <TextView
+        android:text="nonStop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/nonStop_textView"
+        android:paddingLeft="3dp" />
 
 </LinearLayout>

@@ -1,36 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/db_item_draw">
 
     <TextView
         android:text="departure details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/results_depart_details_tv" />
+        android:id="@+id/results_depart_details_tv"
+        android:paddingLeft="2dp" />
 
     <TextView
         android:text="return details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/results_return_details_tv" />
+        android:id="@+id/results_return_details_tv"
+        android:paddingLeft="2dp" />
 
     <TextView
         android:text="@string/stops"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/results_leaving_stops_tv" />
+        android:id="@+id/results_leaving_stops_tv"
+        android:paddingLeft="2dp" />
 
     <TextView
         android:text="@string/return_stops"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/results_return_stops_tv" />
+        android:id="@+id/results_return_stops_tv"
+        android:paddingLeft="2dp" />
 
     <TextView
         android:text="total price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/results_total_price_tv"
-        android:textAlignment="textEnd" />
+        android:textAlignment="textEnd"
+        android:paddingRight="5dp" />
 </LinearLayout>

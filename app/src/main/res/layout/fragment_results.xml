@@ -18,13 +18,56 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:text="Αναζητήσατε για:"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/resultsSearchInfo"
+            android:textAlignment="center"
+            android:textStyle="normal|bold" />
+
+        <TextView
             android:text="TextView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/resultsInfoTextView"
-            android:gravity="center"
-            android:textSize="14sp"
-            android:layout_weight="4" />
+            android:layout_height="wrap_content"
+            android:id="@+id/resultsLocationInfo"
+            android:textAlignment="center" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/resultsDateInfo"
+            android:textAlignment="center" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="106dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/resultsAdultInfo"
+                android:textAlignment="center" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="116dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/resultsChildrenInfo"
+                android:textAlignment="center" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/resultsInfantInfo"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:layout_weight="1" />
+        </LinearLayout>
 
         <ListView
             android:layout_width="match_parent"
