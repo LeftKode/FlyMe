@@ -100,7 +100,7 @@ public class MainActivityFragment extends Fragment{
             String originLocation = cursor.getString(cursor.getColumnIndexOrThrow("originLocation"));
             String destLocation = cursor.getString(cursor.getColumnIndexOrThrow("destinationLocation"));
             String departureDate = cursor.getString(cursor.getColumnIndexOrThrow("departureDate"));
-            String arrivalDate = cursor.getString(cursor.getColumnIndexOrThrow("arrivalDate"));
+            String returnDate = cursor.getString(cursor.getColumnIndexOrThrow("returnDate"));
             int numOfAdults = cursor.getInt(cursor.getColumnIndexOrThrow("adultsNumber"));
             int numOfChildren = cursor.getInt(cursor.getColumnIndexOrThrow("childrenNumber"));
             int numOfInfants = cursor.getInt(cursor.getColumnIndexOrThrow("infantNumber"));
@@ -109,8 +109,8 @@ public class MainActivityFragment extends Fragment{
             originView.setText(getResources().getString(R.string.from) + originLocation);
             destinationView.setText(getResources().getString(R.string.to) + destLocation);
             depDateView.setText(getResources().getString(R.string.transition) + departureDate);
-            if(arrivalDate != null)
-                arrDateView.setText(getResources().getString(R.string.return_from)+ arrivalDate);
+            if(returnDate != null)
+                arrDateView.setText(getResources().getString(R.string.return_from)+ returnDate);
             else
                 arrDateView.setText(getResources().getString(R.string.return_not_declared));
 

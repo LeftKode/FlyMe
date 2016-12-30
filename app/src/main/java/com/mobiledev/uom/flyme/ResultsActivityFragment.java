@@ -41,10 +41,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,7 +90,9 @@ public class ResultsActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         myDBHelper = new DBHelper(getActivity());
-
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage(getResources().getString(R.string.loading_message));
     }
 
     @Override
@@ -146,8 +149,6 @@ public class ResultsActivityFragment extends Fragment {
             Log.v("TestUrl",databaseUrlText);
         }*/
 
-        //TODO Να εμφανίζει ένα textView αν μας έρθει από τον server ότι δεν υπάρχει απάντηση
-
         //TODO Οι ημερομηνίες μπορεί να είναι λάθος αν στο κινητό έχει ψεύτικη ημερομηνία.
         //Να του εμφανίζεται μήνυμα "Κάτι πήγε στραβά! Μήπως έχετε λάνθασμένη ημερομηνία?"
         this.rootView = rootView;
@@ -160,6 +161,12 @@ public class ResultsActivityFragment extends Fragment {
         private String airlinesCodes = "";
         private boolean returnDateExists;
         ExecutorService executor = Executors.newFixedThreadPool(4);
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.show();
+        }
 
         private List<FlightModel> getFlightDataFromJson(String urlStr, String flightJsonStr) throws JSONException, ParseException {
 
@@ -325,17 +332,17 @@ public class ResultsActivityFragment extends Fragment {
 
                         originObject = flightObject.getJSONObject(F_ORIGIN);
                         originLoc = originObject.getString(F_AIRP);
-                        //TODO Να μετατρέπω τον κωδικό του αεροδρομίου αναχώρησης
+
 
                         flight.setOriginLocation(originLoc);
 
                         destinationObject = flightObject.getJSONObject(F_DEST);
                         destinationLoc = destinationObject.getString(F_AIRP);
-                        //TODO Να μετατρέπω τον κωδικό του αεροδρομίου προορισμού
+
                         flight.setDestinationLocation(destinationLoc);
 
                         airlineCode = flightObject.getString(F_AIRL);
-                        //TODO Να μετατρέπω τον κωδικό της αεροπορικής εταιρείας
+
                         *//*if(!airlinesMap.containsKey(airlineCode)){
                             airlinesMap.put(airlineCode,null);
                         }*//*
@@ -377,16 +384,16 @@ public class ResultsActivityFragment extends Fragment {
 
                             originObject = flightObject.getJSONObject(F_ORIGIN);
                             originLoc = originObject.getString(F_AIRP);
-                            //TODO Να μετατρέπω τον κωδικό του αεροδρομίου αναχώρησης
+
                             flight.setOriginLocation(originLoc);
 
                             destinationObject = flightObject.getJSONObject(F_DEST);
                             destinationLoc = destinationObject.getString(F_AIRP);
-                            //TODO Να μετατρέπω τον κωδικό του αεροδρομίου προορισμού
+
                             flight.setDestinationLocation(destinationLoc);
 
                             airlineCode = flightObject.getString(F_AIRL);
-                            //TODO Να μετατρέπω τον κωδικό της αεροπορικής εταιρείας
+
                             flight.setAirline(airlineCode);
                             inboundFlightList.add(flight);*/
                         }
@@ -437,6 +444,7 @@ public class ResultsActivityFragment extends Fragment {
                 modelList.add(model);
 
             }
+            //Δημιουργία ενός thread για την εύρεση της αεροπορικής εταιρείας
             executor.execute(new AirlineFinderThread(airlinesMap,airlinesCodes));
 
             //Τερματίζονται τα νήματα με τα αιτήματα από τα api
@@ -464,14 +472,14 @@ public class ResultsActivityFragment extends Fragment {
                 for (Itinerary itin: model.getItineraries()) {
                     for(Flight flight: itin.getOutboundFlightsList()){
                         flight.setOriginAirport(airportsMap.get(flight.getOriginAirport().getValue()));
-                        flight.setDestinationAirport(airportsMap.get(flight.getOriginAirport().getValue()));
+                        flight.setDestinationAirport(airportsMap.get(flight.getDestinationAirport().getValue()));
                         flight.setAirline(airlinesMap.get(flight.getAirline().getCode()));
                     }
 
                     if(returnDateExists){
                         for(Flight flight: itin.getInboundFlightsList()){
                             flight.setOriginAirport(airportsMap.get(flight.getOriginAirport().getValue()));
-                            flight.setDestinationAirport(airportsMap.get(flight.getOriginAirport().getValue()));
+                            flight.setDestinationAirport(airportsMap.get(flight.getDestinationAirport().getValue()));
                             flight.setAirline(airlinesMap.get(flight.getAirline().getCode()));
                         }
                     }
@@ -491,20 +499,26 @@ public class ResultsActivityFragment extends Fragment {
 
             Airport originValueOnly,destinValueOnly;
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
             String departure = flightObject.getString(F_DEPS);
             String arrival = flightObject.getString(F_ARRS);
-            Date myDepDate = dateFormat.parse(departure);
-            Date myArrDate = dateFormat.parse(arrival);
+            Calendar departDate = Calendar.getInstance();
+            departDate.setTime(dateFormat.parse(departure));
+            Calendar arrivalDate = Calendar.getInstance();
+            arrivalDate.setTime(dateFormat.parse(arrival));
 
-            dateFormat.applyPattern("dd-MM-yyyy HH:mm");
-            String departDate = dateFormat.format(myDepDate);
-            String arrivalDate = dateFormat.format(myArrDate);
+            //dateFormat.parse(departure);
+            //Date myArrDate = dateFormat.parse(arrival);
+
+            //dateFormat.applyPattern("dd-MM-yyyy HH:mm");
+            //String departDate = dateFormat.format(myDepDate);
+            //String arrivalDate = dateFormat.format(myArrDate);
 
             JSONObject originObject = flightObject.getJSONObject(F_ORIGIN);
             String originValue = originObject.getString(F_AIRP);
             originValueOnly = new Airport(originValue,null);
 
+            //Δημιουργία ενός thread για την εύρεση του αεροδρομίο αναχώρησης
             if(!airportsCodesList.contains(originValue)){
                 airportsCodesList.add(originValue);
                 executor.execute(new AirportFinderThread(airportsMap,originValue));
@@ -513,8 +527,9 @@ public class ResultsActivityFragment extends Fragment {
 
             JSONObject destinationObject = flightObject.getJSONObject(F_DEST);
             String destinationValue = destinationObject.getString(F_AIRP);
-            destinValueOnly = new Airport(originValue,null);
-            //TODO Να μετατρέπω τον κωδικό του αεροδρομίου προορισμού
+            destinValueOnly = new Airport(destinationValue,null);
+
+            //Δημιουργία ενός thread για την εύρεση του αεροδρομίο άφιξης
             if(!airportsCodesList.contains(destinationValue)){
                 airportsCodesList.add(destinationValue);
                 executor.execute(new AirportFinderThread(airportsMap,destinationValue));
@@ -623,17 +638,18 @@ public class ResultsActivityFragment extends Fragment {
                 }
             }
 
+            progressDialog.dismiss();
             ItineraryAdapter adapter = new ItineraryAdapter(getContext(), R.layout.fragment_main, itineraries);
             listView.setAdapter(adapter);
 
         }
     }
-
     public boolean isOnline() {
         ConnectivityManager cm =
-                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnected();
+               (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+       NetworkInfo netInfo = cm.getActiveNetworkInfo();
+       return netInfo != null && netInfo.isConnected();
     }
+
 
 }

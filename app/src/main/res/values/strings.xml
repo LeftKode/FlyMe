@@ -70,6 +70,18 @@
 
     <string name="destin_date_after_origin_message">Η ημερομηνία προορισμού δεν μπορεί να είναι πριν από την ημερομηνία αναχώρησης.</string>
 
+    <!-- Καινούρια strings-->
+    <string name="loading_message">Φορτώνουν τα δεδομένα. Παρακαλώ περιμένετε...</string>
+
+    <!-- Συντομογραφίες αναχώρησης και επιστροφής-->
+    <string name="depart_title_abbrev">ΑΝ</string>
+    <string name="return_title_abbrev">ΕΠ</string>
+    <string name="hours_first_letter">ω</string>
+    <string name="minutes_first_letter">λ</string>
+
+    <string name="stops">Στάσεις</string>
+    <string name="return_stops">Στάσεις Επ</string>
+
     <!-- Strings στην DetailsActivity-->
     <string name="title_activity_details">Λεπτομέρειες Πτήσης</string>
     <string name="departure_title">Μετάβαση</string>

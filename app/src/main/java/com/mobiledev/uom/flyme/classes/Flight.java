@@ -1,17 +1,19 @@
 package com.mobiledev.uom.flyme.classes;
 
+import java.util.Calendar;
+
 /**
  * Created by Lefteris on 25/12/2016.
  */
 
 public class Flight {
-    private String departureDate;
-    private String arrivalDate;
+    private Calendar departureDate;
+    private Calendar arrivalDate;
     private Airline airline;
     private Airport originAirport;
     private Airport destinationAirport;
 
-    public Flight(Airline airline, String departureDate, String arrivalDate, Airport originAirport, Airport destinationAirport) {
+    public Flight(Airline airline, Calendar departureDate, Calendar arrivalDate, Airport originAirport, Airport destinationAirport) {
         this.airline = airline;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
@@ -35,11 +37,11 @@ public class Flight {
         return airline;
     }
 
-    public String getArrivalDate() {
+    public Calendar getArrivalDate() {
         return arrivalDate;
     }
 
-    public String getDepartureDate() {
+    public Calendar getDepartureDate() {
         return departureDate;
     }
 

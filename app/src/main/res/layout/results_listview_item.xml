@@ -7,24 +7,30 @@
         android:text="departure details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/results_depart_details" />
+        android:id="@+id/results_depart_details_tv" />
 
     <TextView
         android:text="return details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/results_return_details" />
+        android:id="@+id/results_return_details_tv" />
 
     <TextView
-        android:text="stop number"
+        android:text="@string/stops"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/results_stop_no" />
+        android:id="@+id/results_leaving_stops_tv" />
+
+    <TextView
+        android:text="@string/return_stops"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/results_return_stops_tv" />
 
     <TextView
         android:text="total price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/results_total_price"
+        android:id="@+id/results_total_price_tv"
         android:textAlignment="textEnd" />
 </LinearLayout>

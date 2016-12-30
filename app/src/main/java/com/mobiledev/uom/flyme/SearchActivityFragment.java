@@ -219,7 +219,6 @@ public class SearchActivityFragment extends Fragment implements DatePickerDialog
         //Προσθήκη Listener στο κουμπί returnPickDateBtn
         returnPickDateBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO Να βάλω περιορισμό ώστε όταν θα υπάρχει ημερομηνία επιστροφής να είναι μεγαλύτερη ή ίση από αυτή της αναχώρησης.
                 activeDateDisplay = returnPickDateBtn;
                 ((SearchActivity) getActivity()).showDatePickerDialog(v);
             }
