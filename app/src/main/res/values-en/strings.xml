@@ -40,10 +40,18 @@
     <!--  Τιμή στα SharedPreferences για τα δολάρια -->
     <string name="currency_usd" translatable="false">usd</string>
 
+    <!-- Αεροδρόμιο Αναχώρησης και Προορισμού -->
+    <string name="origin">Departure Airport</string>
+    <string name="destination">Destination Airport</string>
+
+    <!-- Περιγραφή αεροδρόμιο αναχώρησης και προορισμού -->
+    <string name="origin_hint">Select a departure airport</string>
+    <string name="destination_hint">Select a destination airport</string>
+
     <string name="with_return">Return</string>
 
     <string name="adults_text">Adults</string>
-    <string name="children_text">reChildren (2-11 years old)</string>
+    <string name="children_text">Children (2-11 years old)</string>
     <string name="infants_text">Infants (max 2 years old)</string>
 
     <string name="flyers_higher_than_max_message">The passengers can\'t be more than 9. Please add less passengers.</string>
@@ -57,6 +65,29 @@
     <string name="destination_is_missing_message">You haven\'t selected the destination airport!</string>
 
     <string name="destin_date_after_origin_message">The return date can\'t be before the transition date!</string>
+
+    <!-- Καινούρια strings-->
+    <string name="loading_message">Loading. Please wait&#8230;</string>
+
+    <!-- Συντομογραφίες αναχώρησης και επιστροφής-->
+    <string name="hours_first_letter">h</string>
+    <string name="minutes_first_letter">s</string>
+
+    <string name="stops">Stops</string>
+    <string name="return_stops">Stops Ret</string>
+
+    <!-- Strings στην ResultsActivity -->
+    <string name="result_search">Search criteria</string>
+    <string name="result_direct_fligths">Direct flights only</string>
+    <string name="result_dialog_title">Interent connection not found</string>
+    <string name="result_dialog_message">No available internet connection found. Please connect to the internet and try again</string>
+    <string name="result_dialog_try_again">Try again</string>
+    <string name="result_adults">Adults:&#160;</string>
+    <string name="result_children">Children:&#160;</string>
+    <string name="result_infants">Infants:&#160;</string>
+    <string name="result_transition">Transition:&#160;</string>
+    <string name="result_return">Return:&#160;</string>
+    <string name="result_no_flights_found">No flights were found for your search criteria</string>
 
     <!-- Strings στην DetailsActivity-->
     <string name="title_activity_details">Flights Details</string>

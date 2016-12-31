@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FlyMe</string>
     <string name="try_again">Δοκιμάστε ξανα</string>
@@ -47,7 +48,6 @@
     <string name="origin_hint">Επιλέξτε Αεροδρόμιο Αναχώρησης</string>
     <string name="destination_hint">Επιλέξτε Αεροδρόμιο Προορισμού</string>
 
-
     <string name="with_return">Με Επιστροφή</string>
 
     <string name="plus_symbol">+</string>
@@ -70,16 +70,27 @@
     <string name="destin_date_after_origin_message">Η ημερομηνία προορισμού δεν μπορεί να είναι πριν από την ημερομηνία αναχώρησης.</string>
 
     <!-- Καινούρια strings-->
-    <string name="loading_message">Φορτώνουν τα δεδομένα. Παρακαλώ περιμένετε...</string>
+    <string name="loading_message">Φορτώνουν τα δεδομένα. Παρακαλώ περιμένετε&#8230;</string>
 
     <!-- Συντομογραφίες αναχώρησης και επιστροφής-->
-    <string name="depart_title_abbrev">ΑΝ</string>
-    <string name="return_title_abbrev">ΕΠ</string>
     <string name="hours_first_letter">ω</string>
     <string name="minutes_first_letter">λ</string>
 
     <string name="stops">Στάσεις</string>
     <string name="return_stops">Στάσεις Επ</string>
+
+    <!-- Strings στην ResultsActivity -->
+    <string name="result_search">Αναζητήσατε για:</string>
+    <string name="result_direct_fligths">Μόνο απευθείας πτήσεις</string>
+    <string name="result_dialog_title">Δεν βρέθηκε δίκτυο</string>
+    <string name="result_dialog_message">Δεν βρέθηκε κάποιο διαθέσιμο δίκτυο. Συνδεθείτε και δοκιμάστε ξανά</string>
+    <string name="result_dialog_try_again">Δοκιμάστε ξανά</string>
+    <string name="result_adults">Ενήλικες:&#160;</string>
+    <string name="result_children">Παιδιά:&#160;</string>
+    <string name="result_infants">Βρέφη:&#160;</string>
+    <string name="result_transition">Μετάβαση:&#160;&#160;</string>
+    <string name="result_return">Επιστροφή:&#160;</string>
+    <string name="result_no_flights_found">Δεν βρέθηκαν διαθέσιμες πτήσεις για την αναζήτηση σας!</string>
 
     <!-- Strings στην DetailsActivity-->
     <string name="title_activity_details">Λεπτομέρειες Πτήσης</string>

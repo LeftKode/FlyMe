@@ -56,6 +56,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import static android.view.View.GONE;
 import static java.lang.Boolean.FALSE;
 
 
@@ -75,6 +76,7 @@ public class ResultsActivityFragment extends Fragment {
     private int adultNo;
     private int childrenNo;
     private int infantNo;
+    private int nonStopValue;
     private List<Itinerary> itineraries;
 
 
@@ -144,6 +146,7 @@ public class ResultsActivityFragment extends Fragment {
             TextView adultInfo = (TextView) rootView.findViewById(R.id.resultsAdultInfo);
             TextView childrenInfo = (TextView) rootView.findViewById(R.id.resultsChildrenInfo);
             TextView infantInfo = (TextView) rootView.findViewById(R.id.resultsInfantInfo);
+            TextView stopsInfo = (TextView) rootView.findViewById(R.id.results_stops);
 
             String locationInfoString = originLoc.substring(originLoc.indexOf('[')+1,originLoc.lastIndexOf(']')) +" - "
                     + destinationLoc.substring(destinationLoc.indexOf('[')+1,destinationLoc.lastIndexOf(']'));
@@ -161,7 +164,7 @@ public class ResultsActivityFragment extends Fragment {
             String finalDepartDate = new SimpleDateFormat("d MMM").format(departDate);
 
 
-            searchResults.setText("Αναζητήσατε για:");
+            searchResults.setText(getResources().getString(R.string.result_search));
             locationInfo.setText(locationInfoString);
             dateInfo.setText(finalDepartDate);
             if(retunDateString!=null){
@@ -173,6 +176,11 @@ public class ResultsActivityFragment extends Fragment {
                 String finalReturnDate = new SimpleDateFormat("d MMM").format(returnDate);
                 dateInfo.setText(finalDepartDate + " - " + finalReturnDate);
             }
+
+            if(nonStopValue == 1)
+                stopsInfo.setText(getResources().getString(R.string.result_direct_fligths));
+            else
+                stopsInfo.setVisibility(GONE);
 
             adultInfo.setText("Ενήλικες: " + adultNo);
             childrenInfo.setText("Παιδιά: " + childrenNo);
@@ -689,6 +697,7 @@ public class ResultsActivityFragment extends Fragment {
             TextView adultInfo = (TextView) rootView.findViewById(R.id.resultsAdultInfo);
             TextView childrenInfo = (TextView) rootView.findViewById(R.id.resultsChildrenInfo);
             TextView infantInfo = (TextView) rootView.findViewById(R.id.resultsInfantInfo);
+            TextView stopsInfo = (TextView) rootView.findViewById(R.id.results_stops);
             
             if(result == null){
                 textView.setText("Δεν βρέθηκαν διαθέσιμες πτήσεις για την αναζήτηση σας!");
@@ -697,7 +706,7 @@ public class ResultsActivityFragment extends Fragment {
                 adultInfo.setText("");
                 childrenInfo.setText("");
                 infantInfo.setText("");
-
+                stopsInfo.setText("");
             }
             else{
                 for (FlightModel model: result) {
@@ -708,7 +717,7 @@ public class ResultsActivityFragment extends Fragment {
             }
 
             progressDialog.dismiss();
-            ItineraryAdapter adapter = new ItineraryAdapter(getContext(), R.layout.fragment_main, itineraries);
+            ItineraryAdapter adapter = new ItineraryAdapter(getContext(), R.layout.fragment_main, itineraries,getActivity());
             listView.setAdapter(adapter);
 
         }

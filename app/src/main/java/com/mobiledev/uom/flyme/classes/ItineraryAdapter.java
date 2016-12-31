@@ -1,6 +1,9 @@
 package com.mobiledev.uom.flyme.classes;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,13 +33,16 @@ public class ItineraryAdapter extends ArrayAdapter {
     private int resource;
     private LayoutInflater inflater;
     private static Context context;
+    private Activity activity;
 
-    public ItineraryAdapter(Context context, int resource, List<Itinerary> objects){
+
+    public ItineraryAdapter(Context context, int resource, List<Itinerary> objects, Activity activity){
         super(context, resource, objects);
         itinerariesList = objects;
         this.resource = resource;
         inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
         ItineraryAdapter.context = context;
+        this.activity = activity;
     }
 
     //καλείται τόσες φόρες όσα και τα αντικείμενα που έχουμε
@@ -48,8 +54,14 @@ public class ItineraryAdapter extends ArrayAdapter {
             convertView = inflater.inflate(R.layout.results_listview_item, null);
         }
 
-        TextView departDetTV = (TextView)convertView.findViewById(R.id.results_depart_details_tv);
-        TextView returnDetTV = (TextView)convertView.findViewById(R.id.results_return_details_tv);
+        TextView transition_airportLoc_TV = (TextView)convertView.findViewById(R.id.results_transition_airport_loc);
+        TextView transition_travelTime_TV = (TextView)convertView.findViewById(R.id.results_transition_times_tv);
+        TextView transition_flightDuration_TV = (TextView)convertView.findViewById(R.id.results_transition_duration_tv);
+        TextView results_return_details_TV = (TextView)convertView.findViewById(R.id.results_return_details_tv);
+        TextView return_airportLoc_TV = (TextView)convertView.findViewById(R.id.results_return_airport_loc);
+        TextView return_travelTime_TV = (TextView)convertView.findViewById(R.id.results_return_times_tv);
+        TextView return_flightDuration_TV = (TextView)convertView.findViewById(R.id.results_return_duration_tv);
+
         TextView leavingStopsTV = (TextView)convertView.findViewById(R.id.results_leaving_stops_tv);
         TextView returnStopsTV = (TextView)convertView.findViewById(R.id.results_return_stops_tv);
         TextView totalPriceTV = (TextView)convertView.findViewById(R.id.results_total_price_tv);
@@ -77,20 +89,27 @@ public class ItineraryAdapter extends ArrayAdapter {
 
         String departdiffTimeStr = getTimeDiffernceString(departTime,arrivalTime);
 
-        //Το text των λεπτομερειών της αναχώρησης
-        String departStr = convertView.getResources().getString(R.string.depart_title_abbrev) +
-                " " + originStr + "→" + destinStr + " [" + departTimeStr + "-" + arrivalTimeStr+"] " + departdiffTimeStr;
+//        //Το text των λεπτομερειών της αναχώρησης
+//        String departStr = convertView.getResources().getString(R.string.depart_title_abbrev) +
+//                " " + originStr + "→" + destinStr + " [" + departTimeStr + "-" + arrivalTimeStr+"] " + departdiffTimeStr;
 
-        //Το text των στάσεων της αναχώρησης
-        String stopsStr = convertView.getResources().getString(R.string.stops) +
-                '(' + (outboundsList.size()-1) + ')';
 
-        //Προσθέση αν υπάρχουν των αεροδρομίων αναχώρησης-στάσεων
-        stopsStr+=getStopsString(outboundsList);
 
         //Τα αντίστοιχα textViews παίρνουν τα text
-        departDetTV.setText(departStr);
-        leavingStopsTV.setText(stopsStr);
+        transition_airportLoc_TV.setText(originStr + "→" + destinStr);
+        transition_travelTime_TV.setText("[" + departTimeStr + "-" + arrivalTimeStr+"]");
+        transition_flightDuration_TV.setText(departdiffTimeStr);
+        if(outboundsList.size()-1 != 0){
+            //Το text των στάσεων της αναχώρησης
+            String stopsStr = convertView.getResources().getString(R.string.stops) +
+                    '(' + (outboundsList.size()-1) + ')';
+
+            //Προσθέση αν υπάρχουν των αεροδρομίων αναχώρησης-στάσεων
+            stopsStr+=getStopsString(outboundsList);
+            leavingStopsTV.setVisibility(View.VISIBLE);
+            leavingStopsTV.setText(stopsStr);
+        }else if(outboundsList.size() -1 == 0)
+            leavingStopsTV.setVisibility(View.GONE);
 
         //String originDepartDateStr = departFlight.getDepartureDate();
         //String originDepartTimeStr = originDepartDateStr.substring(originDepartDateStr.length()-5,originDepartDateStr.length());
@@ -124,7 +143,7 @@ public class ItineraryAdapter extends ArrayAdapter {
             String returndiffTimeStr = getTimeDiffernceString(returnDepartTime,returnArrivalTime);
 
             //To text των λεπτομερειών της επιστροφής
-            String returnStr =  convertView.getResources().getString(R.string.return_title_abbrev) +
+            String returnStr =  "EP" +
                     " " + returnOriginStr + "→" + returnDestinStr +
                     " [" + returnDepartTimeStr + "-" + returnArrivalTimeStr+"] " + returndiffTimeStr;
 
@@ -139,20 +158,40 @@ public class ItineraryAdapter extends ArrayAdapter {
 
 
             //Τα αντίστοιχα textViews παίρνουν τα text και εμφανίζονται αν υπάρχει επιστροφή
-            returnDetTV.setVisibility(View.VISIBLE);
-            returnDetTV.setText(returnStr);
-            returnStopsTV.setVisibility(View.VISIBLE);
-            returnStopsTV.setText(stopsReturnStr);
+            return_airportLoc_TV.setVisibility(View.VISIBLE);
+            return_travelTime_TV.setVisibility(View.VISIBLE);
+            return_flightDuration_TV.setVisibility(View.VISIBLE);
+            results_return_details_TV.setVisibility(View.VISIBLE);
+            return_airportLoc_TV.setText(returnOriginStr + "→" + returnDestinStr);
+            return_travelTime_TV.setText("[" + returnDepartTimeStr + "-" + returnArrivalTimeStr+"]");
+            return_flightDuration_TV.setText(returndiffTimeStr);
+            if(inboundsList.size()-1 != 0) {
+                returnStopsTV.setVisibility(View.VISIBLE);
+                returnStopsTV.setText(stopsReturnStr);
+            }else if(inboundsList.size()-1 == 0)
+                returnStopsTV.setVisibility(View.GONE);
         }else{
             //Αφού δεν υπάρχει επιστροφή να μην εμφανίζονται τα αντίστοιχα textViews
-            returnDetTV.setVisibility(View.GONE);
+            return_airportLoc_TV.setVisibility(View.GONE);
+            return_travelTime_TV.setVisibility(View.GONE);
+            return_flightDuration_TV.setVisibility(View.GONE);
+            results_return_details_TV.setVisibility(View.GONE);
             returnStopsTV.setVisibility(View.GONE);
         }
 
 
         float totalPrice = itinerariesList.get(position).getModel().getTotalPrice();
-        //TODO Να προσθέσουμε το νόμισμα
-        totalPriceTV.setText(Float.toString(totalPrice));
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        String currencyType = sharedPreferences.getString(
+                activity.getString(R.string.currency_key),
+                activity.getString(R.string.currency_eur));
+
+        if(currencyType.equals(activity.getString(R.string.currency_eur)))
+            totalPriceTV.setText(Float.toString(totalPrice) + " EUR");
+        else if(currencyType.equals(activity.getString(R.string.currency_usd)))
+            totalPriceTV.setText(Float.toString(totalPrice) + " USD");
+
+
 
         /*//καλώ το substring για να μην εμφανίζει το [code]
         originLoc.setText(originAirportName.substring(0,originAirportName.indexOf("[")-1));
