@@ -1,12 +1,13 @@
 package com.mobiledev.uom.flyme.classes;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Tolis on 19/12/2016.
  */
 
-public class FlightModel {
+public class FlightModel implements Serializable {
 
     private String currency;
     private float totalPrice;

@@ -1,12 +1,13 @@
 package com.mobiledev.uom.flyme.classes;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
  * Created by Lefteris on 25/12/2016.
  */
 
-public class Flight {
+public class Flight implements Serializable {
     private Calendar departureDate;
     private Calendar arrivalDate;
     private Airline airline;

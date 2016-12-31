@@ -1,10 +1,12 @@
 package com.mobiledev.uom.flyme.classes;
 
+import java.io.Serializable;
+
 /**
  * Created by Lefteris on 26/12/2016.
  */
 
-public class Airline {
+public class Airline implements Serializable {
 
     private String code;    //Kωδικός Αεροπορικής Εταιρείας
     private String name;    //Όνομα Αεροπορικής Εταιρείας

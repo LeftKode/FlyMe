@@ -86,20 +86,7 @@ public class ItineraryAdapter extends ArrayAdapter {
                 '(' + (outboundsList.size()-1) + ')';
 
         //Προσθέση αν υπάρχουν των αεροδρομίων αναχώρησης-στάσεων
-        if(outboundsList.size()-1 != 0){
-            stopsStr+=':';
-            String lastDestValue, newOriginValue;
-            for (int i = 1; i < outboundsList.size(); i++) {
-                lastDestValue = outboundsList.get(i-1).getDestinationAirport().getValue();
-                newOriginValue = outboundsList.get(i).getOriginAirport().getValue();
-                if(lastDestValue.equals(newOriginValue))
-                    stopsStr+=  " "+ newOriginValue;
-                else
-                    stopsStr+= " ["+ lastDestValue+'→'+ newOriginValue+"]";
-                if(i<(outboundsList.size()-1))
-                    stopsStr+= " -";
-            }
-        }
+        stopsStr+=getStopsString(outboundsList);
 
         //Τα αντίστοιχα textViews παίρνουν τα text
         departDetTV.setText(departStr);
@@ -144,24 +131,12 @@ public class ItineraryAdapter extends ArrayAdapter {
 
 
             //Το text των στάσεων της επιστροφής
-            String stopsReturnStr = convertView.getResources().getString(R.string.return_stops) +
-                    '(' + (inboundsList.size()-1) + ")";
+            String stopsReturnStr = convertView.getResources().getString(R.string.return_stops) + '(' + (inboundsList.size()-1) + ")";
+
 
             //Προσθέση αν υπάρχουν των αεροδρομίων αναχώρησης-στάσεων στην επιστροφή
-            if(inboundsList.size()-1 != 0){
-                stopsReturnStr+=':';
-                String lastDestValue, newOriginValue;
-                for (int i = 1; i < inboundsList.size(); i++) {
-                    lastDestValue = inboundsList.get(i-1).getDestinationAirport().getValue();
-                    newOriginValue = inboundsList.get(i).getOriginAirport().getValue();
-                    if(lastDestValue.equals(newOriginValue))
-                        stopsReturnStr+=   " "+ newOriginValue;
-                    else
-                        stopsReturnStr+= " ["+ lastDestValue+'→'+ newOriginValue+"]";
-                    if(i<(inboundsList.size()-1))
-                        stopsReturnStr+= " -";
-                }
-            }
+            stopsReturnStr+=getStopsString(inboundsList);
+
 
             //Τα αντίστοιχα textViews παίρνουν τα text και εμφανίζονται αν υπάρχει επιστροφή
             returnDetTV.setVisibility(View.VISIBLE);
@@ -217,5 +192,24 @@ public class ItineraryAdapter extends ArrayAdapter {
         long end = endDate.getTimeInMillis();
         long start = startDate.getTimeInMillis();
         return (TimeUnit.MILLISECONDS.toMinutes(Math.abs(end - start))%60);
+    }
+
+    public static String getStopsString(List<Flight> flightsList){
+        String stopsText="";
+        if(flightsList.size()-1 != 0){
+            stopsText+=':';
+            String lastDestValue, newOriginValue;
+            for (int i = 1; i < flightsList.size(); i++) {
+                lastDestValue = flightsList.get(i-1).getDestinationAirport().getValue();
+                newOriginValue = flightsList.get(i).getOriginAirport().getValue();
+                if(lastDestValue.equals(newOriginValue))
+                    stopsText+=   " "+ newOriginValue;
+                else
+                    stopsText+= " ["+ lastDestValue+'→'+ newOriginValue+"]";
+                if(i<(flightsList.size()-1))
+                    stopsText+= " -";
+            }
+        }
+        return stopsText;
     }
 }

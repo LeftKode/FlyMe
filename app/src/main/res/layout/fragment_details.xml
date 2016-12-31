@@ -16,162 +16,157 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/details_layout">
 
-        <TextView
-            android:text="@string/departure_title"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_departView" />
+            android:layout_height="match_parent"
+            android:id="@+id/details_depart_layout">
 
-        <TextView
-            android:text="departLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_departLocation" />
+            <TextView
+                android:text="@string/departure_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_departView"
+                android:textStyle="normal|bold" />
 
-        <TextView
-            android:text="depart date/time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_depart_date_time" />
+            <TextView
+                android:text="departAirport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_depart_airport" />
 
-        <TextView
-            android:text="arrivalLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_arrivalLocation" />
+            <TextView
+                android:text="depart date/time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_depart_date_time" />
 
-        <TextView
-            android:text="arrival date/time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_arrival_date_time" />
+            <TextView
+                android:text="arrivalAirport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_arrival_airport" />
 
-        <TextView
-            android:text="duration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_arrival_duration" />
+            <TextView
+                android:text="arrival date/time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_arrival_date_time" />
 
-        <TextView
-            android:text="airline"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_airline" />
+            <TextView
+                android:text="duration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_arrival_duration" />
 
-        <TextView
-            android:text="@string/return_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_arrivalView" />
+            <TextView
+                android:text="airlines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_airlines" />
 
-        <TextView
-            android:text="returnLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_ret_depart_loc" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/details_depart_flights_layout"></LinearLayout>
+        </LinearLayout>
 
-        <TextView
-            android:text="return date/rime"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_ret_date_time" />
+            android:layout_height="match_parent"
+            android:id="@+id/details_return_layout">
 
-        <TextView
-            android:text="ret_arrivalLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_ret_arrivalLocation" />
+            <TextView
+                android:text="@string/return_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_arrivalView"
+                android:textStyle="normal|bold" />
 
-        <TextView
-            android:text="ret_arrival_date_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_ret_arrival_date_time" />
+            <TextView
+                android:text="returnAirport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_ret_depart_airport" />
 
-        <TextView
-            android:text="return duration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_et_duration" />
+            <TextView
+                android:text="return date/rime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_ret_date_time" />
 
-        <TextView
-            android:text="return airline"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_ret_airline" />
+            <TextView
+                android:text="ret_arrival_airport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_ret_arrival_airport" />
 
-        <TextView
-            android:text="price per adult"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_adult_price"
-            android:textAlignment="textEnd" />
+            <TextView
+                android:text="ret_arrival_date_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_ret_arrival_date_time" />
 
-        <TextView
-            android:text="net_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_adult_net"
-            android:textAlignment="textEnd" />
+            <TextView
+                android:text="return duration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_ret_duration" />
 
-        <TextView
-            android:text="tax"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_adult_tax"
-            android:textAlignment="textEnd" />
+            <TextView
+                android:text="return airlines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_ret_airlines" />
 
-        <TextView
-            android:text="price per child"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_child_price"
-            android:textAlignment="textEnd" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/details_return_flights_layout"></LinearLayout>
+        </LinearLayout>
 
-        <TextView
-            android:text="net_price"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_child_net"
-            android:textAlignment="textEnd" />
+            android:layout_height="match_parent"
+            android:id="@+id/details_prices_layout">
 
-        <TextView
-            android:text="tax"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_child_tax"
-            android:textAlignment="textEnd" />
+            <TextView
+                android:text="price per adult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_adult_price"
+                android:textAlignment="textEnd" />
 
-        <TextView
-            android:text="price per infant"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_infant_price"
-            android:textAlignment="textEnd" />
+            <TextView
+                android:text="price per child"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_child_price"
+                android:textAlignment="textEnd" />
 
-        <TextView
-            android:text="net_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_infant_net"
-            android:textAlignment="textEnd" />
+            <TextView
+                android:text="price per infant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_infant_price"
+                android:textAlignment="textEnd" />
 
-        <TextView
-            android:text="tax"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_infant_tax"
-            android:textAlignment="textEnd" />
+            <TextView
+                android:text="total price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_total_price"
+                android:textAlignment="textEnd"
+                android:textColor="@android:color/holo_green_dark"
+                android:textStyle="normal|bold" />
+        </LinearLayout>
 
-        <TextView
-            android:text="total price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/details_total_price"
-            android:textAlignment="textEnd"
-            android:textColor="@android:color/holo_green_dark"
-            android:textStyle="normal|bold" />
     </LinearLayout>
 </ScrollView>

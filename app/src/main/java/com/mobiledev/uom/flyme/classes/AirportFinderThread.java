@@ -41,7 +41,15 @@ public class AirportFinderThread extends Thread {
         Airport airport;
         try {
             airport = getAirportDataFromJson(airportJsonString);
-            airportsMap.put(code,airport);
+            if(airport!=null)
+                airportsMap.put(code,airport);
+            else
+                airportsMap.put(code, new Airport(code,code));
+            //TODO To QRH (με την αναζήτηση RTM -> DCA) δεν υπάρχει όπως και κάποια άλλα.. Έτσι το put δεν θα γίνεται σωστά..
+            //Πρέπει να βάλω να ελέγχει το airport κι αν επιστρέφει null τότε ο κωδικός να στέλνεται στο IATA.
+            //Αν κι εκεί δεν υπάρχει τότε να βάλω στο label τον ίδιο τον κωδικό.
+            //Το ίδιο και για τις αεροπορικές εταιρίες
+
             //return getAirlineDataFromJson(airlineJsonString);
         } catch (JSONException e){
             Log.e(LOG_TAG, e.getMessage(), e);

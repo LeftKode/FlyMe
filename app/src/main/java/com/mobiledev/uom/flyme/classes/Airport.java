@@ -1,6 +1,8 @@
 package com.mobiledev.uom.flyme.classes;
 
-public class Airport {
+import java.io.Serializable;
+
+public class Airport implements Serializable {
 
     private String value;
     private String label;

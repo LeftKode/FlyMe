@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -74,6 +75,7 @@ public class ResultsActivityFragment extends Fragment {
     private int adultNo;
     private int childrenNo;
     private int infantNo;
+    private List<Itinerary> itineraries;
 
 
     List<String> airportsCodesList = new ArrayList<>();     //Λίστα με τα αεροδρόμια που βρέθηκαν
@@ -151,20 +153,44 @@ public class ResultsActivityFragment extends Fragment {
             Date returnDate = null;
             try{
                 departDate = format.parse(departDateString);
-                returnDate = format.parse(retunDateString);
+
             }catch (ParseException e){
                 e.printStackTrace();
             }
 
             String finalDepartDate = new SimpleDateFormat("d MMM").format(departDate);
-            String finalReturnDate = new SimpleDateFormat("d MMM").format(returnDate);
+
 
             searchResults.setText("Αναζητήσατε για:");
             locationInfo.setText(locationInfoString);
-            dateInfo.setText(finalDepartDate+ " - " + finalReturnDate);
+            dateInfo.setText(finalDepartDate);
+            if(retunDateString!=null){
+                try {
+                    returnDate = format.parse(retunDateString);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                String finalReturnDate = new SimpleDateFormat("d MMM").format(returnDate);
+                dateInfo.setText(finalDepartDate + " - " + finalReturnDate);
+            }
+
             adultInfo.setText("Ενήλικες: " + adultNo);
             childrenInfo.setText("Παιδιά: " + childrenNo);
             infantInfo.setText("Βρέφη: " + infantNo);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent intentDetails = new Intent(getContext(), DetailsActivity.class);
+
+                    //Bundle bundle = new Bundle();
+                    //bundle.putSerializable("ItinObj", itineraries.get(i));
+                    //intentDetails.putExtras(bundle);
+
+                    intentDetails.putExtra("ItinObj", itineraries.get(i));
+                    startActivity(intentDetails);
+                }
+            });
 
             //Log.e("Test",Integer.toString(adultNo));
            // Log.e("Test",Integer.toString(childrenNo));
@@ -655,13 +681,15 @@ public class ResultsActivityFragment extends Fragment {
         @Override
         protected void onPostExecute(List<FlightModel> result){
 
+            //TextView textView = (TextView) rootView.findViewById(R.id.resultsInfoTextView);
+            itineraries = new ArrayList<>();
             TextView textView = (TextView) rootView.findViewById(R.id.resultsSearchInfo);
             TextView locationInfo = (TextView) rootView.findViewById(R.id.resultsLocationInfo);
             TextView dateInfo = (TextView) rootView.findViewById(R.id.resultsDateInfo);
             TextView adultInfo = (TextView) rootView.findViewById(R.id.resultsAdultInfo);
             TextView childrenInfo = (TextView) rootView.findViewById(R.id.resultsChildrenInfo);
             TextView infantInfo = (TextView) rootView.findViewById(R.id.resultsInfantInfo);
-            List<Itinerary> itineraries = new ArrayList<>();
+            
             if(result == null){
                 textView.setText("Δεν βρέθηκαν διαθέσιμες πτήσεις για την αναζήτηση σας!");
                 locationInfo.setText("");
