@@ -9,7 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mobiledev.uom.flyme.ResultsActivityFragment"
-    tools:showIn="@layout/activity_results">
+    tools:showIn="@layout/activity_results"
+    android:background="@color/background_color">
 
 
     <LinearLayout
@@ -58,26 +59,28 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="16dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp">
 
             <TextView
                 android:text="TextView"
-                android:layout_width="106dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/resultsAdultInfo"
                 android:textAlignment="center"
                 android:textColor="@color/dark_black"
-                android:textStyle="normal|bold" />
+                android:textStyle="normal|bold"
+                android:layout_weight="1" />
 
             <TextView
                 android:text="TextView"
-                android:layout_width="116dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/resultsChildrenInfo"
                 android:textAlignment="center"
                 android:textColor="@color/dark_black"
-                android:textStyle="normal|bold" />
+                android:textStyle="normal|bold"
+                android:layout_weight="1" />
 
             <TextView
                 android:text="TextView"
@@ -94,9 +97,9 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
             android:layout_weight="1"
-            android:id="@+id/results_listview" />
+            android:id="@+id/results_listview"
+            android:layout_alignParentTop="true" />
 
     </LinearLayout>
 

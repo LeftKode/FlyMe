@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.mobiledev.uom.flyme.R;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -34,6 +35,7 @@ public class ItineraryAdapter extends ArrayAdapter {
     private LayoutInflater inflater;
     private static Context context;
     private Activity activity;
+    private DecimalFormat decimalFormat = new DecimalFormat("#,###.00");
 
 
     public ItineraryAdapter(Context context, int resource, List<Itinerary> objects, Activity activity){
@@ -96,7 +98,7 @@ public class ItineraryAdapter extends ArrayAdapter {
 
 
         //Τα αντίστοιχα textViews παίρνουν τα text
-        transition_airportLoc_TV.setText(originStr + "→" + destinStr);
+        transition_airportLoc_TV.setText(originStr + "->" + destinStr);
         transition_travelTime_TV.setText("[" + departTimeStr + "-" + arrivalTimeStr+"]");
         transition_flightDuration_TV.setText(departdiffTimeStr);
         if(outboundsList.size()-1 != 0){
@@ -109,7 +111,7 @@ public class ItineraryAdapter extends ArrayAdapter {
             leavingStopsTV.setVisibility(View.VISIBLE);
             leavingStopsTV.setText(stopsStr);
         }else if(outboundsList.size() -1 == 0)
-            leavingStopsTV.setVisibility(View.GONE);
+            leavingStopsTV.setVisibility(View.INVISIBLE);
 
         //String originDepartDateStr = departFlight.getDepartureDate();
         //String originDepartTimeStr = originDepartDateStr.substring(originDepartDateStr.length()-5,originDepartDateStr.length());
@@ -162,14 +164,14 @@ public class ItineraryAdapter extends ArrayAdapter {
             return_travelTime_TV.setVisibility(View.VISIBLE);
             return_flightDuration_TV.setVisibility(View.VISIBLE);
             results_return_details_TV.setVisibility(View.VISIBLE);
-            return_airportLoc_TV.setText(returnOriginStr + "→" + returnDestinStr);
+            return_airportLoc_TV.setText(returnOriginStr + "->" + returnDestinStr);
             return_travelTime_TV.setText("[" + returnDepartTimeStr + "-" + returnArrivalTimeStr+"]");
             return_flightDuration_TV.setText(returndiffTimeStr);
             if(inboundsList.size()-1 != 0) {
                 returnStopsTV.setVisibility(View.VISIBLE);
                 returnStopsTV.setText(stopsReturnStr);
             }else if(inboundsList.size()-1 == 0)
-                returnStopsTV.setVisibility(View.GONE);
+                returnStopsTV.setVisibility(View.INVISIBLE);
         }else{
             //Αφού δεν υπάρχει επιστροφή να μην εμφανίζονται τα αντίστοιχα textViews
             return_airportLoc_TV.setVisibility(View.GONE);
@@ -187,9 +189,9 @@ public class ItineraryAdapter extends ArrayAdapter {
                 activity.getString(R.string.currency_eur));
 
         if(currencyType.equals(activity.getString(R.string.currency_eur)))
-            totalPriceTV.setText(Float.toString(totalPrice) + " EUR");
+            totalPriceTV.setText(decimalFormat.format(totalPrice) + " €");
         else if(currencyType.equals(activity.getString(R.string.currency_usd)))
-            totalPriceTV.setText(Float.toString(totalPrice) + " USD");
+            totalPriceTV.setText(decimalFormat.format(totalPrice) + " $");
 
 
 
@@ -244,7 +246,7 @@ public class ItineraryAdapter extends ArrayAdapter {
                 if(lastDestValue.equals(newOriginValue))
                     stopsText+=   " "+ newOriginValue;
                 else
-                    stopsText+= " ["+ lastDestValue+'→'+ newOriginValue+"]";
+                    stopsText+= " ["+ lastDestValue+"->"+ newOriginValue+"]";
                 if(i<(flightsList.size()-1))
                     stopsText+= " -";
             }

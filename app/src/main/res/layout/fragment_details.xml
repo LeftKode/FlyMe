@@ -5,168 +5,432 @@
     android:id="@+id/content_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+
     tools:context="com.mobiledev.uom.flyme.DetailsActivityFragment"
-    tools:showIn="@layout/activity_details">
+    tools:showIn="@layout/activity_details"
+    android:background="@color/background_color"
+    style="@android:style/Widget.DeviceDefault.Light.ScrollView">
 
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="@dimen/activity_vertical_margin"
         android:id="@+id/details_layout">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/details_depart_layout">
+            android:id="@+id/details_depart_layout"
+            android:layout_marginBottom="20dp">
 
-            <TextView
-                android:text="@string/departure_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/details_departView"
-                android:textStyle="normal|bold" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/flight_title_draw"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:paddingLeft="@dimen/activity_horizontal_margin">
 
-            <TextView
-                android:text="departAirport"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/details_depart_airport" />
+                <TextView
+                    android:text="@string/departure_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/details_departView"
+                    android:textStyle="normal|bold"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:layout_marginBottom="10dp"
+                    android:shadowColor="@color/airport_label_color"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2.5"/>
 
-            <TextView
-                android:text="depart date/time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/details_depart_date_time" />
+                <TextView
+                    android:text="departAirport"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/details_depart_airport"
+                    android:textStyle="normal|bold"
+                    android:textSize="15sp"
+                    android:textAlignment="center"
+                    android:textColor="@color/airport_label_color" />
 
-            <TextView
-                android:text="arrivalAirport"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/details_arrival_airport" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp">
 
-            <TextView
-                android:text="arrival date/time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/details_arrival_date_time" />
+                    <TextView
+                        android:text="@string/departure_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView5"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="#ec407a" />
 
-            <TextView
-                android:text="duration"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/details_arrival_duration" />
+                    <TextView
+                        android:text="depart date/time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/details_depart_date_time"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textColor="#ec407a" />
+                </LinearLayout>
 
-            <TextView
-                android:text="airlines"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/details_airlines" />
+                <TextView
+                    android:text="arrivalAirport"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/details_arrival_airport"
+                    android:textStyle="normal|bold"
+                    android:textSize="15sp"
+                    android:textAlignment="center"
+                    android:textColor="@color/airport_label_color" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:text="@string/return_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView7"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="#ec407a" />
+
+                    <TextView
+                        android:text="arrival date/time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/details_arrival_date_time"
+                        android:textAlignment="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textColor="#ec407a" />
+                </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/details_depart_flights_layout"></LinearLayout>
+                android:id="@+id/details_depart_flights_layout"
+                android:background="@drawable/flight_stops_draw"
+                android:paddingTop="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:text="@string/itinerary_depart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView4"
+                    android:textSize="18sp"
+                    android:textAlignment="center"
+                    android:textStyle="normal|bold"
+                    android:layout_marginBottom="15dp"
+                    android:textColor="@android:color/white"
+                    android:shadowColor="@color/black_shade"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2.5" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/details_return_layout">
+            android:id="@+id/details_return_layout"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center"
+            android:gravity="center">
 
-            <TextView
-                android:text="@string/return_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/details_arrivalView"
-                android:textStyle="normal|bold" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/flight_title_draw"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
 
-            <TextView
-                android:text="returnAirport"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/details_ret_depart_airport" />
+                <TextView
+                    android:text="@string/return_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/details_arrivalView"
+                    android:textStyle="normal|bold"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:layout_marginBottom="10dp"
+                    android:shadowColor="@color/airport_label_color"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2.5"/>/>
 
-            <TextView
-                android:text="return date/rime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/details_ret_date_time" />
+                <TextView
+                    android:text="returnAirport"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/details_ret_depart_airport"
+                    android:textStyle="normal|bold"
+                    android:textSize="15sp"
+                    android:textColor="@color/airport_label_color"
+                    android:textAlignment="center" />
 
-            <TextView
-                android:text="ret_arrival_airport"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/details_ret_arrival_airport" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp">
 
-            <TextView
-                android:text="ret_arrival_date_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/details_ret_arrival_date_time" />
+                    <TextView
+                        android:text="@string/departure_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView9"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="#ec407a" />
 
-            <TextView
-                android:text="return duration"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/details_ret_duration" />
+                    <TextView
+                        android:text="return date/rime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/details_ret_date_time"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textColor="#ec407a" />
+                </LinearLayout>
 
-            <TextView
-                android:text="return airlines"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/details_ret_airlines" />
+                <TextView
+                    android:text="ret_arrival_airport"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/details_ret_arrival_airport"
+                    android:textStyle="normal|bold"
+                    android:textSize="15sp"
+                    android:textColor="@color/airport_label_color"
+                    android:textAlignment="center" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:text="@string/return_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView10"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="#ec407a" />
+
+                    <TextView
+                        android:text="ret_arrival_date_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/details_ret_arrival_date_time"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="#ec407a" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/details_return_flights_layout"></LinearLayout>
+                android:id="@+id/details_return_flights_layout"
+                android:background="@drawable/flight_stops_draw"
+                android:paddingTop="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:text="@string/itinerary_return"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView8"
+                    android:textSize="18sp"
+                    android:textAlignment="center"
+                    android:textStyle="normal|bold"
+                    android:layout_marginBottom="15dp"
+                    android:textColor="@android:color/white"
+                    android:shadowColor="@color/black_shade"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2.5"/>
+            </LinearLayout>
+
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/details_prices_layout">
+            android:layout_marginEnd="15dp">
 
-            <TextView
-                android:text="price per adult"
+            <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/details_adult_price"
-                android:textAlignment="textEnd" />
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:id="@+id/details_row_adults">
 
-            <TextView
-                android:text="price per child"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/details_child_price"
-                android:textAlignment="textEnd" />
+                <TextView
+                    android:text="@string/adults_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:textSize="14sp" />
 
-            <TextView
-                android:text="price per infant"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/details_infant_price"
-                android:textAlignment="textEnd" />
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/details_adults_operation_tv"
+                    android:textAlignment="textEnd"
+                    android:textSize="14sp" />
 
-            <TextView
-                android:text="total price"
+                <TextView
+                    android:text="price per adult"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/details_adult_price"
+                    android:textAlignment="textEnd"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/details_total_price"
-                android:textAlignment="textEnd"
-                android:textColor="@android:color/holo_green_dark"
-                android:textStyle="normal|bold" />
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:id="@+id/details_row_children">
+
+                <TextView
+                    android:text="@string/children_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/details_children_operation_tv"
+                    android:textAlignment="textEnd"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:text="price per child"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/details_child_price"
+                    android:textAlignment="textEnd"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:id="@+id/details_row_infants">
+
+                <TextView
+                    android:text="@string/infants_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/details_infants_operation_tv"
+                    android:textAlignment="textEnd"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:text="price per infant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/details_infant_price"
+                    android:textAlignment="textEnd"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:id="@+id/details_row_total_price"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:text="@string/total_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:textStyle="normal|bold"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:text="total price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/details_total_price"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/pink_shade"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="16sp"
+                    android:textStyle="normal|bold" />
+            </TableRow>
+        </TableLayout>
 
     </LinearLayout>
 </ScrollView>

@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3f51b5</color>
+    <color name="colorPrimary">#6b9efd</color>
     <color name="colorPrimaryDark">#2234a9</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="pink_shade">#CD3278</color>
+    <color name="pink_shade">#cd3278</color>
     <color name="colorHint">#7777</color>
-    <color name="light_gray">#C2C2C2</color>
+    <color name="light_gray">#c2c2c2</color>
     <color name="holo_green">#ff669900</color>
     <color name="dark_gray">#858585</color>
     <color name="black_shade">#454545</color>
     <color name="dark_black">#030303</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="airport_label_color">#de0011ff</color>
+    <color name="background_color">#e9d5e7ff</color>
+    <color name="toolbar_color">#2962FF</color>
+
 </resources>

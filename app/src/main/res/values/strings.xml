@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FlyMe</string>
-    <string name="try_again">Δοκιμάστε ξανα</string>
+    <string name="try_again">Δοκιμάστε ξανά</string>
     <string name="action_settings">Ρυθμίσεις</string>
     <string name="action_search">Αναζήτηση Πτήσεων</string>
     <string name="title_activity_search">Αναζήτηση Πτήσεων</string>
@@ -26,6 +26,14 @@
     <!-- Ημερομηνία Αναχώρησης και Επιστροφής-->
     <string name="departure_date">Ημερομηνία Αναχώρησης</string>
     <string name="return_date">Ημερομηνία Επιστροφής</string>
+
+
+    <string name="yes">Ναι</string>
+    <string name="no">Όχι</string>
+
+    <string name="itinerary_depart">Δρομολόγιο</string>
+    <string name="itinerary_return">Δρομολόγιο Επιστροφής</string>
+    <string name="stop">Στάση</string>
 
     <!-- Όνομα της λίστας στο μενου -->
     <string name="currency_label">Νόμισμα</string>
@@ -96,5 +104,14 @@
     <string name="title_activity_details">Λεπτομέρειες Πτήσης</string>
     <string name="departure_title">Μετάβαση</string>
     <string name="return_title">Επιστροφή</string>
+    <string name="total_duration">Συνολική Διάρκεια:&#160;</string>
+    <string name="duration">Διάρκεια:&#160;</string>
+    <string name="flight_no">Πτήση Νο</string>
+
+    <string name="adults_price">Τιμή Ενηλίκων: </string>
+    <string name="children_price">Τιμή Παιδιών: </string>
+    <string name="infants_price">Τιμή Βρεφών: </string>
+    <string name="total_price">Συνολικό Ποσό: </string>
+
 
 </resources>

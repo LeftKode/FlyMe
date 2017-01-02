@@ -11,7 +11,8 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="com.mobiledev.uom.flyme.SearchActivityFragment"
-        tools:showIn="@layout/activity_search">
+        tools:showIn="@layout/activity_search"
+    android:background="@color/background_color">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +41,9 @@
                     android:imeOptions="flagNoExtractUi"
                     android:layout_weight="0.1"
                     android:layout_width="match_parent"
-                    android:hint="@string/origin_hint"/>
+                    android:hint="@string/origin_hint"
+                    android:textColor="@color/colorAccent"
+                    android:textColorLink="@color/airport_label_color" />
 
                 <ProgressBar
                     android:id="@+id/pb_loading_indicator"
@@ -120,7 +123,8 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:background="@drawable/button_draw" />
 
             </LinearLayout>
 
@@ -131,7 +135,9 @@
                 android:id="@+id/withReturnSwitch"
                 android:textStyle="normal|bold"
                 android:layout_weight="1"
-                android:layout_marginBottom="15dp" />
+                android:layout_marginBottom="15dp"
+                android:textOn="@string/yes"
+                android:textOff="@string/no" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -191,7 +197,8 @@
                     style="@android:style/Widget.Button"
                     android:layout_height="wrap_content"
                     android:text="@string/minus_symbol"
-                    android:id="@+id/adultsMinusBtn" />
+                    android:id="@+id/adultsMinusBtn"
+                    android:background="@drawable/button_draw" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -209,7 +216,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/plus_symbol"
-                    android:id="@+id/adultsAddBtn" />
+                    android:id="@+id/adultsAddBtn"
+                    android:background="@drawable/button_draw" />
 
             </LinearLayout>
 
@@ -236,7 +244,8 @@
                     style="@android:style/Widget.Button"
                     android:layout_height="wrap_content"
                     android:text="@string/minus_symbol"
-                    android:id="@+id/childrenMinusBtn" />
+                    android:id="@+id/childrenMinusBtn"
+                    android:background="@drawable/button_draw" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -254,7 +263,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/plus_symbol"
-                    android:id="@+id/childrenAddBtn" />
+                    android:id="@+id/childrenAddBtn"
+                    android:background="@drawable/button_draw" />
 
             </LinearLayout>
 
@@ -281,7 +291,8 @@
                     style="@android:style/Widget.Button"
                     android:layout_height="wrap_content"
                     android:text="@string/minus_symbol"
-                    android:id="@+id/infantsMinusBtn" />
+                    android:id="@+id/infantsMinusBtn"
+                    android:background="@drawable/button_draw" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -299,7 +310,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/plus_symbol"
-                    android:id="@+id/infantsAddBtn" />
+                    android:id="@+id/infantsAddBtn"
+                    android:background="@drawable/button_draw" />
 
             </LinearLayout>
 
@@ -337,7 +349,8 @@
                 android:gravity="center_vertical|center_horizontal|center"
                 android:layout_gravity="center"
                 android:textStyle="normal|bold"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                android:background="@drawable/button_draw" />
 
 
         </LinearLayout>

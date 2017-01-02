@@ -93,6 +93,7 @@
     <string name="title_activity_details">Flights Details</string>
     <string name="departure_title">Transition</string>
     <string name="return_title">Return</string>
+    <string name="total_duration">Total Duration:&#160;</string>
 
 
 </resources>

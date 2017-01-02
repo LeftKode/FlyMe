@@ -119,6 +119,7 @@ public class ResultsActivityFragment extends Fragment {
             destinationLoc = data.getString(data.getColumnIndexOrThrow("destinationLocation"));
             departDateString = data.getString(data.getColumnIndexOrThrow("departureDate"));
             retunDateString = data.getString(data.getColumnIndexOrThrow("returnDate"));
+            nonStopValue =  data.getInt(data.getColumnIndexOrThrow("nonStop"));
 
 
             ShowFlightsTask flightsTask = new ShowFlightsTask();
@@ -177,6 +178,8 @@ public class ResultsActivityFragment extends Fragment {
                 dateInfo.setText(finalDepartDate + " - " + finalReturnDate);
             }
 
+
+
             if(nonStopValue == 1)
                 stopsInfo.setText(getResources().getString(R.string.result_direct_fligths));
             else
@@ -196,6 +199,7 @@ public class ResultsActivityFragment extends Fragment {
                     //intentDetails.putExtras(bundle);
 
                     intentDetails.putExtra("ItinObj", itineraries.get(i));
+                    intentDetails.putExtra("db_id", db_id);
                     startActivity(intentDetails);
                 }
             });
