@@ -121,7 +121,6 @@ public class ResultsActivityFragment extends Fragment {
             retunDateString = data.getString(data.getColumnIndexOrThrow("returnDate"));
             nonStopValue =  data.getInt(data.getColumnIndexOrThrow("nonStop"));
 
-
             ShowFlightsTask flightsTask = new ShowFlightsTask();
 
             if(isOnline()){

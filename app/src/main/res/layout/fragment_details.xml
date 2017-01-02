@@ -417,7 +417,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="textEnd"
                     android:textStyle="normal|bold"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:text="total price"
@@ -427,7 +427,7 @@
                     android:textAlignment="textEnd"
                     android:textColor="@color/pink_shade"
                     android:layout_marginLeft="20dp"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="normal|bold" />
             </TableRow>
         </TableLayout>
