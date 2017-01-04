@@ -4,14 +4,10 @@ package com.mobiledev.uom.flyme.classes;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by Lefteris on 26/12/2016.
- */
-
 public class Itinerary implements Serializable {
-    private FlightModel model;
-    private List<Flight> outboundFlightsList;
-    private List<Flight> inboundFlightsList;
+    private FlightModel model;  //Το flightModel που το περιέχει
+    private List<Flight> outboundFlightsList; //Λίστα με τις πτήσεις αναχώρησης
+    private List<Flight> inboundFlightsList; //Λίστα με τις πτήσεις επιστροφής
 
     public Itinerary(FlightModel model) {
         this.model = model;

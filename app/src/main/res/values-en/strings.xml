@@ -17,15 +17,15 @@
     <string name="transition">Transition:&#160;</string>
     <string name="return_from">Return:&#160;</string>
     <string name="return_not_declared">Return: Not declared!</string>
-    <string name="adult_number">Adults:&#160;</string>
+    <string name="adults_number">Adults:&#160;</string>
     <string name="children_number">Children:&#160;</string>
-    <string name="infant_number">Infants:&#160;</string>
+    <string name="infants_number">Infants:&#160;</string>
     <string name="non_direct_flights">Direct flights: No</string>
     <string name="direct_flights">Direct flights: Yes</string>
 
     <!-- Ημερομηνία Αναχώρησης και Επιστροφής -->
-    <string name="departure_date">Departure date</string>
-    <string name="return_date">Return date</string>
+    <string name="departure_date">Departure Date</string>
+    <string name="return_date">Return Date</string>
 
     <!-- Όνομα της λίστας στο μενου -->
     <string name="currency_label">Currency</string>
@@ -34,11 +34,8 @@
     <!-- Επικεφαλιδα για τα δολαρια -->
     <string name="currency_label_dollars">USD</string>
     <!-- Κλειδί του νομίσματος για τα SharedPreferences -->
-    <string name="currency_key" translatable="false">currency</string>
     <!-- Τιμή στα SharedPreferences για τα ευρώ -->
-    <string name="currency_eur" translatable="false">EUR</string>
     <!--  Τιμή στα SharedPreferences για τα δολάρια -->
-    <string name="currency_usd" translatable="false">USD</string>
 
     <!-- Αεροδρόμιο Αναχώρησης και Προορισμού -->
     <string name="origin">Departure Airport</string>
@@ -102,7 +99,7 @@
     <string name="duration">Duration:&#160;</string>
     <string name="flight_no">Flight No</string>
     <string name="infants_price">Infant Fare:</string>
-    <string name="itinerary_depart">Itinerary</string>
+    <string name="itinerary_depart">Departure Itinerary</string>
     <string name="itinerary_return">Return Itinerary</string>
     <string name="minus_symbol">-</string>
     <string name="no">No</string>
@@ -110,6 +107,7 @@
     <string name="result_internet_not_found_button">Retry</string>
     <string name="result_internet_not_found_message">There were no available internet connections found. Connect to the interent and try again.</string>
     <string name="result_internet_not_found_title">No internet connection found</string>
+    <string name="arrival_date">Arrival Date</string>
 
 
 </resources>

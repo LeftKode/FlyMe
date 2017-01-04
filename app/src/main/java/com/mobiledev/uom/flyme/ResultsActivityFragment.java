@@ -83,8 +83,8 @@ public class ResultsActivityFragment extends Fragment {
 
 
     List<String> airportsCodesList = new ArrayList<>();     //Λίστα με τα αεροδρόμια που βρέθηκαν
-    Map<String, Airport> airportsMap = new ConcurrentHashMap<>();
-    Map<String, Airline> airlinesMap = new HashMap<>();
+    Map<String, Airport> airportsMap = new ConcurrentHashMap<>(); //Map  με τα αεροδρόμια (Κωδικος τους το κλειδί)
+    Map<String, Airline> airlinesMap = new HashMap<>();  //Map  με τις αεροπορικές εταιρίες (Κωδικος τους το κλειδί)
 
     private ListView listView;
 
@@ -97,6 +97,7 @@ public class ResultsActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         myDBHelper = new DBHelper(getActivity());
+        //Δημιουργία μηνύματος να περιμένει ο χρήστης όσο τα δεδομένα φορτώνουν
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false);
         progressDialog.setMessage(getResources().getString(R.string.loading_message));
@@ -136,10 +137,13 @@ public class ResultsActivityFragment extends Fragment {
 
             ShowFlightsTask flightsTask = new ShowFlightsTask();
 
+            //Αν υπάρχει σύνδεση στο δίκτυο να καλέσει την flightTask
             if(isOnline()){
                 flightsTask.execute(urlText);
             }else{
+                //Αλλιώς ενημερώνει τον χρήστη οτι δεν βρέθηκε δίκτυο
                 DialogInterface.OnClickListener listener = null;
+
 
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
                 alertDialogBuilder.setTitle(getResources().getString(R.string.result_internet_not_found_title));
@@ -152,6 +156,7 @@ public class ResultsActivityFragment extends Fragment {
                 Button dialogButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
                 dialogButton.setOnClickListener(new AlertDialogButtonListener(dialog,flightsTask,getActivity(),urlText));
             }
+            //Αρχικοποίήση της listView και των textViews που θα περιγράφουν την αναζήτηση
             listView = (ListView) rootView.findViewById(R.id.results_listview);
             TextView searchResults = (TextView) rootView.findViewById(R.id.resultsSearchInfo);
             TextView locationInfo = (TextView) rootView.findViewById(R.id.resultsLocationInfo);
@@ -161,6 +166,7 @@ public class ResultsActivityFragment extends Fragment {
             TextView infantInfo = (TextView) rootView.findViewById(R.id.resultsInfantInfo);
             TextView stopsInfo = (TextView) rootView.findViewById(R.id.results_stops);
 
+            //Ανάκτηση πληροφοριών από τα πεδία εγγραφής της βάσης
             String locationInfoString = originLoc.substring(originLoc.indexOf('[')+1,originLoc.lastIndexOf(']')) +" - "
                     + destinationLoc.substring(destinationLoc.indexOf('[')+1,destinationLoc.lastIndexOf(']'));
 
@@ -180,6 +186,7 @@ public class ResultsActivityFragment extends Fragment {
             searchResults.setText(getResources().getString(R.string.result_search));
             locationInfo.setText(locationInfoString);
             dateInfo.setText(finalDepartDate);
+            //Αν υπάρχει ημερομηνία επιστροφής να εμφανίσει την ημερομηνία επιστροφής
             if(retunDateString!=null){
                 try {
                     returnDate = format.parse(retunDateString);
@@ -191,12 +198,13 @@ public class ResultsActivityFragment extends Fragment {
             }
 
 
-
+            //Άμα είχε επιλέξει ο χρήστης μόνο απευθείας πτήσεις να του το εμφανίσει στον τίτλο των αποτελεσμάτων
             if(nonStopValue == 1)
                 stopsInfo.setText(getResources().getString(R.string.result_direct_fligths));
             else
                 stopsInfo.setVisibility(GONE);
 
+            //Εμφάνιση αριθμών επιβατών
             adultInfo.setText("Ενήλικες: " + adultNo);
             childrenInfo.setText("Παιδιά: " + childrenNo);
             infantInfo.setText("Βρέφη: " + infantNo);
@@ -215,10 +223,6 @@ public class ResultsActivityFragment extends Fragment {
                     startActivity(intentDetails);
                 }
             });
-
-            //Log.e("Test",Integer.toString(adultNo));
-           // Log.e("Test",Integer.toString(childrenNo));
-           // Log.e("Test",Integer.toString(infantNo));
             Log.e("Test", urlText);
 
         }
@@ -229,25 +233,27 @@ public class ResultsActivityFragment extends Fragment {
             Log.v("TestUrl",databaseUrlText);
         }*/
 
-        //TODO Οι ημερομηνίες μπορεί να είναι λάθος αν στο κινητό έχει ψεύτικη ημερομηνία.
+        //TODOm Οι ημερομηνίες μπορεί να είναι λάθος αν στο κινητό έχει ψεύτικη ημερομηνία.
         //Να του εμφανίζεται μήνυμα "Κάτι πήγε στραβά! Μήπως έχετε λάνθασμένη ημερομηνία?"
         this.rootView = rootView;
 
         return rootView;
     }
 
+    //Στέλνει τα απαραίτητα url και παίρνει τις απαντήσεις για τα διαθέσιμα δρομολόγια
     public class ShowFlightsTask extends AsyncTask<String , Void, List<FlightModel>> {
         private final String LOG_TAG = ResultsActivityFragment.ShowFlightsTask.class.getSimpleName();
         private String airlinesCodes = "";
         private boolean returnDateExists;
-        ExecutorService executor = Executors.newFixedThreadPool(4);
+        ExecutorService executor = Executors.newFixedThreadPool(4); //Executor που θα περιέχει όλα τα νήματα που θα δημιουργηθούν
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog.show();
+            progressDialog.show(); //Εμφάνιση του μηνύματος να περιμένει ο χρήστης
         }
 
+        //Παίρνει τις πληροφορίες των αποτελεσμάτων της αναζήτησης δρομολογίων με JSON
         private List<FlightModel> getFlightDataFromJson(String urlStr, String flightJsonStr) throws JSONException, ParseException {
 
             final String F_CUR = "currency";
@@ -297,19 +303,20 @@ public class ResultsActivityFragment extends Fragment {
 
 
 
-
+            //Αν συμπεριλαμβάνεται και ημερομηνία επιστροφής να πάρει true η αντίστοιχη μεταβλητή
             returnDateExists = urlText.contains("return_date");
             //boolean zeroAdults = urlText.contains("adults=0");
             //boolean infantsExist = urlText.contains("infants");
 
             for(int i=0; i < flightResult.length(); i++){
 
-
+                //Παίρνει την συνολική τιμή
                 newObject = flightResult.getJSONObject(i);
                 fare = newObject.getJSONObject(F_FARE);
                 priceStr = fare.getString(F_PRICE);
                 totalPrice = Float.valueOf(priceStr);
 
+                //Παίρνει τις τιμές των επιβατών
                 if(adultNo>0){
                     priceAdultObj = fare.getJSONObject(F_PRICE_PER_ADULT);
                     priceStr = priceAdultObj.getString(F_TOTAL_FARE);
@@ -327,67 +334,24 @@ public class ResultsActivityFragment extends Fragment {
                 if(childrenNo>0){
                     totalFarePerChild = (float) ((totalPrice -((adultNo*totalFarePerAdult) + (infantNo*totalFarePerInfant)))/childrenNo);
                     totalFarePerChild = (float) Math.round(totalFarePerChild * 100) / 100; //Για να παίρνει μέχρι 2 δεκαδικά
-                    //Log.v("SSSSSSSSSSSSSSSSS",Float.toString(totalPrice));
-                    //Log.v("SSSSSSSSSSSSSSSSS",Float.toString(totalFarePerAdult));
-                    //Log.v("SSSSSSSSSSSSSSSSS",Float.toString(totalFarePerInfant));
-
-                    //Log.v("SSSSSSSSSSSSSSSSS",Float.toString(5*totalFarePerChild));
-
                 }else
                     totalFarePerChild = 0;
 
-                //TODO Να βάλω να παίρνει την τιμή του καθενός επιβάτη
                 itinArray = newObject.getJSONArray(F_ITINS);
+
+                //Φτιάχνει ένα FlightModel που μπορεί να περιέχει ένα ή περισσότερα itineraries
                 model = new FlightModel();
                 model.setItineraries(new ArrayList<Itinerary>());
+
+                //Θέτει στο model τις τιμές
                 model.setPricePerAdult(totalFarePerAdult);
                 model.setPricePerChild(totalFarePerChild);
                 model.setPricePerInfant(totalFarePerInfant);
+                model.setTotalPrice(totalPrice);
+
+                //Για κάθε δρομολόγιο
                 for(int j=0; j<itinArray.length(); j++) {
                     itinObject = itinArray.getJSONObject(j);
-                    /*outboundObject = itinObject.getJSONObject(F_OUTBOUNDS);
-
-
-                    flightArray = outboundObject.getJSONArray(F_FLIGHTS);
-                    for(int k=0; k<flightArray.length(); k++) {
-                        flightObject = flightArray.getJSONObject(k);
-
-                        model = new FlightModel();
-
-                        departure = flightObject.getString(F_DEPS);
-                        arrival = flightObject.getString(F_ARRS);
-
-                        dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                        myDepDate = dateFormat.parse(departure);
-                        myArrDate = dateFormat.parse(arrival);
-
-                        dateFormat.applyPattern("dd-MM-yyyy HH:mm");
-                        departDate = dateFormat.format(myDepDate);
-                        model.setDepartureDate(departDate);
-                        arrivalDate = dateFormat.format(myArrDate);
-                        model.setArrivalDate(arrivalDate);
-
-                        originObject = flightObject.getJSONObject(F_ORIGIN);
-                        originLoc = originObject.getString(F_AIRP);
-                        model.setOriginLocation(originLoc);
-
-                        destinationObject = flightObject.getJSONObject(F_DEST);
-                        destinationLoc = destinationObject.getString(F_AIRP);
-                        model.setDestinationLocation(destinationLoc);
-
-                        airlineCode = flightObject.getString(F_AIRL);
-                        model.setAirline(airlineCode);
-
-                        model.setCurrency(currency);
-                        model.setTotalPrice(totalPrice);
-
-                        modelList.add(model);
-                    }
-
-                    if(returnDateExists) {
-                        inbound = itinObject.getJSONObject("inbound");
-                    }*/
-
 
                     outboundObject = itinObject.getJSONObject(F_OUTBOUNDS);
                     outboundFlightArray = outboundObject.getJSONArray(F_FLIGHTS);
@@ -397,46 +361,12 @@ public class ResultsActivityFragment extends Fragment {
                         flightObject = outboundFlightArray.getJSONObject(l);
                         flight = createFlight(flightObject);
                         outboundFlightList.add(flight);
-
-                        /*dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                        departure = flightObject.getString(F_DEPS);
-                        arrival = flightObject.getString(F_ARRS);
-                        myDepDate = dateFormat.parse(departure);
-                        myArrDate = dateFormat.parse(arrival);
-
-                        dateFormat.applyPattern("dd-MM-yyyy HH:mm");
-                        departDate = dateFormat.format(myDepDate);
-                        flight.setDepartureDate(departDate);
-                        arrivalDate = dateFormat.format(myArrDate);
-                        flight.setArrivalDate(arrivalDate);
-
-                        originObject = flightObject.getJSONObject(F_ORIGIN);
-                        originLoc = originObject.getString(F_AIRP);
-
-
-                        flight.setOriginLocation(originLoc);
-
-                        destinationObject = flightObject.getJSONObject(F_DEST);
-                        destinationLoc = destinationObject.getString(F_AIRP);
-
-                        flight.setDestinationLocation(destinationLoc);
-
-                        airlineCode = flightObject.getString(F_AIRL);
-
-                        *//*if(!airlinesMap.containsKey(airlineCode)){
-                            airlinesMap.put(airlineCode,null);
-                        }*//*
-                        airlinesCodes+=airlineCode+",";
-                            //executor.execute(new AirlineFinderThread(airlinesMap,airlineCode));
-
-                        //flight.setAirline(airlineCode);
-                        //outboundFlightList.add(flight);*/
                     }
-                    //TODO Να παιρνω τις διευθυνσεις του model
+                    //TODOm Να παιρνω τις διευθυνσεις του model
                     Itinerary itin = new Itinerary(model);
                     model.getItineraries().add(itin);
                     model.getItineraries().get(j).setOutboundFlightsList(outboundFlightList);
-                   // model.getItineraries().add(new Itinerary(outboundFlightList));
+
 
                     if(returnDateExists){
                         inboundObject = itinObject.getJSONObject(F_INBOUNDS);
@@ -447,80 +377,10 @@ public class ResultsActivityFragment extends Fragment {
                             flightObject = inboundFlightArray.getJSONObject(l);
                             flight = createFlight(flightObject);
                             inboundFlightList.add(flight);
-                            /*flightObject = inboundFlightArray.getJSONObject(l);
-                            flight = new Flight();
-
-                            dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                            departure = flightObject.getString(F_DEPS);
-                            arrival = flightObject.getString(F_ARRS);
-                            myDepDate = dateFormat.parse(departure);
-                            myArrDate = dateFormat.parse(arrival);
-
-                            dateFormat.applyPattern("dd-MM-yyyy HH:mm");
-                            departDate = dateFormat.format(myDepDate);
-                            flight.setDepartureDate(departDate);
-                            arrivalDate = dateFormat.format(myArrDate);
-                            flight.setArrivalDate(arrivalDate);
-
-                            originObject = flightObject.getJSONObject(F_ORIGIN);
-                            originLoc = originObject.getString(F_AIRP);
-
-                            flight.setOriginLocation(originLoc);
-
-                            destinationObject = flightObject.getJSONObject(F_DEST);
-                            destinationLoc = destinationObject.getString(F_AIRP);
-
-                            flight.setDestinationLocation(destinationLoc);
-
-                            airlineCode = flightObject.getString(F_AIRL);
-
-                            flight.setAirline(airlineCode);
-                            inboundFlightList.add(flight);*/
                         }
                         model.getItineraries().get(j).setInboundFlightsList(inboundFlightList);
                     }
-
-
-
-                    /*List<FlightModel.inboundFlights> inboundFlightsList = new ArrayList<>();
-                    for(int l=0; l<inboundFlightArray; l++){
-                        JSONObject flightObject = inboundFlightArray.getJSONObject(l);
-                        FlightModel.inboundFlights inboundFlight = new FlightModel.inboundFlights();
-                        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-
-                        departure = flightObject.getString(F_DEPS);
-                        Date myDepDate = dateFormat1.parse(departure);
-                        dateFormat1.applyPattern("dd-MM-yyyy HH:mm");
-                        String departDate = dateFormat1.format(myDepDate);
-                        inboundFlight.setDepartureDate(departDate);
-
-                        arrival = flightObject.getString(F_ARRS);
-                        Date myArrDate = dateFormat2.parse(arrival);
-                        dateFormat2.applyPattern("dd-MM-yyyy HH:mm");
-                        String arrivalDate = dateFormat2.format(myArrDate);
-                        inboundFlight.setArrivalDate(arrivalDate);
-
-                        JSONObject originObject = flightObject.getJSONObject(F_ORIGIN);
-                        originLoc = originObject.getString(F_AIRP);
-                        inboundFlight.setOriginLocation(originLoc);
-
-                        JSONObject destinationObject = flightObject.getJSONObject(F_DEST);
-                        destinationLoc = destinationObject.getString(F_AIRP);
-                        inboundFlight.setDestinationLocation(destinationLoc);
-
-                        airlineCode = flightObject.getString(F_AIRL);
-                        inboundFlight.setAirline(airlineCode);
-                        inboundFlightList.add(inboundFlight);
-                    }*/
-
-
-
-
                 }
-                model.setCurrency(currency);
-                model.setTotalPrice(totalPrice);
-
                 modelList.add(model);
 
             }
@@ -587,13 +447,6 @@ public class ResultsActivityFragment extends Fragment {
             Calendar arrivalDate = Calendar.getInstance();
             arrivalDate.setTime(dateFormat.parse(arrival));
 
-            //dateFormat.parse(departure);
-            //Date myArrDate = dateFormat.parse(arrival);
-
-            //dateFormat.applyPattern("dd-MM-yyyy HH:mm");
-            //String departDate = dateFormat.format(myDepDate);
-            //String arrivalDate = dateFormat.format(myArrDate);
-
             JSONObject originObject = flightObject.getJSONObject(F_ORIGIN);
             String originValue = originObject.getString(F_AIRP);
             originValueOnly = new Airport(originValue,null);
@@ -623,7 +476,8 @@ public class ResultsActivityFragment extends Fragment {
                 airlinesCodes+=airlineCode+",";
             }
 
-
+            //Επιστρέφει μόνο τους κωδικούς των airlines και airports για να μπορέσει μετά όταν θα βρει τα
+            //labels να τα τοποθετήσει στις πτήσεις που θα έχουν τον αντίστοιχο κωδικό
             return new Flight(airlineCodeOnly,departDate,arrivalDate,originValueOnly,destinValueOnly);
         }
 
@@ -674,8 +528,7 @@ public class ResultsActivityFragment extends Fragment {
             }
             catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attemping
-                // to parse it.
+                //Αν δεν πήγε κάτι καλά στην απάντηση δεν υπάρχει λόγος να γίνει το parsing
                 return null;
             } finally {
                 if (urlConnection != null) {
@@ -705,7 +558,6 @@ public class ResultsActivityFragment extends Fragment {
         @Override
         protected void onPostExecute(List<FlightModel> result){
 
-            //TextView textView = (TextView) rootView.findViewById(R.id.resultsInfoTextView);
             itineraries = new ArrayList<>();
             TextView textView = (TextView) rootView.findViewById(R.id.resultsSearchInfo);
             TextView locationInfo = (TextView) rootView.findViewById(R.id.resultsLocationInfo);
@@ -731,13 +583,15 @@ public class ResultsActivityFragment extends Fragment {
                     }
                 }
             }
-
+            //Να σταματήσει η εμφανιση του μήνυματος "Περίμενε" και να εμφανιστούν τα αποτελέσματα στο listview
             progressDialog.dismiss();
             ItineraryAdapter adapter = new ItineraryAdapter(getContext(), R.layout.fragment_main, itineraries,getActivity());
             listView.setAdapter(adapter);
 
         }
     }
+
+    //Ελέγχει αν έχει σύνδεση στο ίντερνετ
     public boolean isOnline() {
         ConnectivityManager cm =
                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);

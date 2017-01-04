@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+//Activity που ο χρήστης θα βλέπει μια λίστα με τις προηγούμενες τυχόν αναζητήσεις του
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

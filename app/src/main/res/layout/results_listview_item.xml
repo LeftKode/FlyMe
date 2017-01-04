@@ -49,7 +49,8 @@
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
             android:textColor="@color/colorHint"
-            android:textStyle="normal|bold" />
+            android:textStyle="normal|bold"
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -85,7 +86,8 @@
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
             android:textStyle="normal|bold"
-            android:textColor="@color/dark_gray" />
+            android:textColor="@color/dark_gray"
+            android:visibility="gone" />
 
         <TextView
             android:text="duration"
@@ -96,7 +98,8 @@
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
             android:textStyle="normal|bold"
-            android:textColor="@color/colorHint" />
+            android:textColor="@color/colorHint"
+            android:visibility="gone" />
     </LinearLayout>
 
     <TextView

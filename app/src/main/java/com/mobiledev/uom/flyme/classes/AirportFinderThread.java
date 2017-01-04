@@ -19,16 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Lefteris on 27/12/2016.
- */
-
 public class AirportFinderThread extends Thread {
 
     private static final String LOG_TAG = AirlineFinderThread.class.getSimpleName();
 
-    String code;
-    Map<String,Airport> airportsMap;
+    String code; //O κωδικός που θα ψάξει να βρει το label
+    Map<String,Airport> airportsMap; //To map που θα έχει τα αεροδρόμια
 
     public AirportFinderThread(Map<String, Airport> airportsMap, String code) {
         this.airportsMap = airportsMap;
@@ -37,15 +33,17 @@ public class AirportFinderThread extends Thread {
 
     @Override
     public void run() {
+        //Καλεί την μέθοδο getJsonWithAirportDetails για να πάρει το JSON για το αεροδρόμιο
         String airportJsonString = getJsonWithAirportDetails();
         Airport airport;
         try {
+            //Καλεί την μέθοδο getAirportDataFromJson για να πάρει τις πληροφορίες απ το JSON για το αεροδρόμιο
             airport = getAirportDataFromJson(airportJsonString);
             if(airport!=null)
                 airportsMap.put(code,airport);
             else
                 airportsMap.put(code, new Airport(code,code));
-            //TODO To QRH (με την αναζήτηση RTM -> DCA) δεν υπάρχει όπως και κάποια άλλα.. Έτσι το put δεν θα γίνεται σωστά..
+            //TODOm To QRH (με την αναζήτηση RTM -> DCA) δεν υπάρχει όπως και κάποια άλλα.. Έτσι το put δεν θα γίνεται σωστά..
             //Πρέπει να βάλω να ελέγχει το airport κι αν επιστρέφει null τότε ο κωδικός να στέλνεται στο IATA.
             //Αν κι εκεί δεν υπάρχει τότε να βάλω στο label τον ίδιο τον κωδικό.
             //Το ίδιο και για τις αεροπορικές εταιρίες
@@ -56,6 +54,7 @@ public class AirportFinderThread extends Thread {
         }
     }
 
+    //Παίρνει το JSON με τις πληροφορίες του αεροδρομίου
     String getJsonWithAirportDetails(){
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
@@ -119,7 +118,7 @@ public class AirportFinderThread extends Thread {
                 try {
                     reader.close();
                 } catch (final IOException e) {
-                    Log.e("", "Error closing stream", e);
+                    Log.v("", "Error closing stream", e);
                 }
             }
         }
@@ -128,6 +127,7 @@ public class AirportFinderThread extends Thread {
         return airportsJsonStr;
     }
 
+    //Παίρνει τις πληροφορίες του αεροδρομίου από το JSON πο
     Airport getAirportDataFromJson(String airportJsonStr) throws JSONException {
 
 

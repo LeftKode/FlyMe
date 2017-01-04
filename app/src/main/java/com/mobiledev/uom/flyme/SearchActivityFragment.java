@@ -2,11 +2,9 @@ package com.mobiledev.uom.flyme;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -400,31 +398,16 @@ public class SearchActivityFragment extends Fragment implements DatePickerDialog
             builtUri = builtUri.buildUpon().appendQueryParameter(NONSTOP,"true").build();
             nonStop = 1;
         }
-
-        //Επιστρέφει το νόμισμα που επέλεξε ο χρήστης στην αναζήτησ και ανάλογα την επιλογή στέλνει στη διεύθυνση το αντίστοιχο νόμισμα
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String currencyType = sharedPreferences.getString(
-                            getString(R.string.currency_key),
-                            getString(R.string.currency_eur));
-
-        if(currencyType.equals(getString(R.string.currency_eur)))
-            builtUri = builtUri.buildUpon().appendQueryParameter(CURRENCY, "EUR").build();
-        else
-            builtUri = builtUri.buildUpon().appendQueryParameter(CURRENCY, "USD").build();
-
-        //Το νόμισμα συναλλαγής αν είναι διαφορετικό του USD να προσθέτει το αντίστοιχο ερώτημα στο uri
-        //builtUri = builtUri.buildUpon().appendQueryParameter(CURRENCY, "EUR").build();
-                //.appendQueryParameter(NO_OF_RESULTS, "10")
-                //.build();
-
+        //Προσθέτει το currency χωρις τιμή γιατι θα την παίρνει από την επιλογή του χρήστη στις ρυθμίσεις
         url = builtUri.toString();
-
-        String db_url = url.substring(0, url.lastIndexOf('=')+1);
+        url+='&' + CURRENCY + '=';
+        //String db_url = url.substring(0, url.lastIndexOf('=')+1);
         Cursor data = myDBHelper.getTableData();
 
+        //Αν είναι πάνω από 9 οι εγγραφές να σβήνεται η πιο παλιά και να μπαίνει η καινούρια
         if(data.getCount() > 9){
             myDBHelper.deleteRow();
-            myDBHelper.insertData(db_url,originLoc,destinationLoc,departDate,retDate, adultsNo, childrenNo, infantNo, nonStop);
+            myDBHelper.insertData(url,originLoc,destinationLoc,departDate,retDate, adultsNo, childrenNo, infantNo, nonStop);
         }
         else
             myDBHelper.insertData(url,originLoc,destinationLoc,departDate,retDate, adultsNo, childrenNo, infantNo, nonStop);
@@ -495,7 +478,7 @@ public class SearchActivityFragment extends Fragment implements DatePickerDialog
 
     //Εμφανίζει με κατάλληλο format την ημερομηνία στο κατάλληλο κουμπί
     private void updateDisplay(TextView dateDisplay, Calendar date) {
-        //TODO: Να βάλουμε και αν έχει επιλεγμένη την αγγλική γλώσσα να του βγάλει ανάποδα τους μήνες
+        //TODOm: Να βάλουμε και αν έχει επιλεγμένη την αγγλική γλώσσα να του βγάλει ανάποδα τους μήνες
 
         dateDisplay.setText(
                 new StringBuilder()

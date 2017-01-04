@@ -9,7 +9,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ProgressBar;
 
 
-
+//Κλάση για νέο AutoCompleteTextView με απαντήσεις από url request
 public class DelayAutoCompleteTextView extends AutoCompleteTextView {
 
     private static final int MESSAGE_TEXT_CHANGED = 100;
@@ -18,6 +18,7 @@ public class DelayAutoCompleteTextView extends AutoCompleteTextView {
     private int mAutoCompleteDelay = DEFAULT_AUTOCOMPLETE_DELAY;
     private ProgressBar mLoadingIndicator;
 
+    //O χειριστής που θα εμφανίζει και εξαφανίζει τις προτάσεις
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -40,7 +41,7 @@ public class DelayAutoCompleteTextView extends AutoCompleteTextView {
     @Override
     protected void performFiltering(CharSequence text, int keyCode) {
         if (mLoadingIndicator != null) {
-            mLoadingIndicator.setVisibility(View.VISIBLE);
+            mLoadingIndicator.setVisibility(View.VISIBLE); //Να εμφανίζεται το animation για να περιμένει ο χρήστης προτάσεις
         }
         mHandler.removeMessages(MESSAGE_TEXT_CHANGED);
         mHandler.sendMessageDelayed(mHandler.obtainMessage(MESSAGE_TEXT_CHANGED, text), mAutoCompleteDelay);
@@ -49,7 +50,7 @@ public class DelayAutoCompleteTextView extends AutoCompleteTextView {
     @Override
     public void onFilterComplete(int count) {
         if (mLoadingIndicator != null) {
-            mLoadingIndicator.setVisibility(View.INVISIBLE);
+            mLoadingIndicator.setVisibility(View.INVISIBLE); //εξαφανίζει το animation
         }
         super.onFilterComplete(count);
     }

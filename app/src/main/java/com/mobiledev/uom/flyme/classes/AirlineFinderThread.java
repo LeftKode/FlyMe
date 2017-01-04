@@ -18,10 +18,6 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
 
-/**
- * Created by Lefteris on 26/12/2016.
- */
-
 public class AirlineFinderThread extends Thread {
 
     private static final String LOG_TAG = AirlineFinderThread.class.getSimpleName();

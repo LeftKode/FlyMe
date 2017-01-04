@@ -3,16 +3,13 @@ package com.mobiledev.uom.flyme.classes;
 import java.io.Serializable;
 import java.util.Calendar;
 
-/**
- * Created by Lefteris on 25/12/2016.
- */
-
+//Η κλάση με τις λεπτομέρειες κάθε πτήσης
 public class Flight implements Serializable {
-    private Calendar departureDate;
-    private Calendar arrivalDate;
-    private Airline airline;
-    private Airport originAirport;
-    private Airport destinationAirport;
+    private Calendar departureDate; //Ημερομηνία Αναχώρησης
+    private Calendar arrivalDate; //Ημερομηνία Άφιξης
+    private Airline airline; //Αεροπορική Εταιρία Πτήσης
+    private Airport originAirport; //Αεροδρόμιο Αναχώρησης
+    private Airport destinationAirport; //Αεροδρόμιο Προορισμού
 
     public Flight(Airline airline, Calendar departureDate, Calendar arrivalDate, Airport originAirport, Airport destinationAirport) {
         this.airline = airline;

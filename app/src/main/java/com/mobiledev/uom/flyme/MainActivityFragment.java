@@ -119,7 +119,7 @@ public class MainActivityFragment extends Fragment{
             if (numOfAdults == 0 )
                 adultNo.setVisibility(GONE);
             else
-                adultNo.setText(getResources().getString(R.string.adult_number)+Integer.toString(numOfAdults));
+                adultNo.setText(getResources().getString(R.string.adults_number)+Integer.toString(numOfAdults));
 
             if (numOfChildren == 0)
                 childrenNo.setVisibility(GONE);
@@ -129,7 +129,7 @@ public class MainActivityFragment extends Fragment{
             if (numOfInfants == 0)
                 infantNo.setVisibility(GONE);
             else
-                infantNo.setText(getResources().getString(R.string.infant_number)+Integer.toString(numOfInfants));
+                infantNo.setText(getResources().getString(R.string.infants_number)+Integer.toString(numOfInfants));
 
             if(stops == 0)
                 nonStop.setText(getResources().getString(R.string.non_direct_flights));

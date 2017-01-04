@@ -3,13 +3,10 @@ package com.mobiledev.uom.flyme.classes;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by Tolis on 19/12/2016.
- */
-
+//Κλάση που θα περιέχει ένα result από το JSON
 public class FlightModel implements Serializable {
 
-    private String currency;
+
     private float totalPrice;
     private float pricePerAdult;
     //private float taxAdults;
@@ -33,14 +30,6 @@ public class FlightModel implements Serializable {
 
     public void setItineraries(List<Itinerary> itineraries) {
         this.itineraries = itineraries;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
     }
 
     public float getTotalPrice() {
@@ -85,136 +74,3 @@ public class FlightModel implements Serializable {
 
 
 }
-/*
-    public static class inboundFlights {
-        private String departureDate;
-        private String departureTime;
-        private String arrivalDate;
-        private String arrivalTime;
-        private String airline;
-        private String originLoc;
-        private String destinationLoc;
-
-        public String getDepartureDate() {
-            return departureDate;
-        }
-
-        public void setDepartureDate(String departureDate) {
-            this.departureDate = departureDate;
-        }
-
-        public String getDepartureTime() {
-            return departureTime;
-        }
-
-        public void setDepartureTime(String departureTime) {
-            this.departureTime = departureTime;
-        }
-
-        public String getArrivalDate() {
-            return departureDate;
-        }
-
-        public void setArrivalDate(String arrivalDate) {
-            this.arrivalDate = arrivalDate;
-        }
-
-        public String getArrivalTime() {
-            return arrivalTime;
-        }
-
-        public void setArrivalTime(String arrivalTime) {
-            this.arrivalTime = arrivalTime;
-        }
-
-        public String getAirline() {
-            return airline;
-        }
-
-        public void setAirline(String airline) {
-            this.airline = airline;
-        }
-
-        public String getOriginLocation() {
-            return originLoc;
-        }
-
-        public void setOriginLocation(String originLoc) {
-            this.originLoc = originLoc;
-        }
-
-        public String getDestinationLocation() {
-            return destinationLoc;
-        }
-
-        public void setDestinationLocation(String destinationLoc) {
-            this.destinationLoc = destinationLoc;
-        }
-    }
-}*/
-/*    private String currency;
-    private String departureDate;
-    private String arrivalDate;
-    private String originLocation;
-    private String destinationLocation;
-    private String totalPrice;
-    private String airline;
-
-    public String getAirline() {
-        return airline;
-    }
-
-    public void setAirline(String airline) {
-        this.airline = airline;
-    }
-
-    public String getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(String totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public String getDestinationLocation() {
-        return destinationLocation;
-    }
-
-    public void setDestinationLocation(String destinationLocation) {
-        this.destinationLocation = destinationLocation;
-    }
-
-    public String getArrivalDate() {
-        return arrivalDate;
-    }
-
-    public void setArrivalDate(String arrivalDate) {
-        this.arrivalDate = arrivalDate;
-    }
-
-    public String getDepartureDate() {
-        return departureDate;
-    }
-
-    public void setDepartureDate(String departureDate) {
-        this.departureDate = departureDate;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public String getOriginLocation() {
-        return originLocation;
-    }
-
-    public void setOriginLocation(String originLocation) {
-        this.originLocation = originLocation;
-    }
-
-
-}*/

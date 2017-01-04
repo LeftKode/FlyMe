@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class Airport implements Serializable {
 
-    private String value;
-    private String label;
+    private String value; //Ο κωδικός του Αεροδρομίου
+    private String label; //Ο πλήρης τίτλος του Αεροδρομίου
 
     public Airport(String value, String label) {
         this.value = value;

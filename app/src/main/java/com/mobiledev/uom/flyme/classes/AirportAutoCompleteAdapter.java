@@ -33,11 +33,9 @@ import java.util.List;
 
 public class AirportAutoCompleteAdapter extends BaseAdapter implements Filterable {
 
-    private static final int MAX_RESULTS = 5;
+    private static final int MAX_RESULTS = 5; //Ο μέγιστος αριθμός προτάσεων αεροδρομίων που θα εμφανίζει στο autocomplete textView
     private Context mContext;
     private List<Airport> resultList = new ArrayList<>();
-    private boolean interneConToastIsOn;
-   // private Activity activity;
     private SingleToast toast;
 
 
@@ -45,10 +43,6 @@ public class AirportAutoCompleteAdapter extends BaseAdapter implements Filterabl
     public void setToast(SingleToast toast) {
         this.toast = toast;
     }
-
-    /*public void setActivity(Activity activity) {
-        this.activity = activity;
-    }*/
 
     public List<Airport> getResultList() {
         return resultList;
@@ -86,6 +80,8 @@ public class AirportAutoCompleteAdapter extends BaseAdapter implements Filterabl
     @Override
     public Filter getFilter() {
         Filter filter = new Filter() {
+
+            //Τρέχει στο background και στέλενει ένα url για να πάρει το JSON με προτάσεις αεροδρομίων
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults filterResults = new FilterResults();
@@ -100,7 +96,7 @@ public class AirportAutoCompleteAdapter extends BaseAdapter implements Filterabl
                 return filterResults;
             }
 
-            @Override
+            @Override //Ενημερώνει τον χρήστη αν δεν υπάρχει ίντερνετ αλλιώς γεμίζει την resultsList με τα προτεινόμενα αεροδρόμια
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 if(!isOnline()){
                     toast.show(mContext,"No Internet Connection", Toast.LENGTH_SHORT);
@@ -209,6 +205,7 @@ public class AirportAutoCompleteAdapter extends BaseAdapter implements Filterabl
         return airports;
     }
 
+    //Βλέπει αν είναι συνδεδεμένος στο ίντερνετ ο χρήστης
     public boolean isOnline() {
         ConnectivityManager cm =
                 (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);

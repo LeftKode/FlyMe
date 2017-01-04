@@ -43,7 +43,8 @@
                     android:layout_width="match_parent"
                     android:hint="@string/origin_hint"
                     android:textColor="@color/colorAccent"
-                    android:textColorLink="@color/airport_label_color" />
+                    android:textColorLink="@color/airport_label_color"
+                    android:background="@drawable/apptheme_edit_text_holo_light" />
 
                 <ProgressBar
                     android:id="@+id/pb_loading_indicator"
@@ -79,7 +80,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="flagNoExtractUi"
-                    android:layout_weight="0.1" />
+                    android:layout_weight="0.1"
+                    android:background="@drawable/apptheme_edit_text_holo_light"
+                    android:textColor="@color/colorAccent"
+                    android:textColorLink="@color/airport_label_color" />
 
                 <ProgressBar
                     android:id="@+id/pb_loading_indicator2"
@@ -146,7 +150,9 @@
                 android:layout_weight="1"
                 android:id="@+id/returnDateLayout"
                 android:visibility="gone"
-                android:layout_marginBottom="15dp">
+                android:layout_marginBottom="15dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
 
                 <TextView
                     android:text="@string/return_date"
@@ -170,7 +176,8 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:background="@drawable/button_draw" />
 
             </LinearLayout>
 

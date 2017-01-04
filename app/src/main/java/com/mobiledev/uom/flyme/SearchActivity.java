@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+//Activity που ο χρήστης θα επιλέγει την αναζήτηση που θέλει να κάνει
+
 public class SearchActivity extends AppCompatActivity {
 
 
