@@ -99,6 +99,9 @@
     <string name="result_transition">Μετάβαση:&#160;&#160;</string>
     <string name="result_return">Επιστροφή:&#160;</string>
     <string name="result_no_flights_found">Δεν βρέθηκαν διαθέσιμες πτήσεις για την αναζήτηση σας!</string>
+    <string name="result_internet_not_found_title">Δεν βρέθηκε δίκτυο</string>
+    <string name="result_internet_not_found_message">Δεν βρέθηκε κάποιο διαθέσιμο δίκτυο. Συνδεθείτε και δοκιμάστε ξανά</string>
+    <string name="result_internet_not_found_button">Δοκιμάστε ξανά</string>
 
     <!-- Strings στην DetailsActivity-->
     <string name="title_activity_details">Λεπτομέρειες Πτήσης</string>

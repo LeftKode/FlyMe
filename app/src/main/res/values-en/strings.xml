@@ -36,9 +36,9 @@
     <!-- Κλειδί του νομίσματος για τα SharedPreferences -->
     <string name="currency_key" translatable="false">currency</string>
     <!-- Τιμή στα SharedPreferences για τα ευρώ -->
-    <string name="currency_eur" translatable="false">eur</string>
+    <string name="currency_eur" translatable="false">EUR</string>
     <!--  Τιμή στα SharedPreferences για τα δολάρια -->
-    <string name="currency_usd" translatable="false">usd</string>
+    <string name="currency_usd" translatable="false">USD</string>
 
     <!-- Αεροδρόμιο Αναχώρησης και Προορισμού -->
     <string name="origin">Departure Airport</string>
@@ -94,6 +94,22 @@
     <string name="departure_title">Transition</string>
     <string name="return_title">Return</string>
     <string name="total_duration">Total Duration:&#160;</string>
+    <string name="children_price">Children Fare:</string>
+    <string name="total_price">Total Fare:&#160;</string>
+    <string name="stop">Stop</string>
+    <string name="yes">Yes</string>
+    <string name="adults_price">Adults Fare:</string>
+    <string name="duration">Duration:&#160;</string>
+    <string name="flight_no">Flight No</string>
+    <string name="infants_price">Infant Fare:</string>
+    <string name="itinerary_depart">Itinerary</string>
+    <string name="itinerary_return">Return Itinerary</string>
+    <string name="minus_symbol">-</string>
+    <string name="no">No</string>
+    <string name="plus_symbol">+</string>
+    <string name="result_internet_not_found_button">Retry</string>
+    <string name="result_internet_not_found_message">There were no available internet connections found. Connect to the interent and try again.</string>
+    <string name="result_internet_not_found_title">No internet connection found</string>
 
 
 </resources>

@@ -142,9 +142,9 @@ public class ResultsActivityFragment extends Fragment {
                 DialogInterface.OnClickListener listener = null;
 
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-                alertDialogBuilder.setTitle("Δεν βρέθηκε δίκτυο");
-                alertDialogBuilder.setMessage("Δεν βρέθηκε κάποιο διαθέσιμο δίκτυο. Συνδεθείτε και δοκιμάστε ξανά");
-                alertDialogBuilder.setPositiveButton("Δοκιμάστε ξανά", listener);
+                alertDialogBuilder.setTitle(getResources().getString(R.string.result_internet_not_found_title));
+                alertDialogBuilder.setMessage(getResources().getString(R.string.result_internet_not_found_message));
+                alertDialogBuilder.setPositiveButton(getResources().getString(R.string.result_internet_not_found_button), listener);
                 alertDialogBuilder.setCancelable(FALSE);
 
                 AlertDialog dialog = alertDialogBuilder.create();
