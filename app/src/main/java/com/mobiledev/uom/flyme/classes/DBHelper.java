@@ -6,10 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by Administrator on 23/12/2016.
- */
-
+//Κατασκευάζει και ελέγχει τη βάση
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DBNAME = "mydb.db";
@@ -33,6 +30,7 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, DBNAME, null, VERSION);
     }
 
+    //Δημιουργία της βάσης
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
@@ -57,13 +55,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
-    /*
 
-    moveToLast για να παει στο τελος και μετα while("kati".moveToPrevious) για να παω στην αρχη
-    "κατι".getString(1) μου δίνει την πρωτη στήλη της σειρας, το 2 τη 2η κτλ
-    το getCount μας λεει ποσες υπάρχουν στην βαση
-
-    */
+    //Μέθοδος για εισαγωγή δεδομένων στη βάση
     public boolean insertData(String url, String originLoc, String destLoc, String depDate, String arrDate,
                               int adultNo, int childNo, int infantNo,int nonStop){
 
@@ -88,18 +81,22 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    //Μέθοδος για επιστροφή των δεδομένων στη βάση
     public Cursor getTableData(){
         myDB = this.getWritableDatabase();
         Cursor data = myDB.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY " + ID + " DESC", null);
         return data;
     }
 
+    //Μέθοδος για διαγραφή της τελευταίας σειράς από τη βάση
+    //άρα της πιο παλιάς αναζήτησης που έκανε ο χρήστης
     public long deleteRow(){
         myDB = this.getWritableDatabase();
         String where = ID + " = (SELECT MIN("+ID+") FROM "+TABLE_NAME+")";
         return myDB.delete(TABLE_NAME, where ,null);
     }
 
+    //Μέθοδος για επιστροφή μια συγκεκριμένης σειράς από τη βάση ανάλογα με το id που θα ζητήσουμε
     public Cursor getTableRow(int id){
         myDB = this.getWritableDatabase();
         Cursor data = myDB.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + ID + " = " +id, null);
@@ -107,9 +104,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    //Επιστρέφει την τιμή του μεγαλύτερου id που υπάρχει κάποια στιγμή στη βάση
     public Cursor getID(){
         myDB = this.getWritableDatabase();
-        Cursor data = myDB.rawQuery("SELECT " +ID+ " FROM " + TABLE_NAME + " WHERE " + ID + " = (SELECT MAX("+ID+") FROM "+TABLE_NAME+")",null);
+        Cursor data = myDB.rawQuery("SELECT " +ID+ " FROM " + TABLE_NAME + " WHERE " + ID +
+                " = (SELECT MAX("+ID+") FROM "+TABLE_NAME+")",null);
         return data;
 
     }

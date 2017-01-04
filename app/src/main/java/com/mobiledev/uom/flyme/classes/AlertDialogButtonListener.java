@@ -9,10 +9,7 @@ import android.view.View;
 
 import com.mobiledev.uom.flyme.ResultsActivityFragment;
 
-/**
- * Created by Administrator on 29/12/2016.
- */
-
+//Ελέγχει αν υπάρχει σύνδεση στο ίντερνετ
 public class AlertDialogButtonListener implements View.OnClickListener {
 
     private Dialog dialog;
@@ -27,6 +24,8 @@ public class AlertDialogButtonListener implements View.OnClickListener {
         this.urlText = urlText;
     }
 
+    //Αν βρεθεί σύνδεση καλείται η flightsTask που βρίσκει τις πτήσεις
+    //Αλλιώς το κουμπί μένει σταθερό
     @Override
     public void onClick(View view) {
         if (isOnline()) {

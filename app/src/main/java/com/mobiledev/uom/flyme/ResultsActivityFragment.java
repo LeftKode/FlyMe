@@ -5,11 +5,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -111,7 +113,18 @@ public class ResultsActivityFragment extends Fragment {
             db_id = intent.getExtras().getInt("db_id");
             Cursor data = myDBHelper.getTableRow(db_id);
             data.moveToFirst();
-            urlText = data.getString(data.getColumnIndexOrThrow("url"));
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String currencyType = sharedPreferences.getString(
+                    getString(R.string.currency_key),
+                    getString(R.string.currency_eur));
+
+            String dbUrlText = data.getString(data.getColumnIndexOrThrow("url"));
+            if(currencyType.equals(getString(R.string.currency_eur)))
+                urlText = dbUrlText + "EUR";
+            else
+                urlText = dbUrlText + "USD";
+
             adultNo = data.getInt(data.getColumnIndexOrThrow("adultsNumber"));
             childrenNo = data.getInt(data.getColumnIndexOrThrow("childrenNumber"));
             infantNo = data.getInt(data.getColumnIndexOrThrow("infantNumber"));

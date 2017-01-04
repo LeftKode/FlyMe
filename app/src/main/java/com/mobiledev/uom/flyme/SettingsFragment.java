@@ -6,40 +6,31 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
-/**
- * Created by Administrator on 23/12/2016.
- */
-
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Add 'general' preferences, defined in the XML file
+
         addPreferencesFromResource(R.xml.preferences);
 
-        // For all preferences, attach an OnPreferenceChangeListener so the UI summary can be
-        // updated when the preference changes.
+        // Βάζει ενα listener στο preference για να ελέγχει για αλλαγές
         bindPreferenceSummaryToValue(findPreference(getString(R.string.currency_key)));
     }
-    /**
-     * Attaches a listener so the summary is always updated with the preference value.
-     * Also fires the listener once, to initialize the summary (so it shows up before the value
-     * is changed.)
-     */
+
     private void bindPreferenceSummaryToValue(Preference preference) {
-        // Set the listener to watch for value changes.
+        //Ελέγχει για αλλαγές στα settings
         preference.setOnPreferenceChangeListener(this);
 
-        // Trigger the listener immediately with the preference's
-        // current value.
+        //Θετει στον listener την τιμή που υπάρχει στις ρυθμίσεις
         onPreferenceChange(preference,
                 PreferenceManager
                         .getDefaultSharedPreferences(preference.getContext())
                         .getString(preference.getKey(), ""));
     }
 
+    //Αλλαγή της τιμής στα settings αναλογα με την επιλογή του χρήστη
     @Override
     public boolean onPreferenceChange(Preference preference, Object value) {
         String stringValue = value.toString();

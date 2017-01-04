@@ -409,7 +409,7 @@ public class SearchActivityFragment extends Fragment implements DatePickerDialog
 
         if(currencyType.equals(getString(R.string.currency_eur)))
             builtUri = builtUri.buildUpon().appendQueryParameter(CURRENCY, "EUR").build();
-        else if(currencyType.equals(getString(R.string.currency_usd)))
+        else
             builtUri = builtUri.buildUpon().appendQueryParameter(CURRENCY, "USD").build();
 
         //Το νόμισμα συναλλαγής αν είναι διαφορετικό του USD να προσθέτει το αντίστοιχο ερώτημα στο uri
@@ -419,12 +419,12 @@ public class SearchActivityFragment extends Fragment implements DatePickerDialog
 
         url = builtUri.toString();
 
-
+        String db_url = url.substring(0, url.lastIndexOf('=')+1);
         Cursor data = myDBHelper.getTableData();
 
         if(data.getCount() > 9){
             myDBHelper.deleteRow();
-            myDBHelper.insertData(url,originLoc,destinationLoc,departDate,retDate, adultsNo, childrenNo, infantNo, nonStop);
+            myDBHelper.insertData(db_url,originLoc,destinationLoc,departDate,retDate, adultsNo, childrenNo, infantNo, nonStop);
         }
         else
             myDBHelper.insertData(url,originLoc,destinationLoc,departDate,retDate, adultsNo, childrenNo, infantNo, nonStop);
