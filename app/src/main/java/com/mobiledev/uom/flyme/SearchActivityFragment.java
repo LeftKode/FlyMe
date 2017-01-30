@@ -210,6 +210,7 @@ public class SearchActivityFragment extends Fragment implements DatePickerDialog
             public void onClick(View v) {
                 //showDateDialog(departurePickDateBtn, departureDate);
                 activeDateDisplay = departurePickDateBtn;
+                DatePickerFragment.setCalendar(departureDate);
                 ((SearchActivity) getActivity()).showDatePickerDialog(v);
             }
         });
@@ -218,6 +219,7 @@ public class SearchActivityFragment extends Fragment implements DatePickerDialog
         returnPickDateBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 activeDateDisplay = returnPickDateBtn;
+                DatePickerFragment.setCalendar(returnDate);
                 ((SearchActivity) getActivity()).showDatePickerDialog(v);
             }
         });
@@ -370,6 +372,8 @@ public class SearchActivityFragment extends Fragment implements DatePickerDialog
         originLoc = origin.getLabel();
         destinationLoc = destination.getLabel();
         departDate = String.format(fmt.format(departureDate.getTime()));
+
+        fmt.setCalendar(returnDate);
 
         //Αν έχει επιλέξει ημερομηνία επιστροφής να την προσθέσει
         if(withDestinationSwitch.isChecked()){
