@@ -205,9 +205,9 @@ public class ResultsActivityFragment extends Fragment {
                 stopsInfo.setVisibility(GONE);
 
             //Εμφάνιση αριθμών επιβατών
-            adultInfo.setText("Ενήλικες: " + adultNo);
-            childrenInfo.setText("Παιδιά: " + childrenNo);
-            infantInfo.setText("Βρέφη: " + infantNo);
+            adultInfo.setText(getString(R.string.result_adults) + adultNo);
+            childrenInfo.setText(getString(R.string.result_children) + childrenNo);
+            infantInfo.setText(getString(R.string.result_infants) + infantNo);
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
